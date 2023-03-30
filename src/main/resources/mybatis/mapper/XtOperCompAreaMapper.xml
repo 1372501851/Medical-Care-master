@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.user.mapper.XtOperCompAreaMapper">
+    
+    <resultMap type="XtOperCompArea" id="XtOperCompAreaResult">
+        <result property="uoperCompid"    column="uoper_compid"    />
+        <result property="uareaid"    column="uareaid"    />
+    </resultMap>
+
+    <sql id="selectXtOperCompAreaVo">
+        select uoper_compid, uareaid from xt_oper_comp_area
+    </sql>
+
+    <select id="selectXtOperCompAreaList" parameterType="XtOperCompArea" resultMap="XtOperCompAreaResult">
+        <include refid="selectXtOperCompAreaVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectXtOperCompAreaByUoperCompid" parameterType="String" resultMap="XtOperCompAreaResult">
+        <include refid="selectXtOperCompAreaVo"/>
+        where uoper_compid = #{uoperCompid}
+    </select>
+
+    <select id="getAreaIdList" resultType="java.lang.String">
+        select uareaid from xt_oper_comp_area
+    </select>
+
+    <insert id="insertXtOperCompArea" parameterType="XtOperCompArea">
+        insert into xt_oper_comp_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uoperCompid != null">uoper_compid,</if>
+            <if test="uareaid != null">uareaid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uoperCompid != null">#{uoperCompid},</if>
+            <if test="uareaid != null">#{uareaid},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertXtOperCompAreaBatch">
+        insert into xt_oper_comp_area(uoper_compid,uareaid)
+        value
+        <trim suffixOverrides=",">
+            <foreach collection="areaIdList" item="areaId" index="index">
+                (#{uoperCompid},#{areaId}),
+            </foreach>
+        </trim>
+    </insert>
+
+    <update id="updateXtOperCompArea" parameterType="XtOperCompArea">
+        update xt_oper_comp_area
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uareaid != null">uareaid = #{uareaid},</if>
+        </trim>
+        where uoper_compid = #{uoperCompid}
+    </update>
+
+    <delete id="deleteXtOperCompAreaByUoperCompid" parameterType="String">
+        delete from xt_oper_comp_area where uoper_compid = #{uoperCompid}
+    </delete>
+
+    <delete id="deleteXtOperCompAreaByUoperCompids" parameterType="String">
+        delete from xt_oper_comp_area where uoper_compid in 
+        <foreach item="uoperCompid" collection="array" open="(" separator="," close=")">
+            #{uoperCompid}
+        </foreach>
+    </delete>
+</mapper>

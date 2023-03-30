@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.remind.mapper.RemindUserMapper">
+
+    <resultMap type="RemindUser" id="RemindUserResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="reminderId"    column="reminder_id"    />
+        <result property="remindId"    column="remind_id"    />
+        <result property="count"    column="count"    />
+    </resultMap>
+
+    <sql id="selectRemindUserVo">
+        select id, user_id, reminder_id, remind_id,count from remind_user
+    </sql>
+
+    <select id="selectRemindUserList" parameterType="RemindUser" resultMap="RemindUserResult">
+        <include refid="selectRemindUserVo"/>
+        <where>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="reminderId != null  and reminderId != ''"> and reminder_id = #{reminderId}</if>
+            <if test="remindId != null  and remindId != ''"> and remind_id = #{remindId}</if>
+            <if test="count != null  and count != ''"> and count = #{count}</if>
+        </where>
+    </select>
+
+    <select id="selectRemindUserById" parameterType="String" resultMap="RemindUserResult">
+        <include refid="selectRemindUserVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectRemindUserListForCron" resultMap="RemindUserResult">
+        <include refid="selectRemindUserVo"/>
+        where count > 0
+    </select>
+
+    <insert id="insertRemindUser" parameterType="RemindUser">
+        insert into remind_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="reminderId != null">reminder_id,</if>
+            <if test="remindId != null">remind_id,</if>
+            <if test="count != null">count,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="reminderId != null">#{reminderId},</if>
+            <if test="remindId != null">#{remindId},</if>
+            <if test="count != null">#{count},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRemindUser" parameterType="RemindUser">
+        update remind_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="reminderId != null">reminder_id = #{reminderId},</if>
+            <if test="remindId != null">remind_id = #{remindId},</if>
+            <if test="count != null">count = #{count},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="reduceCountRemindUserById">
+        update remind_user
+        set count = count - 1
+        where count > 0 and id = #{id}
+    </update>
+
+    <delete id="deleteRemindUserById" parameterType="String">
+        delete from remind_user where id = #{id}
+    </delete>
+
+    <delete id="deleteRemindUserByIds" parameterType="String">
+        delete from remind_user where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

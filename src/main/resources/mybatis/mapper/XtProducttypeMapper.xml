@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtProducttypeMapper">
+
+    <resultMap type="XtProducttype" id="XtProducttypeResult">
+        <result property="uproducttypeid"    column="uproducttypeid"    />
+        <result property="uform"    column="uform"    />
+        <result property="uproducttypename"    column="uproducttypename"    />
+        <result property="uparentid"    column="uparentid"    />
+        <result property="ulevel"    column="ulevel"    />
+        <result property="uproductTypePic"    column="uproduct_type_pic"    />
+        <result property="uproductTypeSpace"    column="uproduct_type_space"    />
+    </resultMap>
+
+    <sql id="selectXtProducttypeVo">
+        select uproducttypeid, uform, uproducttypename, uparentid, ulevel, uproduct_type_pic , uproduct_type_space from xt_producttype
+    </sql>
+
+    <select id="selectXtProducttypeList" parameterType="XtProducttype" resultMap="XtProducttypeResult">
+        <include refid="selectXtProducttypeVo"/>
+        <where>
+            <if test="uform != null  and uform != ''"> and uform = #{uform}</if>
+            <if test="uproducttypename != null  and uproducttypename != ''"> and uproducttypename like concat('%', #{uproducttypename}, '%')</if>
+            <if test="uparentid != null  and uparentid != ''"> and uparentid = #{uparentid}</if>
+            <if test="ulevel != null  and ulevel != ''"> and ulevel = #{ulevel}</if>
+        </where>
+    </select>
+
+    <select id="selectXtProducttypeByUproducttypeid" parameterType="String" resultMap="XtProducttypeResult">
+        <include refid="selectXtProducttypeVo"/>
+        where uproducttypeid = #{uproducttypeid}
+    </select>
+
+    <insert id="insertXtProducttype" parameterType="XtProducttype">
+        insert into xt_producttype
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uproducttypeid != null">uproducttypeid,</if>
+            <if test="uform != null and uform != ''">uform,</if>
+            <if test="uproducttypename != null and uproducttypename != ''">uproducttypename,</if>
+            <if test="uparentid != null">uparentid,</if>
+            <if test="ulevel != null and ulevel != ''">ulevel,</if>
+            <if test="uproductTypePic != null">uproduct_type_pic,</if>
+            <if test="uproductTypeSpace != null">uproduct_type_space,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uproducttypeid != null">#{uproducttypeid},</if>
+            <if test="uform != null and uform != ''">#{uform},</if>
+            <if test="uproducttypename != null and uproducttypename != ''">#{uproducttypename},</if>
+            <if test="uparentid != null">#{uparentid},</if>
+            <if test="ulevel != null and ulevel != ''">#{ulevel},</if>
+            <if test="uproductTypePic != null">#{uproductTypePic},</if>
+            <if test="uproductTypeSpace != null">#{uproductTypeSpace},</if>
+         </trim>
+    </insert>
+
+<!--    <update id="updateXtProducttype" parameterType="XtProducttype">-->
+<!--        update xt_producttype-->
+<!--        <trim prefix="SET" suffixOverrides=",">-->
+<!--            <if test="uform != null and uform != ''">uform = #{uform},</if>-->
+<!--            <if test="uproducttypename != null and uproducttypename != ''">uproducttypename = #{uproducttypename},</if>-->
+<!--            <if test="uparentid != null">uparentid = #{uparentid},</if>-->
+<!--            <if test="ulevel != null and ulevel != ''">ulevel = #{ulevel},</if>-->
+<!--            <if test="uproductTypePic != null and uproductTypePic != ''">uproduct_type_pic = #{uproductTypePic}</if>-->
+<!--        </trim>-->
+<!--        where uproducttypeid = #{uproducttypeid}-->
+<!--    </update>-->
+
+    <delete id="deleteXtProducttypeByUproducttypeid" parameterType="String">
+        delete from xt_producttype where uproducttypeid = #{uproducttypeid}
+    </delete>
+
+    <delete id="deleteXtProducttypeByUproducttypeids" parameterType="String">
+        delete from xt_producttype where uproducttypeid in
+        <foreach item="uproducttypeid" collection="array" open="(" separator="," close=")">
+            #{uproducttypeid}
+        </foreach>
+    </delete>
+</mapper>

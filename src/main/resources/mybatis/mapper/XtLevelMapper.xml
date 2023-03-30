@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtLevelMapper">
+
+    <resultMap type="XtLevel" id="XtLevelResult">
+        <result property="ulevelid"    column="ulevelid"    />
+        <result property="ulevelNum"    column="ulevel_num"    />
+        <result property="ulevelDesc"    column="ulevel_desc"    />
+    </resultMap>
+
+    <sql id="selectXtLevelVo">
+        select ulevelid, ulevel_num, ulevel_desc from xt_level
+    </sql>
+
+    <select id="selectXtLevelList" parameterType="XtLevel" resultMap="XtLevelResult">
+        <include refid="selectXtLevelVo"/>
+        <where>
+            <if test="ulevelNum != null "> and ulevel_num = #{ulevelNum}</if>
+            <if test="ulevelDesc != null  and ulevelDesc != ''"> and ulevel_desc = #{ulevelDesc}</if>
+        </where>
+    </select>
+
+    <select id="selectXtLevelByUlevelid" parameterType="String" resultMap="XtLevelResult">
+        <include refid="selectXtLevelVo"/>
+        where ulevelid = #{ulevelid}
+    </select>
+
+    <insert id="insertXtLevel" parameterType="XtLevel">
+        insert into xt_level
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ulevelid != null">ulevelid,</if>
+            <if test="ulevelNum != null">ulevel_num,</if>
+            <if test="ulevelDesc != null">ulevel_desc,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ulevelid != null">#{ulevelid},</if>
+            <if test="ulevelNum != null">#{ulevelNum},</if>
+            <if test="ulevelDesc != null">#{ulevelDesc},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtLevel" parameterType="XtLevel">
+        update xt_level
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ulevelNum != null">ulevel_num = #{ulevelNum},</if>
+            <if test="ulevelDesc != null">ulevel_desc = #{ulevelDesc},</if>
+        </trim>
+        where ulevelid = #{ulevelid}
+    </update>
+
+    <delete id="deleteXtLevelByUlevelid" parameterType="String">
+        delete from xt_level where ulevelid = #{ulevelid}
+    </delete>
+
+    <delete id="deleteXtLevelByUlevelids" parameterType="String">
+        delete from xt_level where ulevelid in
+        <foreach item="ulevelid" collection="array" open="(" separator="," close=")">
+            #{ulevelid}
+        </foreach>
+    </delete>
+</mapper>

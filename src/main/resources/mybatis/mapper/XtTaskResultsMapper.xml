@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.task.mapper.XtTaskResultsMapper">
+
+    <resultMap type="XtTaskResults" id="XtTaskResultsResult">
+        <result property="utaskResultsid"    column="utask_resultsid"    />
+        <result property="utaskid"    column="utaskid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="ubingyin"    column="ubingyin"    />
+        <result property="uprocessingResults"    column="uprocessing_results"    />
+    </resultMap>
+
+    <sql id="selectXtTaskResultsVo">
+        select utask_resultsid, utaskid, uemployeeid, ubingyin, uprocessing_results from xt_task_results
+    </sql>
+
+    <select id="selectXtTaskResultsList" parameterType="XtTaskResults" resultMap="XtTaskResultsResult">
+        <include refid="selectXtTaskResultsVo"/>
+        <where>
+            <if test="utaskid != null  and utaskid != ''"> and utaskid = #{utaskid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="ubingyin != null  and ubingyin != ''"> and ubingyin = #{ubingyin}</if>
+            <if test="uprocessingResults != null  and uprocessingResults != ''"> and uprocessing_results = #{uprocessingResults}</if>
+        </where>
+    </select>
+
+    <select id="selectXtTaskResultsByUtaskResultsid" parameterType="String" resultMap="XtTaskResultsResult">
+        <include refid="selectXtTaskResultsVo"/>
+        where utask_resultsid = #{utaskResultsid}
+    </select>
+
+    <insert id="insertXtTaskResults" parameterType="XtTaskResults">
+        insert into xt_task_results
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="utaskResultsid != null">utask_resultsid,</if>
+            <if test="utaskid != null and utaskid != ''">utaskid,</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid,</if>
+            <if test="ubingyin != null">ubingyin,</if>
+            <if test="uprocessingResults != null">uprocessing_results,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="utaskResultsid != null">#{utaskResultsid},</if>
+            <if test="utaskid != null and utaskid != ''">#{utaskid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">#{uemployeeid},</if>
+            <if test="ubingyin != null">#{ubingyin},</if>
+            <if test="uprocessingResults != null">#{uprocessingResults},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtTaskResults" parameterType="XtTaskResults">
+        update xt_task_results
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="utaskid != null and utaskid != ''">utaskid = #{utaskid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid = #{uemployeeid},</if>
+            <if test="ubingyin != null">ubingyin = #{ubingyin},</if>
+            <if test="uprocessingResults != null">uprocessing_results = #{uprocessingResults},</if>
+        </trim>
+        where utask_resultsid = #{utaskResultsid}
+    </update>
+
+    <delete id="deleteXtTaskResultsByUtaskResultsid" parameterType="String">
+        delete from xt_task_results where utask_resultsid = #{utaskResultsid}
+    </delete>
+
+    <delete id="deleteXtTaskResultsByUtaskResultsids" parameterType="String">
+        delete from xt_task_results where utask_resultsid in
+        <foreach item="utaskResultsid" collection="array" open="(" separator="," close=")">
+            #{utaskResultsid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.task.mapper.XtPingjiaWordsMapper">
+
+    <resultMap type="XtPingjiaWords" id="XtPingjiaWordsResult">
+        <result property="upingjiaWordsid"    column="upingjia_wordsid"    />
+        <result property="utaskForm"    column="utask_form"    />
+        <result property="uwords"    column="uwords"    />
+    </resultMap>
+
+    <sql id="selectXtPingjiaWordsVo">
+        select upingjia_wordsid, utask_form, uwords from xt_pingjia_words
+    </sql>
+
+    <select id="selectXtPingjiaWordsList" parameterType="XtPingjiaWords" resultMap="XtPingjiaWordsResult">
+        <include refid="selectXtPingjiaWordsVo"/>
+        <where>
+            <if test="utaskForm != null  and utaskForm != ''"> and utask_form = #{utaskForm}</if>
+            <if test="uwords != null  and uwords != ''"> and uwords = #{uwords}</if>
+        </where>
+    </select>
+
+    <select id="selectXtPingjiaWordsByUpingjiaWordsid" parameterType="String" resultMap="XtPingjiaWordsResult">
+        <include refid="selectXtPingjiaWordsVo"/>
+        where upingjia_wordsid = #{upingjiaWordsid}
+    </select>
+
+    <insert id="insertXtPingjiaWords" parameterType="XtPingjiaWords">
+        insert into xt_pingjia_words
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="upingjiaWordsid != null">upingjia_wordsid,</if>
+            <if test="utaskForm != null and utaskForm != ''">utask_form,</if>
+            <if test="uwords != null and uwords != ''">uwords,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="upingjiaWordsid != null">#{upingjiaWordsid},</if>
+            <if test="utaskForm != null and utaskForm != ''">#{utaskForm},</if>
+            <if test="uwords != null and uwords != ''">#{uwords},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtPingjiaWords" parameterType="XtPingjiaWords">
+        update xt_pingjia_words
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="utaskForm != null and utaskForm != ''">utask_form = #{utaskForm},</if>
+            <if test="uwords != null and uwords != ''">uwords = #{uwords},</if>
+        </trim>
+        where upingjia_wordsid = #{upingjiaWordsid}
+    </update>
+
+    <delete id="deleteXtPingjiaWordsByUpingjiaWordsid" parameterType="String">
+        delete from xt_pingjia_words where upingjia_wordsid = #{upingjiaWordsid}
+    </delete>
+
+    <delete id="deleteXtPingjiaWordsByUpingjiaWordsids" parameterType="String">
+        delete from xt_pingjia_words where upingjia_wordsid in
+        <foreach item="upingjiaWordsid" collection="array" open="(" separator="," close=")">
+            #{upingjiaWordsid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.approval.mapper.XtFlowstepMapper">
+
+    <resultMap type="XtFlowstep" id="XtFlowstepResult">
+        <result property="ustepid"    column="ustepid"    />
+        <result property="uflowid"    column="uflowid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="ustepname"    column="ustepname"    />
+        <result property="uorderno"    column="uorderno"    />
+        <result property="ufinishflag"    column="ufinishflag"    />
+    </resultMap>
+
+    <sql id="selectXtFlowstepVo">
+        select ustepid, uflowid, ucompid, udepartmentid, uemployeeid, ustepname, uorderno, ufinishflag from xt_flowstep
+    </sql>
+
+    <select id="selectXtFlowstepList" parameterType="XtFlowstep" resultMap="XtFlowstepResult">
+        <include refid="selectXtFlowstepVo"/>
+        <where>
+            <if test="uflowid != null  and uflowid != ''"> and uflowid = #{uflowid}</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="ustepname != null  and ustepname != ''"> and ustepname like concat('%', #{ustepname}, '%')</if>
+            <if test="uorderno != null "> and uorderno = #{uorderno}</if>
+            <if test="ufinishflag != null "> and ufinishflag = #{ufinishflag}</if>
+        </where>
+    </select>
+
+    <select id="selectXtFlowstepByUstepid" parameterType="String" resultMap="XtFlowstepResult">
+        <include refid="selectXtFlowstepVo"/>
+        where ustepid = #{ustepid}
+    </select>
+
+    <insert id="insertXtFlowstep" parameterType="XtFlowstep">
+        insert into xt_flowstep
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ustepid != null">ustepid,</if>
+            <if test="uflowid != null and uflowid != ''">uflowid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid,</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid,</if>
+            <if test="ustepname != null and ustepname != ''">ustepname,</if>
+            <if test="uorderno != null">uorderno,</if>
+            <if test="ufinishflag != null">ufinishflag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ustepid != null">#{ustepid},</if>
+            <if test="uflowid != null and uflowid != ''">#{uflowid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">#{udepartmentid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">#{uemployeeid},</if>
+            <if test="ustepname != null and ustepname != ''">#{ustepname},</if>
+            <if test="uorderno != null">#{uorderno},</if>
+            <if test="ufinishflag != null">#{ufinishflag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtFlowstep" parameterType="XtFlowstep">
+        update xt_flowstep
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uflowid != null and uflowid != ''">uflowid = #{uflowid},</if>
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid = #{udepartmentid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid = #{uemployeeid},</if>
+            <if test="ustepname != null and ustepname != ''">ustepname = #{ustepname},</if>
+            <if test="uorderno != null">uorderno = #{uorderno},</if>
+            <if test="ufinishflag != null">ufinishflag = #{ufinishflag},</if>
+        </trim>
+        where ustepid = #{ustepid}
+    </update>
+
+    <delete id="deleteXtFlowstepByUstepid" parameterType="String">
+        delete from xt_flowstep where ustepid = #{ustepid}
+    </delete>
+
+    <delete id="deleteXtFlowstepByUstepids" parameterType="String">
+        delete from xt_flowstep where ustepid in
+        <foreach item="ustepid" collection="array" open="(" separator="," close=")">
+            #{ustepid}
+        </foreach>
+    </delete>
+</mapper>

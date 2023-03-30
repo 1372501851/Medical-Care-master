@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.approval.mapper.XtFlowopmasterMapper">
+
+    <resultMap type="XtFlowopmaster" id="XtFlowopmasterResult">
+        <result property="uflowopmasterid"    column="uflowopmasterid"    />
+        <result property="uflowid"    column="uflowid"    />
+        <result property="uflowname"    column="uflowname"    />
+        <result property="uappType"    column="uapp_type"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="userAppid"    column="user_appid"    />
+        <result property="ustartDate"    column="ustart_date"    />
+        <result property="uendDate"    column="uend_date"    />
+        <result property="ustatus"    column="ustatus"    />
+        <result property="ustepname"    column="ustepname"    />
+    </resultMap>
+
+    <sql id="selectXtFlowopmasterVo">
+        select uflowopmasterid, uflowid, uflowname, uapp_type, ucompid, udepartmentid, uemployeeid, user_appid, ustart_date, uend_date, ustatus, ustepname from xt_flowopmaster
+    </sql>
+
+    <select id="selectXtFlowopmasterList" parameterType="XtFlowopmaster" resultMap="XtFlowopmasterResult">
+        <include refid="selectXtFlowopmasterVo"/>
+        <where>
+            <if test="uflowid != null  and uflowid != ''"> and uflowid = #{uflowid}</if>
+            <if test="uflowname != null  and uflowname != ''"> and uflowname like concat('%', #{uflowname}, '%')</if>
+            <if test="uappType != null  and uappType != ''"> and uapp_type = #{uappType}</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="userAppid != null "> and user_appid = #{userAppid}</if>
+            <if test="ustartDate != null "> and ustart_date = #{ustartDate}</if>
+            <if test="uendStart != null "> and uend_date = #{uendDate}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+            <if test="ustepname != null  and ustepname != ''"> and ustepname like concat('%', #{ustepname}, '%')</if>
+        </where>
+    </select>
+
+    <select id="selectXtFlowopmasterByUflowopmasterid" parameterType="String" resultMap="XtFlowopmasterResult">
+        <include refid="selectXtFlowopmasterVo"/>
+        where uflowopmasterid = #{uflowopmasterid}
+    </select>
+
+    <insert id="insertXtFlowopmaster" parameterType="XtFlowopmaster">
+        insert into xt_flowopmaster
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uflowopmasterid != null">uflowopmasterid,</if>
+            <if test="uflowid != null and uflowid != ''">uflowid,</if>
+            <if test="uflowname != null and uflowname != ''">uflowname,</if>
+            <if test="uappType != null and uappType != ''">uapp_type,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid,</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid,</if>
+            <if test="userAppid != null">user_appid,</if>
+            <if test="ustartDate != null">ustart_date,</if>
+            <if test="uendDate != null">uend_date,</if>
+            <if test="ustatus != null and ustatus != ''">ustatus,</if>
+            <if test="ustepname != null">ustepname,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uflowopmasterid != null">#{uflowopmasterid},</if>
+            <if test="uflowid != null and uflowid != ''">#{uflowid},</if>
+            <if test="uflowname != null and uflowname != ''">#{uflowname},</if>
+            <if test="uappType != null and uappType != ''">#{uappType},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">#{udepartmentid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">#{uemployeeid},</if>
+            <if test="userAppid != null">#{userAppid},</if>
+            <if test="ustartDate != null">#{ustartDate},</if>
+            <if test="uendDate != null">#{uend_date},</if>
+            <if test="ustatus != null and ustatus != ''">#{ustatus},</if>
+            <if test="ustepname != null">#{ustepname},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtFlowopmaster" parameterType="XtFlowopmaster">
+        update xt_flowopmaster
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uflowid != null and uflowid != ''">uflowid = #{uflowid},</if>
+            <if test="uflowname != null and uflowname != ''">uflowname = #{uflowname},</if>
+            <if test="uappType != null and uappType != ''">uapp_type = #{uappType},</if>
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid = #{udepartmentid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid = #{uemployeeid},</if>
+            <if test="userAppid != null">user_appid = #{userAppid},</if>
+            <if test="ustartDate != null">ustart_date = #{ustartDate},</if>
+            <if test="uendDate != null">uend_date = #{uendDate},</if>
+            <if test="ustatus != null and ustatus != ''">ustatus = #{ustatus},</if>
+            <if test="ustepname != null">ustepname = #{ustepname},</if>
+        </trim>
+        where uflowopmasterid = #{uflowopmasterid}
+    </update>
+
+    <delete id="deleteXtFlowopmasterByUflowopmasterid" parameterType="String">
+        delete from xt_flowopmaster where uflowopmasterid = #{uflowopmasterid}
+    </delete>
+
+    <delete id="deleteXtFlowopmasterByUflowopmasterids" parameterType="String">
+        delete from xt_flowopmaster where uflowopmasterid in
+        <foreach item="uflowopmasterid" collection="array" open="(" separator="," close=")">
+            #{uflowopmasterid}
+        </foreach>
+    </delete>
+</mapper>

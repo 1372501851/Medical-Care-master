@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtCategoryMapper">
+
+    <resultMap type="XtCategory" id="XtCategoryResult">
+        <result property="id"    column="id"    />
+        <result property="uname"    column="uname"    />
+        <result property="uplace"    column="uplace"    />
+    </resultMap>
+
+    <sql id="selectXtCategoryVo">
+        select id, uname, uplace from xt_category
+  </sql>
+
+    <select id="selectXtCategoryByUproductid" parameterType="string" resultMap="XtCategoryResult">
+        <include refid="selectXtCategoryVo"/> where id = #{id}
+    </select>
+
+    <select id="selectXtCategoryList" parameterType="XtCategory" resultMap="XtCategoryResult">
+        <include refid="selectXtCategoryVo"/>
+         where 1 = 1
+        <if test="id != null  and id != ''"> and id = #{id}</if>
+        <if test="uname != null  and uname != ''"> and uname = #{uname}</if>
+        <if test="uplace != null  and uplace != ''"> and uplace = #{uplace}</if>
+    </select>
+
+    <insert id="insertXtCategory" parameterType="XtCategory">
+        insert into xt_category (id,uname,uplace) values (#{id},#{uname},#{uplace})
+    </insert>
+
+    <update id="updateXtCategory" parameterType="XtCategory">
+        update xt_category set uname = #{uname} ,uplace = #{uplace} where id = #{id}
+    </update>
+
+
+    <delete id="deleteXtCategoryByid" parameterType="String">
+        delete FROM xt_category  where id = #{id}
+    </delete>
+
+
+    <delete id="deleteXtCategoryByIds" parameterType="String">
+        delete FROM xt_category
+        where id in
+        <foreach item="ids" collection="array" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
+</mapper>

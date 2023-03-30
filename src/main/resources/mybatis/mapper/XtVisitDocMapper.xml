@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtVisitDocMapper">
+
+    <resultMap type="XtVisitDoc" id="XtVisitDocResult">
+        <result property="uvisitDocid"    column="uvisit_docid"    />
+        <result property="userid"    column="userid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="uhospital"    column="uhospital"    />
+        <result property="uvisitingDepartment"    column="uvisiting_department"    />
+        <result property="uvisitingDoctor"    column="uvisiting_doctor"    />
+        <result property="umedicalRecordNo"    column="umedical_record_no"    />
+        <result property="upatientName"    column="upatient_name"    />
+        <result property="usex"    column="usex"    />
+        <result property="uage"    column="uage"    />
+        <result property="umarriage"    column="umarriage"    />
+        <result property="upatientAllergyHistory"    column="upatient_allergy_history"    />
+        <result property="upatientMedicalHistory"    column="upatient_medical_history"    />
+        <result property="umainSymptoms"    column="umain_symptoms"    />
+        <result property="clinicalDiagnosis"    column="clinical_diagnosis"    />
+        <result property="urp"    column="urp"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+    </resultMap>
+
+    <sql id="selectXtVisitDocVo">
+        select uvisit_docid, userid, ucompid, uemployeeid, udepartmentid, uhospital, uvisiting_department, uvisiting_doctor, umedical_record_no, upatient_name, usex, uage, umarriage, upatient_allergy_history, upatient_medical_history, umain_symptoms, clinical_diagnosis, urp, ucreatedate from xt_visit_doc
+    </sql>
+
+    <select id="selectXtVisitDocList" parameterType="XtVisitDoc" resultMap="XtVisitDocResult">
+        <include refid="selectXtVisitDocVo"/>
+        <where>
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="uhospital != null  and uhospital != ''"> and uhospital = #{uhospital}</if>
+            <if test="uvisitingDepartment != null  and uvisitingDepartment != ''"> and uvisiting_department = #{uvisitingDepartment}</if>
+            <if test="uvisitingDoctor != null  and uvisitingDoctor != ''"> and uvisiting_doctor = #{uvisitingDoctor}</if>
+            <if test="umedicalRecordNo != null  and umedicalRecordNo != ''"> and umedical_record_no = #{umedicalRecordNo}</if>
+            <if test="upatientName != null  and upatientName != ''"> and upatient_name like concat('%', #{upatientName}, '%')</if>
+            <if test="usex != null  and usex != ''"> and usex = #{usex}</if>
+            <if test="uage != null "> and uage = #{uage}</if>
+            <if test="umarriage != null  and umarriage != ''"> and umarriage = #{umarriage}</if>
+            <if test="upatientAllergyHistory != null  and upatientAllergyHistory != ''"> and upatient_allergy_history = #{upatientAllergyHistory}</if>
+            <if test="upatientMedicalHistory != null  and upatientMedicalHistory != ''"> and upatient_medical_history = #{upatientMedicalHistory}</if>
+            <if test="umainSymptoms != null  and umainSymptoms != ''"> and umain_symptoms = #{umainSymptoms}</if>
+            <if test="clinicalDiagnosis != null  and clinicalDiagnosis != ''"> and clinical_diagnosis = #{clinicalDiagnosis}</if>
+            <if test="urp != null  and urp != ''"> and urp = #{urp}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+        </where>
+    </select>
+
+    <select id="selectXtVisitDocByUvisitDocid" parameterType="String" resultMap="XtVisitDocResult">
+        <include refid="selectXtVisitDocVo"/>
+        where uvisit_docid = #{uvisitDocid}
+    </select>
+
+    <insert id="insertXtVisitDoc" parameterType="XtVisitDoc">
+        insert into xt_visit_doc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uvisitDocid != null">uvisit_docid,</if>
+            <if test="userid != null">userid,</if>
+            <if test="ucompid != null">ucompid,</if>
+            <if test="uemployeeid != null">uemployeeid,</if>
+            <if test="udepartmentid != null">udepartmentid,</if>
+            <if test="uhospital != null">uhospital,</if>
+            <if test="uvisitingDepartment != null">uvisiting_department,</if>
+            <if test="uvisitingDoctor != null">uvisiting_doctor,</if>
+            <if test="umedicalRecordNo != null">umedical_record_no,</if>
+            <if test="upatientName != null">upatient_name,</if>
+            <if test="usex != null">usex,</if>
+            <if test="uage != null">uage,</if>
+            <if test="umarriage != null">umarriage,</if>
+            <if test="upatientAllergyHistory != null">upatient_allergy_history,</if>
+            <if test="upatientMedicalHistory != null">upatient_medical_history,</if>
+            <if test="umainSymptoms != null">umain_symptoms,</if>
+            <if test="clinicalDiagnosis != null">clinical_diagnosis,</if>
+            <if test="urp != null">urp,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uvisitDocid != null">#{uvisitDocid},</if>
+            <if test="userid != null">#{userid},</if>
+            <if test="ucompid != null">#{ucompid},</if>
+            <if test="uemployeeid != null">#{uemployeeid},</if>
+            <if test="udepartmentid != null">#{udepartmentid},</if>
+            <if test="uhospital != null">#{uhospital},</if>
+            <if test="uvisitingDepartment != null">#{uvisitingDepartment},</if>
+            <if test="uvisitingDoctor != null">#{uvisitingDoctor},</if>
+            <if test="umedicalRecordNo != null">#{umedicalRecordNo},</if>
+            <if test="upatientName != null">#{upatientName},</if>
+            <if test="usex != null">#{usex},</if>
+            <if test="uage != null">#{uage},</if>
+            <if test="umarriage != null">#{umarriage},</if>
+            <if test="upatientAllergyHistory != null">#{upatientAllergyHistory},</if>
+            <if test="upatientMedicalHistory != null">#{upatientMedicalHistory},</if>
+            <if test="umainSymptoms != null">#{umainSymptoms},</if>
+            <if test="clinicalDiagnosis != null">#{clinicalDiagnosis},</if>
+            <if test="urp != null">#{urp},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtVisitDoc" parameterType="XtVisitDoc">
+        update xt_visit_doc
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userid != null">userid = #{userid},</if>
+            <if test="ucompid != null">ucompid = #{ucompid},</if>
+            <if test="uemployeeid != null">uemployeeid = #{uemployeeid},</if>
+            <if test="udepartmentid != null">udepartmentid = #{udepartmentid},</if>
+            <if test="uhospital != null">uhospital = #{uhospital},</if>
+            <if test="uvisitingDepartment != null">uvisiting_department = #{uvisitingDepartment},</if>
+            <if test="uvisitingDoctor != null">uvisiting_doctor = #{uvisitingDoctor},</if>
+            <if test="umedicalRecordNo != null">umedical_record_no = #{umedicalRecordNo},</if>
+            <if test="upatientName != null">upatient_name = #{upatientName},</if>
+            <if test="usex != null">usex = #{usex},</if>
+            <if test="uage != null">uage = #{uage},</if>
+            <if test="umarriage != null">umarriage = #{umarriage},</if>
+            <if test="upatientAllergyHistory != null">upatient_allergy_history = #{upatientAllergyHistory},</if>
+            <if test="upatientMedicalHistory != null">upatient_medical_history = #{upatientMedicalHistory},</if>
+            <if test="umainSymptoms != null">umain_symptoms = #{umainSymptoms},</if>
+            <if test="clinicalDiagnosis != null">clinical_diagnosis = #{clinicalDiagnosis},</if>
+            <if test="urp != null">urp = #{urp},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+        </trim>
+        where uvisit_docid = #{uvisitDocid}
+    </update>
+
+    <delete id="deleteXtVisitDocByUvisitDocid" parameterType="String">
+        delete from xt_visit_doc where uvisit_docid = #{uvisitDocid}
+    </delete>
+
+    <delete id="deleteXtVisitDocByUvisitDocids" parameterType="String">
+        delete from xt_visit_doc where uvisit_docid in
+        <foreach item="uvisitDocid" collection="array" open="(" separator="," close=")">
+            #{uvisitDocid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.user.mapper.UserInfoMapper">
+
+    <resultMap type="UserInfo" id="UserInfoResult">
+        <result property="id"    column="id"    />
+        <result property="currentPosition"    column="current_position"    />
+        <result property="pushMessage"    column="push_message"    />
+        <result property="userName"    column="user_name"    />
+        <result property="userId"    column="user_id"    />
+        <result property="sex"    column="sex"    />
+        <result property="age"    column="age"    />
+        <result property="city"    column="city"    />
+        <result property="cityId"    column="city_id"    />
+        <result property="detailAddress"    column="detail_address"    />
+        <result property="community"    column="community"    />
+        <result property="homeAddress"    column="home_address"    />
+        <result property="phone"    column="phone"    />
+        <result property="hospital"    column="hospital"    />
+        <result property="dept"    column="dept"    />
+        <result property="bed"    column="bed"    />
+        <result property="userType"    column="user_type"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="longitude"    column="longitude"    />
+    </resultMap>
+
+    <sql id="selectUserInfoVo">
+        select id, current_position, push_message, user_name, user_id, sex, age, city,city_id, detail_address, community, home_address, phone, hospital, dept, bed,
+            user_type,latitude,longitude
+        from user_info
+    </sql>
+
+    <select id="selectUserInfoList" parameterType="UserInfo" resultMap="UserInfoResult">
+        select id, current_position, push_message, user_name, user_id, sex, age, city,city_id, detail_address, community, home_address, phone, hospital, dept, bed,
+        user_type,latitude,longitude
+        ,(
+
+        6371 * acos (
+
+        cos ( radians(#{latitude}) )
+
+        * cos( radians( latitude ) )
+
+        * cos( radians( longitude ) - radians(#{longitude}) )
+
+        + sin ( radians(#{latitude}) )
+
+        * sin( radians( latitude ) )
+
+        )
+
+        ) AS distance
+        from user_info
+        <where>
+            <if test="currentPosition != null  and currentPosition != ''"> and current_position = #{currentPosition}</if>
+            <if test="pushMessage != null  and pushMessage != ''"> and push_message = #{pushMessage}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="cityId != null  and cityId != ''"> and city_id = #{cityId}</if>
+            <if test="detailAddress != null  and detailAddress != ''"> and detail_address = #{detailAddress}</if>
+            <if test="community != null  and community != ''"> and community = #{community}</if>
+            <if test="homeAddress != null  and homeAddress != ''"> and home_address = #{homeAddress}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="hospital != null  and hospital != ''"> and hospital = #{hospital}</if>
+            <if test="dept != null  and dept != ''"> and dept = #{dept}</if>
+            <if test="bed != null  and bed != ''"> and bed = #{bed}</if>
+            <if test="userType != null  and userType !=''"> and user_type = #{userType}</if>
+
+        </where>
+        HAVING distance &lt; 10
+        ORDER BY distance
+    </select>
+
+    <select id="selectUserInfoById" parameterType="String" resultMap="UserInfoResult">
+        <include refid="selectUserInfoVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectUserInfoByUserId" resultMap="UserInfoResult">
+
+        <include refid="selectUserInfoVo"/>
+        where user_id = #{userid}
+    </select>
+
+    <insert id="insertUserInfo" parameterType="UserInfo">
+        insert into user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="currentPosition != null">current_position,</if>
+            <if test="pushMessage != null">push_message,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="sex != null">sex,</if>
+            <if test="age != null">age,</if>
+            <if test="city != null">city,</if>
+            <if test="cityId != null">city_id,</if>
+            <if test="detailAddress != null">detail_address,</if>
+            <if test="community != null">community,</if>
+            <if test="homeAddress != null">home_address,</if>
+            <if test="phone != null">phone,</if>
+            <if test="hospital != null">hospital,</if>
+            <if test="dept != null">dept,</if>
+            <if test="bed != null">bed,</if>
+
+            <if test="userType != null">user_type,</if>
+            <if test="latitude != null">latitude,</if>
+            <if test="longitude != null">longitude,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="currentPosition != null">#{currentPosition},</if>
+            <if test="pushMessage != null">#{pushMessage},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="age != null">#{age},</if>
+            <if test="city != null">#{city},</if>
+            <if test="cityId != null">#{cityId},</if>
+            <if test="detailAddress != null">#{detailAddress},</if>
+            <if test="community != null">#{community},</if>
+            <if test="homeAddress != null">#{homeAddress},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="hospital != null">#{hospital},</if>
+            <if test="dept != null">#{dept},</if>
+            <if test="bed != null">#{bed},</if>
+
+            <if test="userType != null">#{userType},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="longitude != null">#{longitude},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserInfo" parameterType="UserInfo">
+        update user_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="currentPosition != null">current_position = #{currentPosition},</if>
+            <if test="pushMessage != null">push_message = #{pushMessage},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="cityId != null">city_id = #{cityId},</if>
+            <if test="detailAddress != null">detail_address = #{detailAddress},</if>
+            <if test="community != null">community = #{community},</if>
+            <if test="homeAddress != null">home_address = #{homeAddress},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="hospital != null">hospital = #{hospital},</if>
+            <if test="dept != null">dept = #{dept},</if>
+            <if test="bed != null">bed = #{bed},</if>
+
+            <if test="userType != null">user_type = #{userType},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserInfoById" parameterType="String">
+        delete from user_info where id = #{id}
+    </delete>
+
+    <delete id="deleteUserInfoByIds" parameterType="String">
+        delete from user_info where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

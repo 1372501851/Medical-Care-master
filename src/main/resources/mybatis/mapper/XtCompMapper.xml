@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtCompMapper">
+
+    <resultMap type="XtComp" id="XtCompResult">
+        <result property="ucompid"    column="ucompid"    />
+        <result property="ucustomerid"    column="ucustomerid"    />
+        <result property="ucompname"    column="ucompname"    />
+        <result property="uparentid"    column="uparentid"    />
+        <result property="umanageModel"    column="umanage_model"    />
+        <result property="chainOrganizationName"    column="chain_organization_name"    />
+        <result property="ucompType"    column="ucomp_type"    />
+        <result property="uareaid"    column="uareaid"    />
+        <result property="ucommunity"    column="ucommunity"    />
+        <result property="uaddress"    column="uaddress"    />
+        <result property="ulatitude"    column="ulatitude"    />
+        <result property="ulongitude"    column="ulongitude"    />
+        <result property="ulegalPerson"    column="ulegal_person"    />
+        <result property="ulegalIdcard"    column="ulegal_idcard"    />
+        <result property="ulegalMobile"    column="ulegal_mobile"    />
+        <result property="utel"    column="utel"    />
+        <result property="udoorFacePic"    column="udoor_face_pic"    />
+        <result property="uidcardzpic"    column="uidcardzpic"    />
+        <result property="uidcardfpic"    column="uidcardfpic"    />
+        <result property="ubusinessLicense"    column="ubusiness_license"    />
+        <result property="ubusinessLicensePic"    column="ubusiness_license_pic"    />
+        <result property="uindustryLicensePic"    column="uindustry_license_pic"    />
+        <result property="upharmacistLicensePic"    column="upharmacist_license_pic"    />
+        <result property="umedicalLicensePic"    column="umedical_license_pic"    />
+        <result property="ufireSafetyPic"    column="ufire_safety_pic"    />
+        <result property="urelevantCertificatesPic"    column="urelevant_certificates_pic"    />
+        <result property="udiplomaPic"    column="udiploma_pic"    />
+        <result property="uprofessionalTitlePic"    column="uprofessional_title_pic"    />
+        <result property="upracticeLicensePic"    column="upractice_license_pic"    />
+        <result property="uotherCertificatesPic"    column="uother_certificates_pic"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+        <result property="applyStatus" column="apply_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="employId" column="employ_id"/>
+        <result property="addressDetail" column="address_detail"/>
+        <result property="score"    column="score"    />
+        <result property="setUpTime"    column="set_up_time"    />
+        <result property="registerAmount"    column="register_amount"    />
+    </resultMap>
+
+    <sql id="selectXtCompVo">
+        select ucompid, ucustomerid, ucompname, uparentid, umanage_model,chain_organization_name, ucomp_type, uareaid, ucommunity, uaddress, ulatitude, ulongitude, ulegal_person, ulegal_idcard, ulegal_mobile, utel, udoor_face_pic, uidcardzpic, uidcardfpic, ubusiness_license, ubusiness_license_pic, uindustry_license_pic, upharmacist_license_pic, umedical_license_pic, ufire_safety_pic, urelevant_certificates_pic, udiploma_pic, uprofessional_title_pic, upractice_license_pic, uother_certificates_pic, ucreatedate
+        ,apply_status,create_time,update_time,employ_id,address_detail,score,set_up_time,register_amount
+        from xt_comp
+    </sql>
+
+    <select id="selectXtCompList" parameterType="XtComp" resultMap="XtCompResult">
+        <include refid="selectXtCompVo"/>
+        <where>
+            <if test="ucustomerid != null "> and ucustomerid = #{ucustomerid}</if>
+            <if test="ucompname != null  and ucompname != ''"> and ucompname like concat('%', #{ucompname}, '%')</if>
+            <if test="uparentid != null  and uparentid != ''"> and uparentid = #{uparentid}</if>
+            <if test="umanageModel != null  and umanageModel != ''"> and umanage_model = #{umanageModel}</if>
+            <if test="chainOrganizationName != null  and chainOrganizationName != ''"> and chain_organization_name = #{chainOrganizationName}</if>
+            <if test="ucompType != null  and ucompType != ''"> and ucomp_type = #{ucompType}</if>
+            <if test="uareaid != null  and uareaid != ''"> and uareaid = #{uareaid}</if>
+            <if test="ucommunity != null  and ucommunity != ''"> and ucommunity = #{ucommunity}</if>
+            <if test="uaddress != null  and uaddress != ''"> and uaddress = #{uaddress}</if>
+            <if test="ulatitude != null "> and ulatitude = #{ulatitude}</if>
+            <if test="ulongitude != null "> and ulongitude = #{ulongitude}</if>
+            <if test="ulegalPerson != null  and ulegalPerson != ''"> and ulegal_person = #{ulegalPerson}</if>
+            <if test="ulegalIdcard != null  and ulegalIdcard != ''"> and ulegal_idcard = #{ulegalIdcard}</if>
+            <if test="ulegalMobile != null  and ulegalMobile != ''"> and ulegal_mobile = #{ulegalMobile}</if>
+            <if test="utel != null  and utel != ''"> and utel = #{utel}</if>
+            <if test="udoorFacePic != null  and udoorFacePic != ''"> and udoor_face_pic = #{udoorFacePic}</if>
+            <if test="uidcardzpic != null  and uidcardzpic != ''"> and uidcardzpic = #{uidcardzpic}</if>
+            <if test="uidcardfpic != null  and uidcardfpic != ''"> and uidcardfpic = #{uidcardfpic}</if>
+            <if test="ubusinessLicense != null  and ubusinessLicense != ''"> and ubusiness_license = #{ubusinessLicense}</if>
+            <if test="ubusinessLicensePic != null  and ubusinessLicensePic != ''"> and ubusiness_license_pic = #{ubusinessLicensePic}</if>
+            <if test="uindustryLicensePic != null  and uindustryLicensePic != ''"> and uindustry_license_pic = #{uindustryLicensePic}</if>
+            <if test="upharmacistLicensePic != null  and upharmacistLicensePic != ''"> and upharmacist_license_pic = #{upharmacistLicensePic}</if>
+            <if test="umedicalLicensePic != null  and umedicalLicensePic != ''"> and umedical_license_pic = #{umedicalLicensePic}</if>
+            <if test="ufireSafetyPic != null  and ufireSafetyPic != ''"> and ufire_safety_pic = #{ufireSafetyPic}</if>
+            <if test="urelevantCertificatesPic != null  and urelevantCertificatesPic != ''"> and urelevant_certificates_pic = #{urelevantCertificatesPic}</if>
+            <if test="udiplomaPic != null  and udiplomaPic != ''"> and udiploma_pic = #{udiplomaPic}</if>
+            <if test="uprofessionalTitlePic != null  and uprofessionalTitlePic != ''"> and uprofessional_title_pic = #{uprofessionalTitlePic}</if>
+            <if test="upracticeLicensePic != null  and upracticeLicensePic != ''"> and upractice_license_pic = #{upracticeLicensePic}</if>
+            <if test="uotherCertificatesPic != null  and uotherCertificatesPic != ''"> and uother_certificates_pic = #{uotherCertificatesPic}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+            <if test="applyStatus != null "> and apply_status = #{applyStatus}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="employId != null "> and employ_id = #{employId}</if>
+            <if test="addressDetail != null "> and address_detail = #{addressDetail}</if>
+            <if test="score != null" > and score = #{score}</if>
+            <if test="setUpTime != null" > and set_up_time = #{setUpTime}</if>
+            <if test="registerAmount != null" > and register_amount = #{registerAmount}</if>
+        </where>
+    </select>
+
+    <select id="selectXtCompByUcompid" parameterType="String" resultMap="XtCompResult">
+       select * from xt_comp
+        where ucompid = #{ucompid}
+    </select>
+    <select id="selectXtCompListByQuery" parameterType="XtComp" resultMap="XtCompResult">
+        select ucompid, ucustomerid, ucompname, uparentid, umanage_model,chain_organization_name, ucomp_type, uareaid, ucommunity, uaddress, ulatitude, ulongitude, ulegal_person, ulegal_idcard, ulegal_mobile, utel, udoor_face_pic, uidcardzpic, uidcardfpic, ubusiness_license, ubusiness_license_pic, uindustry_license_pic, upharmacist_license_pic, umedical_license_pic, ufire_safety_pic, urelevant_certificates_pic, udiploma_pic, uprofessional_title_pic, upractice_license_pic, uother_certificates_pic, ucreatedate
+        ,apply_status,create_time,update_time,employ_id,address_detail,score,set_up_time,register_amount
+        ,(
+
+        6371 * acos (
+
+        cos ( radians(#{ulatitude}) )
+
+        * cos( radians( ulatitude ) )
+
+        * cos( radians( ulongitude ) - radians(#{ulongitude}) )
+
+        + sin ( radians(#{ulatitude}) )
+
+        * sin( radians( ulatitude ) )
+
+        )
+
+        ) AS distance
+        from xt_comp
+        <where>
+        <if test="ucompType != null  and ucompType != ''"> and ucomp_type = #{ucompType}</if>
+        <if test="ucompname != null  and ucompname != ''"> and ucompname like concat('%', #{ucompname}, '%')</if>
+        <if test="uareaid != null  and uareaid != ''"> and uareaid like concat( #{uareaid}, '%')</if>
+        </where>
+--         HAVING distance &lt; 10
+        ORDER BY distance
+
+    </select>
+    <select id="selectByid" resultType="com.ruoyi.project.merchant.domain.XtComp">
+        select * from xt_comp where apply_status = #{applyStatus};
+    </select>
+
+    <insert id="insertXtComp" parameterType="XtComp">
+        insert into xt_comp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ucompid != null">ucompid,</if>
+            <if test="ucustomerid != null">ucustomerid,</if>
+            <if test="ucompname != null and ucompname != ''">ucompname,</if>
+            <if test="uparentid != null">uparentid,</if>
+            <if test="umanageModel != null and umanageModel != ''">umanage_model,</if>
+            <if test="chainOrganizationName != null and chainOrganizationName != ''">chain_organization_name,</if>
+            <if test="ucompType != null and ucompType != ''">ucomp_type,</if>
+            <if test="uareaid != null and uareaid != ''">uareaid,</if>
+            <if test="ucommunity != null">ucommunity,</if>
+            <if test="uaddress != null">uaddress,</if>
+            <if test="ulatitude != null">ulatitude,</if>
+            <if test="ulongitude != null">ulongitude,</if>
+            <if test="ulegalPerson != null">ulegal_person,</if>
+            <if test="ulegalIdcard != null">ulegal_idcard,</if>
+            <if test="ulegalMobile != null">ulegal_mobile,</if>
+            <if test="utel != null">utel,</if>
+            <if test="udoorFacePic != null">udoor_face_pic,</if>
+            <if test="uidcardzpic != null">uidcardzpic,</if>
+            <if test="uidcardfpic != null">uidcardfpic,</if>
+            <if test="ubusinessLicense != null">ubusiness_license,</if>
+            <if test="ubusinessLicensePic != null">ubusiness_license_pic,</if>
+            <if test="uindustryLicensePic != null">uindustry_license_pic,</if>
+            <if test="upharmacistLicensePic != null">upharmacist_license_pic,</if>
+            <if test="umedicalLicensePic != null">umedical_license_pic,</if>
+            <if test="ufireSafetyPic != null">ufire_safety_pic,</if>
+            <if test="urelevantCertificatesPic != null">urelevant_certificates_pic,</if>
+            <if test="udiplomaPic != null">udiploma_pic,</if>
+            <if test="uprofessionalTitlePic != null">uprofessional_title_pic,</if>
+            <if test="upracticeLicensePic != null">upractice_license_pic,</if>
+            <if test="uotherCertificatesPic != null">uother_certificates_pic,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+            <if test="applyStatus != null ">apply_status,</if>
+            <if test="createTime != null "> create_time, </if>
+            <if test="employId != null "> employ_id,</if>
+            <if test="addressDetail != null "> address_detail,</if>
+            <if test="score != null ">score,</if>
+            <if test="setUpTime != null ">set_up_time,</if>
+            <if test="registerAmount != null ">register_amount,</if>
+
+            <if test="chainOrganizationName != null">chain_organization_name,</if>
+            <if test="branchCompName != null">branc_comp_name,</if>
+            <if test="foodHygieneLicensePic != null">food_hygiene_license_pic,</if>
+            <if test="officeSpace != null">office_space,</if>
+            <if test="industryAssociation != null">industry_association,</if>
+            <if test="spareOne != null">spare_one,</if>
+            <if test="spareTwo != null">spare_two,</if>
+            <if test="spareThree != null">spare_three,</if>
+            <if test="spareFore != null">spare_fore,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ucompid != null">#{ucompid},</if>
+            <if test="ucustomerid != null">#{ucustomerid},</if>
+            <if test="ucompname != null and ucompname != ''">#{ucompname},</if>
+            <if test="uparentid != null">#{uparentid},</if>
+            <if test="umanageModel != null and umanageModel != ''">#{umanageModel},</if>
+            <if test="chainOrganizationName != null and chainOrganizationName != ''">#{chainOrganizationName},</if>
+            <if test="ucompType != null and ucompType != ''">#{ucompType},</if>
+            <if test="uareaid != null and uareaid != ''">#{uareaid},</if>
+            <if test="ucommunity != null">#{ucommunity},</if>
+            <if test="uaddress != null">#{uaddress},</if>
+            <if test="ulatitude != null">#{ulatitude},</if>
+            <if test="ulongitude != null">#{ulongitude},</if>
+            <if test="ulegalPerson != null">#{ulegalPerson},</if>
+            <if test="ulegalIdcard != null">#{ulegalIdcard},</if>
+            <if test="ulegalMobile != null">#{ulegalMobile},</if>
+            <if test="utel != null">#{utel},</if>
+            <if test="udoorFacePic != null">#{udoorFacePic},</if>
+            <if test="uidcardzpic != null">#{uidcardzpic},</if>
+            <if test="uidcardfpic != null">#{uidcardfpic},</if>
+            <if test="ubusinessLicense != null">#{ubusinessLicense},</if>
+            <if test="ubusinessLicensePic != null">#{ubusinessLicensePic},</if>
+            <if test="uindustryLicensePic != null">#{uindustryLicensePic},</if>
+            <if test="upharmacistLicensePic != null">#{upharmacistLicensePic},</if>
+            <if test="umedicalLicensePic != null">#{umedicalLicensePic},</if>
+            <if test="ufireSafetyPic != null">#{ufireSafetyPic},</if>
+            <if test="urelevantCertificatesPic != null">#{urelevantCertificatesPic},</if>
+            <if test="udiplomaPic != null">#{udiplomaPic},</if>
+            <if test="uprofessionalTitlePic != null">#{uprofessionalTitlePic},</if>
+            <if test="upracticeLicensePic != null">#{upracticeLicensePic},</if>
+            <if test="uotherCertificatesPic != null">#{uotherCertificatesPic},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+            <if test="applyStatus != null ">#{applyStatus},</if>
+            <if test="createTime != null "> #{createTime},</if>
+            <if test="employId != null ">  #{employId},</if>
+            <if test="addressDetail != null "> #{addressDetail},</if>
+            <if test="score != null ">#{score},</if>
+            <if test="setUpTime != null ">#{setUpTime},</if>
+            <if test="registerAmount != null ">#{registerAmount},</if>
+
+            <if test="chainOrganizationName != null">#{chainOrganizationName},</if>
+            <if test="branchCompName != null">#{branchCompName},</if>
+            <if test="foodHygieneLicensePic != null">#{foodHygieneLicensePic},</if>
+            <if test="officeSpace != null">#{officeSpace},</if>
+            <if test="industryAssociation != null">#{industryAssociation},</if>
+            <if test="spareOne != null">#{spareOne},</if>
+            <if test="spareThree != null">#{spareThree},</if>
+            <if test="spareFore != null">#{spareFore},</if>
+            <if test="spareTwo != null">#{spareTwo},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtComp" parameterType="XtComp">
+        update xt_comp
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ucustomerid != null">ucustomerid = #{ucustomerid},</if>
+            <if test="ucompname != null and ucompname != ''">ucompname = #{ucompname},</if>
+            <if test="uparentid != null">uparentid = #{uparentid},</if>
+            <if test="umanageModel != null and umanageModel != ''">umanage_model = #{umanageModel},</if>
+            <if test="chainOrganizationName != null and chainOrganizationName != ''">chain_organization_name = #{chainOrganizationName},</if>
+            <if test="ucompType != null and ucompType != ''">ucomp_type = #{ucompType},</if>
+            <if test="uareaid != null and uareaid != ''">uareaid = #{uareaid},</if>
+            <if test="ucommunity != null">ucommunity = #{ucommunity},</if>
+            <if test="uaddress != null">uaddress = #{uaddress},</if>
+            <if test="ulatitude != null">ulatitude = #{ulatitude},</if>
+            <if test="ulongitude != null">ulongitude = #{ulongitude},</if>
+            <if test="ulegalPerson != null">ulegal_person = #{ulegalPerson},</if>
+            <if test="ulegalIdcard != null">ulegal_idcard = #{ulegalIdcard},</if>
+            <if test="ulegalMobile != null">ulegal_mobile = #{ulegalMobile},</if>
+            <if test="utel != null">utel = #{utel},</if>
+            <if test="udoorFacePic != null">udoor_face_pic = #{udoorFacePic},</if>
+            <if test="uidcardzpic != null">uidcardzpic = #{uidcardzpic},</if>
+            <if test="uidcardfpic != null">uidcardfpic = #{uidcardfpic},</if>
+            <if test="ubusinessLicense != null">ubusiness_license = #{ubusinessLicense},</if>
+            <if test="ubusinessLicensePic != null">ubusiness_license_pic = #{ubusinessLicensePic},</if>
+            <if test="uindustryLicensePic != null">uindustry_license_pic = #{uindustryLicensePic},</if>
+            <if test="upharmacistLicensePic != null">upharmacist_license_pic = #{upharmacistLicensePic},</if>
+            <if test="umedicalLicensePic != null">umedical_license_pic = #{umedicalLicensePic},</if>
+            <if test="ufireSafetyPic != null">ufire_safety_pic = #{ufireSafetyPic},</if>
+            <if test="urelevantCertificatesPic != null">urelevant_certificates_pic = #{urelevantCertificatesPic},</if>
+            <if test="udiplomaPic != null">udiploma_pic = #{udiplomaPic},</if>
+            <if test="uprofessionalTitlePic != null">uprofessional_title_pic = #{uprofessionalTitlePic},</if>
+            <if test="upracticeLicensePic != null">upractice_license_pic = #{upracticeLicensePic},</if>
+            <if test="uotherCertificatesPic != null">uother_certificates_pic = #{uotherCertificatesPic},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+            <if test="applyStatus != null ">apply_status = #{applyStatus},</if>
+            <if test="updateTime != null ">update_time = #{updateTime},</if>
+            <if test="employId != null ">  employ_id = #{employId},</if>
+            <if test="addressDetail != null "> address_detail = #{addressDetail},</if>
+            <if test="score != null "> score = #{score},</if>
+            <if test="setUpTime != null "> set_up_time = #{setUpTime},</if>
+            <if test="registerAmount != null "> register_amount = #{registerAmount},</if>
+        </trim>
+        where ucompid = #{ucompid}
+    </update>
+    <update id="updateXtCompApplyStatus">
+        update xt_comp
+            set apply_status = #{status}
+        where ucompid = #{compnyId}
+    </update>
+
+    <delete id="deleteXtCompByUcompid" parameterType="String">
+        delete from xt_comp where ucompid = #{ucompid}
+    </delete>
+
+    <delete id="deleteXtCompByUcompids" parameterType="String">
+        delete from xt_comp where ucompid in
+        <foreach item="ucompid" collection="array" open="(" separator="," close=")">
+            #{ucompid}
+        </foreach>
+    </delete>
+
+</mapper>

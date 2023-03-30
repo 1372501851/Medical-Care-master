@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtOrderitemMapper">
+
+    <resultMap type="XtOrderitem" id="XtOrderitemResult">
+        <result property="uorderitemid"    column="uorderitemid"    />
+        <result property="uorderid"    column="uorderid"    />
+        <result property="uproductid"    column="uproductid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="ucustomerid"    column="ucustomerid"    />
+        <result property="uproductName"    column="uproduct_name"    />
+        <result property="uprice"    column="uprice"    />
+        <result property="unum"    column="unum"    />
+        <result property="uproductForm"    column="uproduct_form"    />
+        <result property="uproductPic"    column="uproduct_pic"    />
+        <result property="ubarcode"    column="ubarcode"    />
+        <result property="ubarcodeNumericCode"    column="ubarcode_numeric_code"    />
+        <result property="uproductModel"    column="uproduct_model"    />
+        <result property="uproductSpecs"    column="uproduct_specs"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+        <result property="totalPrice"    column="total_price"    />
+    </resultMap>
+
+    <resultMap id="hot" type="HotProduct">
+        <result property="productId"    column="product_id"    />
+        <result property="count"    column="num"    />
+    </resultMap>
+
+    <sql id="selectXtOrderitemVo">
+        select uorderitemid, uorderid, uproductid, ucompid, ucustomerid, uproduct_name, uprice, unum, uproduct_form, uproduct_pic, ubarcode, ubarcode_numeric_code, uproduct_model, uproduct_specs, ucreatedate,total_price
+        from xt_orderitem
+    </sql>
+
+    <select id="selectXtOrderitemList" parameterType="XtOrderitem" resultMap="XtOrderitemResult">
+        <include refid="selectXtOrderitemVo"/>
+        <where>
+            <if test="uorderid != null  and uorderid != ''"> and uorderid = #{uorderid}</if>
+            <if test="uproductid != null  and uproductid != ''"> and uproductid = #{uproductid}</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="ucustomerid != null "> and ucustomerid = #{ucustomerid}</if>
+            <if test="uproductName != null  and uproductName != ''"> and uproduct_name like concat('%', #{uproductName}, '%')</if>
+            <if test="uprice != null "> and uprice = #{uprice}</if>
+            <if test="unum != null "> and unum = #{unum}</if>
+            <if test="uproductForm != null  and uproductForm != ''"> and uproduct_form = #{uproductForm}</if>
+            <if test="uproductPic != null  and uproductPic != ''"> and uproduct_pic = #{uproductPic}</if>
+            <if test="ubarcode != null  and ubarcode != ''"> and ubarcode = #{ubarcode}</if>
+            <if test="ubarcodeNumericCode != null  and ubarcodeNumericCode != ''"> and ubarcode_numeric_code = #{ubarcodeNumericCode}</if>
+            <if test="uproductModel != null  and uproductModel != ''"> and uproduct_model = #{uproductModel}</if>
+            <if test="uproductSpecs != null  and uproductSpecs != ''"> and uproduct_specs = #{uproductSpecs}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+            <if test="totalPrice != null "> and total_price = #{totalPrice}</if>
+        </where>
+    </select>
+
+    <select id="selectXtOrderitemByUorderitemid" parameterType="String" resultMap="XtOrderitemResult">
+        <include refid="selectXtOrderitemVo"/>
+        where uorderitemid = #{uorderitemid}
+    </select>
+    <select id="selectXtOrderitemListByCompId" resultMap="hot">
+        select product_id,sum(product_num) as num
+        from xt_order
+        where ucompid = #{ucompid}
+        group by product_id
+        order by num desc
+        limit 0,10
+    </select>
+
+    <insert id="insertXtOrderitem" parameterType="XtOrderitem">
+        insert into xt_orderitem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uorderitemid != null">uorderitemid,</if>
+            <if test="uorderid != null and uorderid != ''">uorderid,</if>
+            <if test="uproductid != null and uproductid != ''">uproductid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="ucustomerid != null">ucustomerid,</if>
+            <if test="uproductName != null and uproductName != ''">uproduct_name,</if>
+            <if test="uprice != null">uprice,</if>
+            <if test="unum != null">unum,</if>
+            <if test="uproductForm != null and uproductForm != ''">uproduct_form,</if>
+            <if test="uproductPic != null">uproduct_pic,</if>
+            <if test="ubarcode != null">ubarcode,</if>
+            <if test="ubarcodeNumericCode != null">ubarcode_numeric_code,</if>
+            <if test="uproductModel != null">uproduct_model,</if>
+            <if test="uproductSpecs != null">uproduct_specs,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+            <if test="totalPrice != null "> total_price,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uorderitemid != null">#{uorderitemid},</if>
+            <if test="uorderid != null and uorderid != ''">#{uorderid},</if>
+            <if test="uproductid != null and uproductid != ''">#{uproductid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="ucustomerid != null">#{ucustomerid},</if>
+            <if test="uproductName != null and uproductName != ''">#{uproductName},</if>
+            <if test="uprice != null">#{uprice},</if>
+            <if test="unum != null">#{unum},</if>
+            <if test="uproductForm != null and uproductForm != ''">#{uproductForm},</if>
+            <if test="uproductPic != null">#{uproductPic},</if>
+            <if test="ubarcode != null">#{ubarcode},</if>
+            <if test="ubarcodeNumericCode != null">#{ubarcodeNumericCode},</if>
+            <if test="uproductModel != null">#{uproductModel},</if>
+            <if test="uproductSpecs != null">#{uproductSpecs},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+            <if test="totalPrice != null "> #{totalPrice},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtOrderitem" parameterType="XtOrderitem">
+        update xt_orderitem
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uorderid != null and uorderid != ''">uorderid = #{uorderid},</if>
+            <if test="uproductid != null and uproductid != ''">uproductid = #{uproductid},</if>
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="ucustomerid != null">ucustomerid = #{ucustomerid},</if>
+            <if test="uproductName != null and uproductName != ''">uproduct_name = #{uproductName},</if>
+            <if test="uprice != null">uprice = #{uprice},</if>
+            <if test="unum != null">unum = #{unum},</if>
+            <if test="uproductForm != null and uproductForm != ''">uproduct_form = #{uproductForm},</if>
+            <if test="uproductPic != null">uproduct_pic = #{uproductPic},</if>
+            <if test="ubarcode != null">ubarcode = #{ubarcode},</if>
+            <if test="ubarcodeNumericCode != null">ubarcode_numeric_code = #{ubarcodeNumericCode},</if>
+            <if test="uproductModel != null">uproduct_model = #{uproductModel},</if>
+            <if test="uproductSpecs != null">uproduct_specs = #{uproductSpecs},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+            <if test="totalPrice != null ">total_price =  #{totalPrice},</if>
+        </trim>
+        where uorderitemid = #{uorderitemid}
+    </update>
+
+    <delete id="deleteXtOrderitemByUorderitemid" parameterType="String">
+        delete from xt_orderitem where uorderitemid = #{uorderitemid}
+    </delete>
+
+    <delete id="deleteXtOrderitemByUorderitemids" parameterType="String">
+        delete from xt_orderitem where uorderitemid in
+        <foreach item="uorderitemid" collection="array" open="(" separator="," close=")">
+            #{uorderitemid}
+        </foreach>
+    </delete>
+</mapper>

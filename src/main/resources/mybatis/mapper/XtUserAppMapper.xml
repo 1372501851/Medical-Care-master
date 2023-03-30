@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.approval.mapper.XtUserAppMapper">
+
+    <resultMap type="XtUserApp" id="XtUserAppResult">
+        <result property="userAppid"    column="user_appid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="uappType"    column="uapp_type"    />
+        <result property="utitle"    column="utitle"    />
+        <result property="uappMoney"    column="uapp_money"    />
+        <result property="usubjectMatter"    column="usubject_matter"    />
+        <result property="upayee"    column="upayee"    />
+        <result property="ustartDate"    column="ustart_date"    />
+        <result property="uendDate"    column="uend_date"    />
+        <result property="ustatus"    column="ustatus"    />
+        <result property="ucontent"    column="ucontent"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+    </resultMap>
+
+    <sql id="selectXtUserAppVo">
+        select user_appid, udepartmentid, ucompid, uemployeeid, uapp_type, utitle, uapp_money, usubject_matter, upayee, ustart_date, uend_date, ustatus, ucontent, ucreatedate from xt_user_app
+    </sql>
+
+    <select id="selectXtUserAppList" parameterType="XtUserApp" resultMap="XtUserAppResult">
+        <include refid="selectXtUserAppVo"/>
+        <where>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="uappType != null  and uappType != ''"> and uapp_type = #{uappType}</if>
+            <if test="utitle != null  and utitle != ''"> and utitle = #{utitle}</if>
+            <if test="uappMoney != null "> and uapp_money = #{uappMoney}</if>
+            <if test="usubjectMatter != null  and usubjectMatter != ''"> and usubject_matter = #{usubjectMatter}</if>
+            <if test="upayee != null  and upayee != ''"> and upayee = #{upayee}</if>
+            <if test="ustartDate != null "> and ustart_date = #{ustartDate}</if>
+            <if test="uendDate != null "> and uend_date = #{uendDate}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+            <if test="ucontent != null  and ucontent != ''"> and ucontent = #{ucontent}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+        </where>
+    </select>
+
+    <select id="selectXtUserAppByUserAppid" parameterType="String" resultMap="XtUserAppResult">
+        <include refid="selectXtUserAppVo"/>
+        where user_appid = #{userAppid}
+    </select>
+
+    <insert id="insertXtUserApp" parameterType="XtUserApp">
+        insert into xt_user_app
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userAppid != null">user_appid,</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid,</if>
+            <if test="uappType != null and uappType != ''">uapp_type,</if>
+            <if test="utitle != null and utitle != ''">utitle,</if>
+            <if test="uappMoney != null">uapp_money,</if>
+            <if test="usubjectMatter != null">usubject_matter,</if>
+            <if test="upayee != null">upayee,</if>
+            <if test="ustartDate != null">ustart_date,</if>
+            <if test="uendDate != null">uend_date,</if>
+            <if test="ustatus != null and ustatus != ''">ustatus,</if>
+            <if test="ucontent != null">ucontent,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userAppid != null">#{userAppid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">#{udepartmentid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">#{uemployeeid},</if>
+            <if test="uappType != null and uappType != ''">#{uappType},</if>
+            <if test="utitle != null and utitle != ''">#{utitle},</if>
+            <if test="uappMoney != null">#{uappMoney},</if>
+            <if test="usubjectMatter != null">#{usubjectMatter},</if>
+            <if test="upayee != null">#{upayee},</if>
+            <if test="ustartDate != null">#{ustartDate},</if>
+            <if test="uendDate != null">#{uendDate},</if>
+            <if test="ustatus != null and ustatus != ''">#{ustatus},</if>
+            <if test="ucontent != null">#{ucontent},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtUserApp" parameterType="XtUserApp">
+        update xt_user_app
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid = #{udepartmentid},</if>
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid = #{uemployeeid},</if>
+            <if test="uappType != null and uappType != ''">uapp_type = #{uappType},</if>
+            <if test="utitle != null and utitle != ''">utitle = #{utitle},</if>
+            <if test="uappMoney != null">uapp_money = #{uappMoney},</if>
+            <if test="usubjectMatter != null">usubject_matter = #{usubjectMatter},</if>
+            <if test="upayee != null">upayee = #{upayee},</if>
+            <if test="ustartDate != null">ustart_date = #{ustartDate},</if>
+            <if test="uendDate != null">uend_date = #{uendDate},</if>
+            <if test="ustatus != null and ustatus != ''">ustatus = #{ustatus},</if>
+            <if test="ucontent != null">ucontent = #{ucontent},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+        </trim>
+        where user_appid = #{userAppid}
+    </update>
+
+    <delete id="deleteXtUserAppByUserAppid" parameterType="String">
+        delete from xt_user_app where user_appid = #{userAppid}
+    </delete>
+
+    <delete id="deleteXtUserAppByUserAppids" parameterType="String">
+        delete from xt_user_app where user_appid in
+        <foreach item="userAppid" collection="array" open="(" separator="," close=")">
+            #{userAppid}
+        </foreach>
+    </delete>
+</mapper>

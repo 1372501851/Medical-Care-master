@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtUserstoreMapper">
+
+    <resultMap type="XtUserstore" id="XtUserstoreResult">
+        <result property="userstoreid"    column="userstoreid"    />
+        <result property="ustoreType"    column="ustore_type"    />
+        <result property="userid"    column="userid"    />
+        <result property="uinfoid"    column="uinfoid"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+        <result property="productName" column="product_name"/>
+    </resultMap>
+
+    <sql id="selectXtUserstoreVo">
+        select userstoreid, ustore_type, userid, uinfoid, ucreatedate ,product_name from xt_userstore
+    </sql>
+
+    <select id="selectXtUserstoreList" parameterType="XtUserstore" resultMap="XtUserstoreResult">
+        <include refid="selectXtUserstoreVo"/>
+        <where>
+            <if test="ustoreType != null  and ustoreType != ''"> and ustore_type = #{ustoreType}</if>
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="uinfoid != null  and uinfoid != ''"> and uinfoid = #{uinfoid}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+        </where>
+    </select>
+
+    <select id="selectXtUserstoreByUserstoreid" parameterType="String" resultMap="XtUserstoreResult">
+        <include refid="selectXtUserstoreVo"/>
+        where userstoreid = #{userstoreid}
+    </select>
+
+    <insert id="insertXtUserstore" parameterType="XtUserstore">
+        insert into xt_userstore
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userstoreid != null">userstoreid,</if>
+            <if test="ustoreType != null and ustoreType != ''">ustore_type,</if>
+            <if test="userid != null and userid != ''">userid,</if>
+            <if test="uinfoid != null and uinfoid != ''">uinfoid,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userstoreid != null">#{userstoreid},</if>
+            <if test="ustoreType != null and ustoreType != ''">#{ustoreType},</if>
+            <if test="userid != null and userid != ''">#{userid},</if>
+            <if test="uinfoid != null and uinfoid != ''">#{uinfoid},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtUserstore" parameterType="XtUserstore">
+        update xt_userstore
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ustoreType != null and ustoreType != ''">ustore_type = #{ustoreType},</if>
+            <if test="userid != null and userid != ''">userid = #{userid},</if>
+            <if test="uinfoid != null and uinfoid != ''">uinfoid = #{uinfoid},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+        </trim>
+        where userstoreid = #{userstoreid}
+    </update>
+
+    <delete id="deleteXtUserstoreByUserstoreid" parameterType="String">
+        delete from xt_userstore where userstoreid = #{userstoreid}
+    </delete>
+
+    <delete id="deleteXtUserstoreByUserstoreids" parameterType="String">
+        delete from xt_userstore where userstoreid in
+        <foreach item="userstoreid" collection="array" open="(" separator="," close=")">
+            #{userstoreid}
+        </foreach>
+    </delete>
+</mapper>

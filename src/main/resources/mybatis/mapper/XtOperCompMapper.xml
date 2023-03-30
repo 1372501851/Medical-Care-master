@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.user.mapper.XtOperCompMapper">
+
+    <resultMap type="XtOperComp" id="XtOperCompResult">
+        <result property="uoperCompid"    column="uoper_compid"    />
+        <result property="uoperCustomerid"    column="uoper_customerid"    />
+        <result property="ucompname"    column="ucompname"    />
+        <result property="uparentid"    column="uparentid"    />
+        <result property="uareaid"    column="uareaid"    />
+        <result property="uaddress"    column="uaddress"    />
+        <result property="ulatitude"    column="ulatitude"    />
+        <result property="ulongitude"    column="ulongitude"    />
+        <result property="ulegalPerson"    column="ulegal_person"    />
+        <result property="ulegalIdcard"    column="ulegal_idcard"    />
+        <result property="ulegalMobile"    column="ulegal_mobile"    />
+        <result property="utel"    column="utel"    />
+        <result property="udoorFacePic"    column="udoor_face_pic"    />
+        <result property="uidcardzpic"    column="uidcardzpic"    />
+        <result property="uidcardfpic"    column="uidcardfpic"    />
+        <result property="ubusinessLicense"    column="ubusiness_license"    />
+        <result property="ubusinessLicensePic"    column="ubusiness_license_pic"    />
+        <result property="uindustryLicensePic"    column="uindustry_license_pic"    />
+        <result property="urelevantCertificatesPic"    column="urelevant_certificates_pic"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+        <result property="createrId"    column="creater_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+        <result property="ancestors"    column="ancestors"    />
+
+    </resultMap>
+
+    <sql id="selectXtOperCompVo">
+        select uoper_compid, uoper_customerid, ucompname, uparentid, uareaid, uaddress, ulatitude, ulongitude, ulegal_person, ulegal_idcard, ulegal_mobile, utel, udoor_face_pic, uidcardzpic, uidcardfpic, ubusiness_license, ubusiness_license_pic, uindustry_license_pic, urelevant_certificates_pic, ucreatedate,
+               creater_id,create_by,create_time,update_time,update_by,del_flag,status,ancestors
+        from xt_oper_comp
+    </sql>
+
+    <select id="selectXtOperCompList" parameterType="XtOperComp" resultMap="XtOperCompResult">
+        <include refid="selectXtOperCompVo"/>
+        <where>
+            <if test="uoperCustomerid != null "> and uoper_customerid = #{uoperCustomerid}</if>
+            <if test="ucompname != null  and ucompname != ''"> and ucompname like concat('%', #{ucompname}, '%')</if>
+            <if test="uparentid != null  and uparentid != ''"> and uparentid = #{uparentid}</if>
+            <if test="uareaid != null  and uareaid != ''"> and uareaid = #{uareaid}</if>
+            <if test="uaddress != null  and uaddress != ''"> and uaddress = #{uaddress}</if>
+            <if test="ulatitude != null "> and ulatitude = #{ulatitude}</if>
+            <if test="ulongitude != null "> and ulongitude = #{ulongitude}</if>
+            <if test="ulegalPerson != null  and ulegalPerson != ''"> and ulegal_person = #{ulegalPerson}</if>
+            <if test="ulegalIdcard != null  and ulegalIdcard != ''"> and ulegal_idcard = #{ulegalIdcard}</if>
+            <if test="ulegalMobile != null  and ulegalMobile != ''"> and ulegal_mobile = #{ulegalMobile}</if>
+            <if test="utel != null  and utel != ''"> and utel = #{utel}</if>
+            <if test="udoorFacePic != null  and udoorFacePic != ''"> and udoor_face_pic = #{udoorFacePic}</if>
+            <if test="uidcardzpic != null  and uidcardzpic != ''"> and uidcardzpic = #{uidcardzpic}</if>
+            <if test="uidcardfpic != null  and uidcardfpic != ''"> and uidcardfpic = #{uidcardfpic}</if>
+            <if test="ubusinessLicense != null  and ubusinessLicense != ''"> and ubusiness_license = #{ubusinessLicense}</if>
+            <if test="ubusinessLicensePic != null  and ubusinessLicensePic != ''"> and ubusiness_license_pic = #{ubusinessLicensePic}</if>
+            <if test="uindustryLicensePic != null  and uindustryLicensePic != ''"> and uindustry_license_pic = #{uindustryLicensePic}</if>
+            <if test="urelevantCertificatesPic != null  and urelevantCertificatesPic != ''"> and urelevant_certificates_pic = #{urelevantCertificatesPic}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+             and creater_id = #{createrId} and del_flag = '0'
+        </where>
+    </select>
+
+    <select id="selectXtOperCompByUoperCompid" parameterType="String" resultMap="XtOperCompResult">
+        <include refid="selectXtOperCompVo"/>
+        where uoper_compid = #{uoperCompid}
+    </select>
+    <select id="selectXtOperCompListByType" resultMap="XtOperCompResult">
+        select uoper_compid, uoper_customerid, ucompname, uparentid, uareaid, uaddress, ulatitude, ulongitude, ulegal_person, ulegal_idcard, ulegal_mobile, utel, udoor_face_pic, uidcardzpic, uidcardfpic, ubusiness_license, ubusiness_license_pic, uindustry_license_pic, urelevant_certificates_pic, ucreatedate
+        from xt_oper_comp u
+        left join sys_user_role ur on ur.user_id = u.uoper_userid
+
+    </select>
+    <select id="selectXtOperCompByUCustomerid" resultType="com.ruoyi.project.user.domain.XtOperComp">
+        <include refid="selectXtOperCompVo"/>
+        where uoper_customerid = #{uoperCustomerid}
+    </select>
+    <select id="selectXtOperCompListByQueryList" resultMap="XtOperCompResult">
+        <include refid="selectXtOperCompVo"/>
+        <where>
+            <if test="uoperCustomerid != null "> and uoper_customerid = #{uoperCustomerid}</if>
+            <if test="ucompname != null  and ucompname != ''"> and ucompname like concat('%', #{ucompname}, '%')</if>
+            <if test="uparentid != null  and uparentid != ''"> and uparentid = #{uparentid}</if>
+            <if test="uareaid != null  and uareaid != ''"> and uareaid = #{uareaid}</if>
+            <if test="uaddress != null  and uaddress != ''"> and uaddress = #{uaddress}</if>
+            <if test="ulatitude != null "> and ulatitude = #{ulatitude}</if>
+            <if test="ulongitude != null "> and ulongitude = #{ulongitude}</if>
+            <if test="ulegalPerson != null  and ulegalPerson != ''"> and ulegal_person = #{ulegalPerson}</if>
+            <if test="ulegalIdcard != null  and ulegalIdcard != ''"> and ulegal_idcard = #{ulegalIdcard}</if>
+            <if test="ulegalMobile != null  and ulegalMobile != ''"> and ulegal_mobile = #{ulegalMobile}</if>
+            <if test="utel != null  and utel != ''"> and utel = #{utel}</if>
+            <if test="udoorFacePic != null  and udoorFacePic != ''"> and udoor_face_pic = #{udoorFacePic}</if>
+            <if test="uidcardzpic != null  and uidcardzpic != ''"> and uidcardzpic = #{uidcardzpic}</if>
+            <if test="uidcardfpic != null  and uidcardfpic != ''"> and uidcardfpic = #{uidcardfpic}</if>
+            <if test="ubusinessLicense != null  and ubusinessLicense != ''"> and ubusiness_license = #{ubusinessLicense}</if>
+            <if test="ubusinessLicensePic != null  and ubusinessLicensePic != ''"> and ubusiness_license_pic = #{ubusinessLicensePic}</if>
+            <if test="uindustryLicensePic != null  and uindustryLicensePic != ''"> and uindustry_license_pic = #{uindustryLicensePic}</if>
+            <if test="urelevantCertificatesPic != null  and urelevantCertificatesPic != ''"> and urelevant_certificates_pic = #{urelevantCertificatesPic}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+           and del_flag = '0' and ancestors like concat( #{query}, '%')
+        </where>
+    </select>
+    <select id="selectXtOperCompListByUserType" resultMap="XtOperCompResult">
+        <include refid="selectXtOperCompVo"/>
+        where uareaid = #{areaId} and u
+
+
+    </select>
+
+    <insert id="insertXtOperComp" parameterType="XtOperComp">
+        insert into xt_oper_comp
+        (
+            <if test="uoperCompid != null">uoper_compid,</if>
+            <if test="uoperCustomerid != null">uoper_customerid,</if>
+            <if test="ucompname != null and ucompname != ''">ucompname,</if>
+            <if test="uparentid != null">uparentid,</if>
+            <if test="uareaid != null and uareaid != ''">uareaid,</if>
+            <if test="uaddress != null">uaddress,</if>
+            <if test="ulatitude != null">ulatitude,</if>
+            <if test="ulongitude != null">ulongitude,</if>
+            <if test="ulegalPerson != null">ulegal_person,</if>
+            <if test="ulegalIdcard != null">ulegal_idcard,</if>
+            <if test="ulegalMobile != null">ulegal_mobile,</if>
+            <if test="utel != null">utel,</if>
+            <if test="udoorFacePic != null">udoor_face_pic,</if>
+            <if test="uidcardzpic != null">uidcardzpic,</if>
+            <if test="uidcardfpic != null">uidcardfpic,</if>
+            <if test="ubusinessLicense != null">ubusiness_license,</if>
+            <if test="ubusinessLicensePic != null">ubusiness_license_pic,</if>
+            <if test="uindustryLicensePic != null">uindustry_license_pic,</if>
+            <if test="urelevantCertificatesPic != null">urelevant_certificates_pic,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+
+            <if test="createrId != null">creater_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="ancestors != null">ancestors,</if>
+        create_time,del_flag,status
+        )values (
+        <if test="uoperCompid != null">#{uoperCompid},</if>
+        <if test="uoperCustomerid != null">#{uoperCustomerid},</if>
+        <if test="ucompname != null and ucompname != ''">#{ucompname},</if>
+        <if test="uparentid != null">#{uparentid},</if>
+        <if test="uareaid != null and uareaid != ''">#{uareaid},</if>
+        <if test="uaddress != null">#{uaddress},</if>
+        <if test="ulatitude != null">#{ulatitude},</if>
+        <if test="ulongitude != null">#{ulongitude},</if>
+        <if test="ulegalPerson != null">#{ulegalPerson},</if>
+        <if test="ulegalIdcard != null">#{ulegalIdcard},</if>
+        <if test="ulegalMobile != null">#{ulegalMobile},</if>
+        <if test="utel != null">#{utel},</if>
+        <if test="udoorFacePic != null">#{udoorFacePic},</if>
+        <if test="uidcardzpic != null">#{uidcardzpic},</if>
+        <if test="uidcardfpic != null">#{uidcardfpic},</if>
+        <if test="ubusinessLicense != null">#{ubusinessLicense},</if>
+        <if test="ubusinessLicensePic != null">#{ubusinessLicensePic},</if>
+        <if test="uindustryLicensePic != null">#{uindustryLicensePic},</if>
+        <if test="urelevantCertificatesPic != null">#{urelevantCertificatesPic},</if>
+        <if test="ucreatedate != null">#{ucreatedate},</if>
+
+
+        <if test="createrId != null">#{createrId},</if>
+        <if test="createBy != null">#{createBy},</if>
+        <if test="updateTime != null">#{updateTime},</if>
+        <if test="updateBy != null">#{updateBy},</if>
+        <if test="ancestors != null">#{ancestors},</if>
+        sysdate(),'0','0'
+        )
+
+    </insert>
+
+    <update id="updateXtOperComp" parameterType="XtOperComp">
+        update xt_oper_comp
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uoperCustomerid != null">uoper_customerid = #{uoperCustomerid},</if>
+            <if test="ucompname != null and ucompname != ''">ucompname = #{ucompname},</if>
+            <if test="uparentid != null">uparentid = #{uparentid},</if>
+            <if test="uareaid != null and uareaid != ''">uareaid = #{uareaid},</if>
+            <if test="uaddress != null">uaddress = #{uaddress},</if>
+            <if test="ulatitude != null">ulatitude = #{ulatitude},</if>
+            <if test="ulongitude != null">ulongitude = #{ulongitude},</if>
+            <if test="ulegalPerson != null">ulegal_person = #{ulegalPerson},</if>
+            <if test="ulegalIdcard != null">ulegal_idcard = #{ulegalIdcard},</if>
+            <if test="ulegalMobile != null">ulegal_mobile = #{ulegalMobile},</if>
+            <if test="utel != null">utel = #{utel},</if>
+            <if test="udoorFacePic != null">udoor_face_pic = #{udoorFacePic},</if>
+            <if test="uidcardzpic != null">uidcardzpic = #{uidcardzpic},</if>
+            <if test="uidcardfpic != null">uidcardfpic = #{uidcardfpic},</if>
+            <if test="ubusinessLicense != null">ubusiness_license = #{ubusinessLicense},</if>
+            <if test="ubusinessLicensePic != null">ubusiness_license_pic = #{ubusinessLicensePic},</if>
+            <if test="uindustryLicensePic != null">uindustry_license_pic = #{uindustryLicensePic},</if>
+            <if test="urelevantCertificatesPic != null">urelevant_certificates_pic = #{urelevantCertificatesPic},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+        </trim>
+        where uoper_compid = #{uoperCompid}
+    </update>
+
+    <delete id="deleteXtOperCompByUoperCompid" parameterType="String">
+        update xt_oper_comp
+        set del_flag = '2'
+        where uoper_compid = #{uoperCompid}
+    </delete>
+
+
+    <delete id="deleteXtOperCompByUoperCompids" parameterType="String">
+        delete from xt_oper_comp where uoper_compid in
+        <foreach item="uoperCompid" collection="array" open="(" separator="," close=")">
+            #{uoperCompid}
+        </foreach>
+    </delete>
+</mapper>

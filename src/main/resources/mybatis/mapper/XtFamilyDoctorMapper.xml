@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtFamilyDoctorMapper">
+
+    <resultMap type="XtFamilyDoctor" id="XtFamilyDoctorResult">
+        <result property="ufamilyDoctorid"    column="ufamily_doctorid"    />
+        <result property="userid"    column="userid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="ustatus"    column="ustatus"    />
+        <result property="uprice"    column="uprice"    />
+        <result property="utotalprice"    column="utotalprice"    />
+        <result property="ustartTime"    column="ustart_time"    />
+        <result property="uendTime"    column="uend_time"    />
+        <result property="uremark"    column="uremark"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+    </resultMap>
+
+    <sql id="selectXtFamilyDoctorVo">
+        select ufamily_doctorid, userid, uemployeeid, ustatus, uprice, utotalprice, ustart_time, uend_time, uremark, ucreatedate from xt_family_doctor
+    </sql>
+
+    <select id="selectXtFamilyDoctorList" parameterType="XtFamilyDoctor" resultMap="XtFamilyDoctorResult">
+        <include refid="selectXtFamilyDoctorVo"/>
+        <where>
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+            <if test="uprice != null "> and uprice = #{uprice}</if>
+            <if test="utotalprice != null "> and utotalprice = #{utotalprice}</if>
+            <if test="ustartTime != null "> and ustart_time = #{ustartTime}</if>
+            <if test="uendTime != null "> and uend_time = #{uendTime}</if>
+            <if test="uremark != null  and uremark != ''"> and uremark = #{uremark}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+        </where>
+    </select>
+
+    <select id="selectXtFamilyDoctorByUfamilyDoctorid" parameterType="String" resultMap="XtFamilyDoctorResult">
+        <include refid="selectXtFamilyDoctorVo"/>
+        where ufamily_doctorid = #{ufamilyDoctorid}
+    </select>
+
+    <insert id="insertXtFamilyDoctor" parameterType="XtFamilyDoctor">
+        insert into xt_family_doctor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ufamilyDoctorid != null">ufamily_doctorid,</if>
+            <if test="userid != null and userid != ''">userid,</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid,</if>
+            <if test="ustatus != null">ustatus,</if>
+            <if test="uprice != null">uprice,</if>
+            <if test="utotalprice != null">utotalprice,</if>
+            <if test="ustartTime != null">ustart_time,</if>
+            <if test="uendTime != null">uend_time,</if>
+            <if test="uremark != null">uremark,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ufamilyDoctorid != null">#{ufamilyDoctorid},</if>
+            <if test="userid != null and userid != ''">#{userid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">#{uemployeeid},</if>
+            <if test="ustatus != null">#{ustatus},</if>
+            <if test="uprice != null">#{uprice},</if>
+            <if test="utotalprice != null">#{utotalprice},</if>
+            <if test="ustartTime != null">#{ustartTime},</if>
+            <if test="uendTime != null">#{uendTime},</if>
+            <if test="uremark != null">#{uremark},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtFamilyDoctor" parameterType="XtFamilyDoctor">
+        update xt_family_doctor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userid != null and userid != ''">userid = #{userid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid = #{uemployeeid},</if>
+            <if test="ustatus != null">ustatus = #{ustatus},</if>
+            <if test="uprice != null">uprice = #{uprice},</if>
+            <if test="utotalprice != null">utotalprice = #{utotalprice},</if>
+            <if test="ustartTime != null">ustart_time = #{ustartTime},</if>
+            <if test="uendTime != null">uend_time = #{uendTime},</if>
+            <if test="uremark != null">uremark = #{uremark},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+        </trim>
+        where ufamily_doctorid = #{ufamilyDoctorid}
+    </update>
+
+    <delete id="deleteXtFamilyDoctorByUfamilyDoctorid" parameterType="String">
+        delete from xt_family_doctor where ufamily_doctorid = #{ufamilyDoctorid}
+    </delete>
+
+    <delete id="deleteXtFamilyDoctorByUfamilyDoctorids" parameterType="String">
+        delete from xt_family_doctor where ufamily_doctorid in
+        <foreach item="ufamilyDoctorid" collection="array" open="(" separator="," close=")">
+            #{ufamilyDoctorid}
+        </foreach>
+    </delete>
+</mapper>

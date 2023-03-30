@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtFinanceMapper">
+    
+    <resultMap type="XtFinance" id="XtFinanceResult">
+        <result property="financeId"    column="finance_id"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="tradeType"    column="trade_type"    />
+        <result property="tradeNo"    column="trade_no"    />
+        <result property="amount"    column="amount"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectXtFinanceVo">
+        select finance_id, ucompid, trade_type, trade_no, amount, status, create_time from xt_finance
+    </sql>
+
+    <select id="selectXtFinanceList" parameterType="XtFinance" resultMap="XtFinanceResult">
+        <include refid="selectXtFinanceVo"/>
+        <where>  
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="tradeType != null  and tradeType != ''"> and trade_type = #{tradeType}</if>
+            <if test="tradeNo != null  and tradeNo != ''"> and trade_no = #{tradeNo}</if>
+            <if test="amount != null "> and amount = #{amount}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+    </select>
+    
+    <select id="selectXtFinanceByFinanceId" parameterType="String" resultMap="XtFinanceResult">
+        <include refid="selectXtFinanceVo"/>
+        where finance_id = #{financeId}
+    </select>
+        
+    <insert id="insertXtFinance" parameterType="XtFinance">
+        insert into xt_finance
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="financeId != null">finance_id,</if>
+            <if test="ucompid != null">ucompid,</if>
+            <if test="tradeType != null">trade_type,</if>
+            <if test="tradeNo != null">trade_no,</if>
+            <if test="amount != null">amount,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="financeId != null">#{financeId},</if>
+            <if test="ucompid != null">#{ucompid},</if>
+            <if test="tradeType != null">#{tradeType},</if>
+            <if test="tradeNo != null">#{tradeNo},</if>
+            <if test="amount != null">#{amount},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtFinance" parameterType="XtFinance">
+        update xt_finance
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ucompid != null">ucompid = #{ucompid},</if>
+            <if test="tradeType != null">trade_type = #{tradeType},</if>
+            <if test="tradeNo != null">trade_no = #{tradeNo},</if>
+            <if test="amount != null">amount = #{amount},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where finance_id = #{financeId}
+    </update>
+
+    <delete id="deleteXtFinanceByFinanceId" parameterType="String">
+        delete from xt_finance where finance_id = #{financeId}
+    </delete>
+
+    <delete id="deleteXtFinanceByFinanceIds" parameterType="String">
+        delete from xt_finance where finance_id in 
+        <foreach item="financeId" collection="array" open="(" separator="," close=")">
+            #{financeId}
+        </foreach>
+    </delete>
+</mapper>

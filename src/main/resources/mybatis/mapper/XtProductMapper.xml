@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtProductMapper">
+
+    <resultMap type="XtProduct" id="XtProductResult">
+        <result property="uproductid"    column="uproductid"    />
+        <result property="uproducttypeid"    column="uproducttypeid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="ucustomerid"    column="ucustomerid"    />
+        <result property="uproductName"    column="uproduct_name"    />
+        <result property="uproductForm"    column="uproduct_form"    />
+        <result property="uproductPic"    column="uproduct_pic"    />
+        <result property="ubarcode"    column="ubarcode"    />
+        <result property="ubarcodeNumericCode"    column="ubarcode_numeric_code"    />
+        <result property="ucategoryName"    column="ucategory_name"    />
+        <result property="usortName"    column="usort_name"    />
+        <result property="utradeName"    column="utrade_name"    />
+        <result property="uproductModel"    column="uproduct_model"    />
+        <result property="uproductSpecs"    column="uproduct_specs"    />
+        <result property="uproductDose"    column="uproduct_dose"    />
+        <result property="umanufacturer"    column="umanufacturer"    />
+        <result property="umaterialCode"    column="umaterial_code"    />
+        <result property="uproductStandards"    column="uproduct_standards"    />
+        <result property="uapprovalNo"    column="uapproval_no"    />
+        <result property="ucrtificateInspection"    column="ucrtificate_inspection"    />
+        <result property="ucertificate"    column="ucertificate"    />
+        <result property="umainComponents"    column="umain_components"    />
+        <result property="umainEfficacy"    column="umain_efficacy"    />
+        <result property="usageMethod"    column="usage_method"    />
+        <result property="usingleTreatment"    column="usingle_treatment"    />
+        <result property="umattersAttention"    column="umatters_attention"    />
+        <result property="ustorageMethod"    column="ustorage_method"    />
+        <result property="ushelfLife"    column="ushelf_life"    />
+        <result property="uexpirationDate"    column="uexpiration_date"    />
+        <result property="uinventoryQuantity"    column="uinventory_quantity"    />
+        <result property="udeliveryQuantity"    column="udelivery_quantity"    />
+        <result property="ureceiptQuantity"    column="uReceipt_quantity"    />
+        <result property="utransactionPrice"    column="utransaction_price"    />
+        <result property="uretailPrice"    column="uretail_price"    />
+        <result property="umembershipPrice"    column="umembership_price"    />
+        <result property="upriceHuicheng"    column="uprice_huicheng"    />
+        <result property="uwholesalePrice"    column="uwholesale_price"    />
+        <result property="uagencyPrice"    column="uagency_price"    />
+        <result property="uoutsourcingPrice"    column="uoutsourcing_price"    />
+        <result property="upurchasePrice"    column="upurchase_price"    />
+        <result property="ucommodityLosses"    column="ucommodity_losses"    />
+        <result property="uremarks1"    column="uremarks1"    />
+        <result property="uremarks2"    column="uremarks2"    />
+        <result property="flag"    column="flag"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="flag"    column="flag"    />
+
+    </resultMap>
+
+    <sql id="selectXtProductVo">
+        select uproductid, uproducttypeid, ucompid, ucustomerid, uproduct_name, uproduct_form, uproduct_pic, ubarcode, ubarcode_numeric_code, ucategory_name, usort_name, utrade_name, uproduct_model, uproduct_specs, uproduct_dose, umanufacturer, umaterial_code, uproduct_standards, uapproval_no, ucrtificate_inspection, ucertificate, umain_components, umain_efficacy, usage_method, usingle_treatment, umatters_attention, ustorage_method, ushelf_life, uexpiration_date, uinventory_quantity, udelivery_quantity, uReceipt_quantity, utransaction_price, uretail_price, umembership_price, uprice_huicheng, uwholesale_price, uagency_price, uoutsourcing_price, upurchase_price, ucommodity_losses, uremarks1, uremarks2, flag, status, create_time, update_time from xt_product
+    </sql>
+
+    <select id="selectXtProductList" parameterType="XtProduct" resultMap="XtProductResult">
+        select uproductid, uproducttypeid, xt_product.ucompid, xt_product.ucustomerid, uproduct_name, uproduct_form, uproduct_pic, ubarcode, ubarcode_numeric_code, ucategory_name, usort_name, utrade_name, uproduct_model, uproduct_specs, uproduct_dose, umanufacturer, umaterial_code, uproduct_standards, uapproval_no, ucrtificate_inspection, ucertificate, umain_components, umain_efficacy, usage_method, usingle_treatment, umatters_attention, ustorage_method, ushelf_life, uexpiration_date, uinventory_quantity, udelivery_quantity, uReceipt_quantity, utransaction_price, uretail_price, umembership_price, uprice_huicheng, uwholesale_price, uagency_price, uoutsourcing_price, upurchase_price, ucommodity_losses, uremarks1, uremarks2, flag, status, xt_product.create_time, xt_product.update_time,ucompname
+        from xt_product left join xt_comp on xt_product.ucompid = xt_comp.ucompid
+        where flag = '0'
+        <if test="ucompid != null ">
+            AND xt_product.ucompid = #{ucompid}
+        </if>
+        <if test="uproducttypeid != null ">
+            AND uproducttypeid = #{uproducttypeid}
+        </if>
+        <if test="uproductName != null ">
+            AND uproduct_name = #{uproductName}
+        </if>
+        <if test="uproductForm != null ">
+            AND uproduct_form = #{uproductForm}
+        </if>
+        <if test="uproductid != null ">
+            AND uproductid = #{uproductid}
+        </if>
+<!--        <if test="sort == 1 and SalesQuantity != null">-->
+<!--            order by  SalesQuantity-->
+<!--        </if>-->
+<!--        <if test="sort == 2 ">-->
+<!--            order by  uretail_price-->
+<!--        </if>-->
+
+
+
+
+
+    </select>
+
+    <select id="selectXtProductByUproductid" parameterType="String" resultMap="XtProductResult">
+        <include refid="selectXtProductVo"/>
+        where uproductid = #{uproductid} and flag = '0'
+    </select>
+    <select id="selectXtProductByUpCompId" parameterType="String" resultMap="XtProductResult">
+        <include refid="selectXtProductVo"/>
+        where ucompid = #{compId} and flag = '0'
+    </select>
+    <select id="selectProductTypesBycompId" resultType="java.lang.String">
+        select distinct(uproducttypeid)
+        from xt_product
+        where ucompid = #{ucompid}
+    </select>
+
+    <insert id="insertXtProduct" parameterType="XtProduct">
+        insert into xt_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uproductid != null">uproductid,</if>
+            <if test="uproducttypeid != null and uproducttypeid != ''">uproducttypeid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="ucustomerid != null">ucustomerid,</if>
+            <if test="uproductName != null and uproductName != ''">uproduct_name,</if>
+            <if test="uproductForm != null and uproductForm != ''">uproduct_form,</if>
+            <if test="uproductPic != null and uproductPic != ''">uproduct_pic,</if>
+            <if test="ubarcode != null and ubarcode != ''">ubarcode,</if>
+            <if test="ubarcodeNumericCode != null and ubarcodeNumericCode != ''">ubarcode_numeric_code,</if>
+            <if test="ucategoryName != null and ucategoryName != ''">ucategory_name,</if>
+            <if test="usortName != null and usortName != ''">usort_name,</if>
+            <if test="utradeName != null and utradeName != ''">utrade_name,</if>
+            <if test="uproductModel != null and uproductModel != ''">uproduct_model,</if>
+            <if test="uproductSpecs != null and uproductSpecs != ''">uproduct_specs,</if>
+            <if test="uproductDose != null and uproductDose != ''">uproduct_dose,</if>
+            <if test="umanufacturer != null and umanufacturer != ''">umanufacturer,</if>
+            <if test="umaterialCode != null and umaterialCode != ''">umaterial_code,</if>
+            <if test="uproductStandards != null and uproductStandards != ''">uproduct_standards,</if>
+            <if test="uapprovalNo != null and uapprovalNo != ''">uapproval_no,</if>
+            <if test="ucrtificateInspection != null and ucrtificateInspection != ''">ucrtificate_inspection,</if>
+            <if test="ucertificate != null and ucertificate != ''">ucertificate,</if>
+            <if test="umainComponents != null and umainComponents != ''">umain_components,</if>
+            <if test="umainEfficacy != null and umainEfficacy != ''">umain_efficacy,</if>
+            <if test="usageMethod != null and usageMethod != ''">usage_method,</if>
+            <if test="usingleTreatment != null and usingleTreatment != ''">usingle_treatment,</if>
+            <if test="umattersAttention != null and umattersAttention != ''">umatters_attention,</if>
+            <if test="ustorageMethod != null and ustorageMethod != ''">ustorage_method,</if>
+            <if test="ushelfLife != null and ushelfLife != ''">ushelf_life,</if>
+            <if test="uexpirationDate != null and uexpirationDate != ''">uexpiration_date,</if>
+            <if test="uinventoryQuantity != null">uinventory_quantity,</if>
+            <if test="udeliveryQuantity != null">udelivery_quantity,</if>
+            <if test="ureceiptQuantity != null">uReceipt_quantity,</if>
+            <if test="utransactionPrice != null">utransaction_price,</if>
+            <if test="uretailPrice != null">uretail_price,</if>
+            <if test="umembershipPrice != null">umembership_price,</if>
+            <if test="upriceHuicheng != null">uprice_huicheng,</if>
+            <if test="uwholesalePrice != null">uwholesale_price,</if>
+            <if test="uagencyPrice != null">uagency_price,</if>
+            <if test="uoutsourcingPrice != null">uoutsourcing_price,</if>
+            <if test="upurchasePrice != null">upurchase_price,</if>
+            <if test="ucommodityLosses != null and ucommodityLosses != ''">ucommodity_losses,</if>
+            <if test="uremarks1 != null and uremarks1 != ''">uremarks1,</if>
+            <if test="uremarks2 != null and uremarks2 != ''">uremarks2,</if>
+            <if test="flag != null">flag,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="ucategoryid != null">ucategoryid,</if>
+            <if test="ucategoryPlace != null">ucategory_place,</if>
+            <if test="uremarks3 != null">uremarks3,</if>
+            <if test="utradePlace != null">utrade_place,</if>
+            <if test="utradeOriginplace != null">utrade_originplace,</if>
+            <if test="usortPlace != null">usort_place,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uproductid != null">#{uproductid},</if>
+            <if test="uproducttypeid != null and uproducttypeid != ''">#{uproducttypeid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="ucustomerid != null">#{ucustomerid},</if>
+            <if test="uproductName != null and uproductName != ''">#{uproductName},</if>
+            <if test="uproductForm != null and uproductForm != ''">#{uproductForm},</if>
+            <if test="uproductPic != null and uproductPic != ''">#{uproductPic},</if>
+            <if test="ubarcode != null and ubarcode != ''">#{ubarcode},</if>
+            <if test="ubarcodeNumericCode != null and ubarcodeNumericCode != ''">#{ubarcodeNumericCode},</if>
+            <if test="ucategoryName != null and ucategoryName != ''">#{ucategoryName},</if>
+            <if test="usortName != null and usortName != ''">#{usortName},</if>
+            <if test="utradeName != null and utradeName != ''">#{utradeName},</if>
+            <if test="uproductModel != null and uproductModel != ''">#{uproductModel},</if>
+            <if test="uproductSpecs != null and uproductSpecs != ''">#{uproductSpecs},</if>
+            <if test="uproductDose != null and uproductDose != ''">#{uproductDose},</if>
+            <if test="umanufacturer != null and umanufacturer != ''">#{umanufacturer},</if>
+            <if test="umaterialCode != null and umaterialCode != ''">#{umaterialCode},</if>
+            <if test="uproductStandards != null and uproductStandards != ''">#{uproductStandards},</if>
+            <if test="uapprovalNo != null and uapprovalNo != ''">#{uapprovalNo},</if>
+            <if test="ucrtificateInspection != null and ucrtificateInspection != ''">#{ucrtificateInspection},</if>
+            <if test="ucertificate != null and ucertificate != ''">#{ucertificate},</if>
+            <if test="umainComponents != null and umainComponents != ''">#{umainComponents},</if>
+            <if test="umainEfficacy != null and umainEfficacy != ''">#{umainEfficacy},</if>
+            <if test="usageMethod != null and usageMethod != ''">#{usageMethod},</if>
+            <if test="usingleTreatment != null and usingleTreatment != ''">#{usingleTreatment},</if>
+            <if test="umattersAttention != null and umattersAttention != ''">#{umattersAttention},</if>
+            <if test="ustorageMethod != null and ustorageMethod != ''">#{ustorageMethod},</if>
+            <if test="ushelfLife != null and ushelfLife != ''">#{ushelfLife},</if>
+            <if test="uexpirationDate != null and uexpirationDate != ''">#{uexpirationDate},</if>
+            <if test="uinventoryQuantity != null">#{uinventoryQuantity},</if>
+            <if test="udeliveryQuantity != null">#{udeliveryQuantity},</if>
+            <if test="ureceiptQuantity != null">#{ureceiptQuantity},</if>
+            <if test="utransactionPrice != null">#{utransactionPrice},</if>
+            <if test="uretailPrice != null">#{uretailPrice},</if>
+            <if test="umembershipPrice != null">#{umembershipPrice},</if>
+            <if test="upriceHuicheng != null">#{upriceHuicheng},</if>
+            <if test="uwholesalePrice != null">#{uwholesalePrice},</if>
+            <if test="uagencyPrice != null">#{uagencyPrice},</if>
+            <if test="uoutsourcingPrice != null">#{uoutsourcingPrice},</if>
+            <if test="upurchasePrice != null">#{upurchasePrice},</if>
+            <if test="ucommodityLosses != null and ucommodityLosses != ''">#{ucommodityLosses},</if>
+            <if test="uremarks1 != null and uremarks1 != ''">#{uremarks1},</if>
+            <if test="uremarks2 != null and uremarks2 != ''">#{uremarks2},</if>
+            <if test="flag != null">#{flag},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="ucategoryid != null">#{ucategoryid},</if>
+            <if test="ucategoryPlace != null">ucategory_place=#{ucategoryPlace},</if>
+            <if test="uremarks3 != null">uremarks3=#{uremarks3},</if>
+            <if test="utradePlace != null">utrade_place=#{utradePlace},</if>
+            <if test="utradeOriginplace != null">utrade_originplace=#{utradeOriginplace},</if>
+            <if test="usortPlace != null">usort_place=#{usortPlace},</if>
+         </trim>
+    </insert>
+
+<!--    <update id="updateXtProduct" parameterType="XtProduct">-->
+<!--        update xt_product-->
+<!--        <trim prefix="SET" suffixOverrides=",">-->
+<!--            <if test="uproducttypeid != null and uproducttypeid != ''">uproducttypeid = #{uproducttypeid},</if>-->
+<!--            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>-->
+<!--            <if test="ucustomerid != null">ucustomerid = #{ucustomerid},</if>-->
+<!--            <if test="uproductName != null and uproductName != ''">uproduct_name = #{uproductName},</if>-->
+<!--            <if test="uproductForm != null and uproductForm != ''">uproduct_form = #{uproductForm},</if>-->
+<!--            <if test="uproductPic != null and uproductPic != ''">uproduct_pic = #{uproductPic},</if>-->
+<!--            <if test="ubarcode != null and ubarcode != ''">ubarcode = #{ubarcode},</if>-->
+<!--            <if test="ubarcodeNumericCode != null and ubarcodeNumericCode != ''">ubarcode_numeric_code = #{ubarcodeNumericCode},</if>-->
+<!--            <if test="ucategoryName != null and ucategoryName != ''">ucategory_name = #{ucategoryName},</if>-->
+<!--            <if test="usortName != null and usortName != ''">usort_name = #{usortName},</if>-->
+<!--            <if test="utradeName != null and utradeName != ''">utrade_name = #{utradeName},</if>-->
+<!--            <if test="uproductModel != null and uproductModel != ''">uproduct_model = #{uproductModel},</if>-->
+<!--            <if test="uproductSpecs != null and uproductSpecs != ''">uproduct_specs = #{uproductSpecs},</if>-->
+<!--            <if test="uproductDose != null and uproductDose != ''">uproduct_dose = #{uproductDose},</if>-->
+<!--            <if test="umanufacturer != null and umanufacturer != ''">umanufacturer = #{umanufacturer},</if>-->
+<!--            <if test="umaterialCode != null and umaterialCode != ''">umaterial_code = #{umaterialCode},</if>-->
+<!--            <if test="uproductStandards != null and uproductStandards != ''">uproduct_standards = #{uproductStandards},</if>-->
+<!--            <if test="uapprovalNo != null and uapprovalNo != ''">uapproval_no = #{uapprovalNo},</if>-->
+<!--            <if test="ucrtificateInspection != null and ucrtificateInspection != ''">ucrtificate_inspection = #{ucrtificateInspection},</if>-->
+<!--            <if test="ucertificate != null and ucertificate != ''">ucertificate = #{ucertificate},</if>-->
+<!--            <if test="umainComponents != null and umainComponents != ''">umain_components = #{umainComponents},</if>-->
+<!--            <if test="umainEfficacy != null and umainEfficacy != ''">umain_efficacy = #{umainEfficacy},</if>-->
+<!--            <if test="usageMethod != null and usageMethod != ''">usage_method = #{usageMethod},</if>-->
+<!--            <if test="usingleTreatment != null and usingleTreatment != ''">usingle_treatment = #{usingleTreatment},</if>-->
+<!--            <if test="umattersAttention != null and umattersAttention != ''">umatters_attention = #{umattersAttention},</if>-->
+<!--            <if test="ustorageMethod != null and ustorageMethod != ''">ustorage_method = #{ustorageMethod},</if>-->
+<!--            <if test="ushelfLife != null and ushelfLife != ''">ushelf_life = #{ushelfLife},</if>-->
+<!--            <if test="uexpirationDate != null and uexpirationDate != ''">uexpiration_date = #{uexpirationDate},</if>-->
+<!--            <if test="uinventoryQuantity != null">uinventory_quantity = #{uinventoryQuantity},</if>-->
+<!--            <if test="udeliveryQuantity != null">udelivery_quantity = #{udeliveryQuantity},</if>-->
+<!--            <if test="ureceiptQuantity != null">uReceipt_quantity = #{ureceiptQuantity},</if>-->
+<!--            <if test="utransactionPrice != null">utransaction_price = #{utransactionPrice},</if>-->
+<!--            <if test="uretailPrice != null">uretail_price = #{uretailPrice},</if>-->
+<!--            <if test="umembershipPrice != null">umembership_price = #{umembershipPrice},</if>-->
+<!--            <if test="upriceHuicheng != null">uprice_huicheng = #{upriceHuicheng},</if>-->
+<!--            <if test="uwholesalePrice != null">uwholesale_price = #{uwholesalePrice},</if>-->
+<!--            <if test="uagencyPrice != null">uagency_price = #{uagencyPrice},</if>-->
+<!--            <if test="uoutsourcingPrice != null">uoutsourcing_price = #{uoutsourcingPrice},</if>-->
+<!--            <if test="upurchasePrice != null">upurchase_price = #{upurchasePrice},</if>-->
+<!--            <if test="ucommodityLosses != null and ucommodityLosses != ''">ucommodity_losses = #{ucommodityLosses},</if>-->
+<!--            <if test="uremarks1 != null and uremarks1 != ''">uremarks1 = #{uremarks1},</if>-->
+<!--            <if test="uremarks2 != null and uremarks2 != ''">uremarks2 = #{uremarks2},</if>-->
+<!--            <if test="flag != null">flag = #{flag},</if>-->
+<!--            <if test="status != null">status = #{status},</if>-->
+<!--            <if test="createTime != null">create_time = #{createTime},</if>-->
+<!--            <if test="updateTime != null">update_time = #{updateTime},</if>-->
+<!--        </trim>-->
+<!--        where uproductid = #{uproductid}-->
+<!--    </update>-->
+
+    <update id="banXtProductByUproductids">
+        update xt_product
+        set status = '2'
+        where uproductid in
+        <foreach item="uproductid" collection="array" open="(" separator="," close=")">
+            #{uproductid}
+        </foreach>
+    </update>
+
+    <update id="releaseXtProductByUproductids">
+        update xt_product
+        set status = '0'
+        where uproductid in
+        <foreach item="uproductid" collection="array" open="(" separator="," close=")">
+            #{uproductid}
+        </foreach>
+    </update>
+
+    <delete id="deleteXtProductByUproductid" parameterType="String">
+        delete from xt_product where uproductid = #{uproductid}
+    </delete>
+
+
+    <delete id="deleteXtProductByUproductids" parameterType="String">
+        update xt_product
+        set flag = '2'
+        where uproductid in
+        <foreach item="uproductid" collection="array" open="(" separator="," close=")">
+            #{uproductid}
+        </foreach>
+    </delete>
+
+    <select id="selectProductByPlAndZl" resultType="XtProduct" parameterType="string">
+        select * from xt_product
+        <where>
+            <if test="sortName != null  and sortName != ''"> and usort_name = #{sortName}</if>
+            <if test="categoryName != null  and categoryName != ''"> and ucategory_name = #{categoryName}</if>
+        </where>
+
+    </select>
+
+<!--    <update id="updateXtProduct2" parameterType="XtProduct">-->
+<!--        update xt_product-->
+<!--        <trim prefix="SET" suffixOverrides=",">-->
+<!--            <if test="uproducttypeid != null and uproducttypeid != ''">uproducttypeid = #{uproducttypeid},</if>-->
+<!--            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>-->
+<!--            <if test="ucustomerid != null">ucustomerid = #{ucustomerid},</if>-->
+<!--            <if test="uproductName != null and uproductName != ''">uproduct_name = #{uproductName},</if>-->
+<!--            <if test="uproductForm != null and uproductForm != ''">uproduct_form = #{uproductForm},</if>-->
+<!--            <if test="uproductPic != null and uproductPic != ''">uproduct_pic = #{uproductPic},</if>-->
+<!--            <if test="ubarcode != null and ubarcode != ''">ubarcode = #{ubarcode},</if>-->
+<!--            <if test="ubarcodeNumericCode != null and ubarcodeNumericCode != ''">ubarcode_numeric_code = #{ubarcodeNumericCode},</if>-->
+<!--            <if test="ucategoryName != null and ucategoryName != ''">ucategory_name = #{ucategoryName},</if>-->
+<!--            <if test="usortName != null and usortName != ''">usort_name = #{usortName},</if>-->
+<!--            <if test="utradeName != null and utradeName != ''">utrade_name = #{utradeName},</if>-->
+<!--            <if test="uproductModel != null and uproductModel != ''">uproduct_model = #{uproductModel},</if>-->
+<!--            <if test="uproductSpecs != null and uproductSpecs != ''">uproduct_specs = #{uproductSpecs},</if>-->
+<!--            <if test="uproductDose != null and uproductDose != ''">uproduct_dose = #{uproductDose},</if>-->
+<!--            <if test="umanufacturer != null and umanufacturer != ''">umanufacturer = #{umanufacturer},</if>-->
+<!--            <if test="umaterialCode != null and umaterialCode != ''">umaterial_code = #{umaterialCode},</if>-->
+<!--            <if test="uproductStandards != null and uproductStandards != ''">uproduct_standards = #{uproductStandards},</if>-->
+<!--            <if test="uapprovalNo != null and uapprovalNo != ''">uapproval_no = #{uapprovalNo},</if>-->
+<!--            <if test="ucrtificateInspection != null and ucrtificateInspection != ''">ucrtificate_inspection = #{ucrtificateInspection},</if>-->
+<!--            <if test="ucertificate != null and ucertificate != ''">ucertificate = #{ucertificate},</if>-->
+<!--            <if test="umainComponents != null and umainComponents != ''">umain_components = #{umainComponents},</if>-->
+<!--            <if test="umainEfficacy != null and umainEfficacy != ''">umain_efficacy = #{umainEfficacy},</if>-->
+<!--            <if test="usageMethod != null and usageMethod != ''">usage_method = #{usageMethod},</if>-->
+<!--            <if test="usingleTreatment != null and usingleTreatment != ''">usingle_treatment = #{usingleTreatment},</if>-->
+<!--            <if test="umattersAttention != null and umattersAttention != ''">umatters_attention = #{umattersAttention},</if>-->
+<!--            <if test="ustorageMethod != null and ustorageMethod != ''">ustorage_method = #{ustorageMethod},</if>-->
+<!--            <if test="ushelfLife != null and ushelfLife != ''">ushelf_life = #{ushelfLife},</if>-->
+<!--            <if test="uexpirationDate != null and uexpirationDate != ''">uexpiration_date = #{uexpirationDate},</if>-->
+<!--            <if test="uinventoryQuantity != null">uinventory_quantity = #{uinventoryQuantity},</if>-->
+<!--            &lt;!&ndash;            <if test="udeliveryQuantity != null">udelivery_quantity = #{udeliveryQuantity},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="ureceiptQuantity != null">uReceipt_quantity = #{ureceiptQuantity},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="utransactionPrice != null">utransaction_price = #{utransactionPrice},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="uretailPrice != null">uretail_price = #{uretailPrice},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="umembershipPrice != null">umembership_price = #{umembershipPrice},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="upriceHuicheng != null">uprice_huicheng = #{upriceHuicheng},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="uwholesalePrice != null">uwholesale_price = #{uwholesalePrice},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="uagencyPrice != null">uagency_price = #{uagencyPrice},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="uoutsourcingPrice != null">uoutsourcing_price = #{uoutsourcingPrice},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="upurchasePrice != null">upurchase_price = #{upurchasePrice},</if>&ndash;&gt;-->
+<!--            &lt;!&ndash;            <if test="ucommodityLosses != null and ucommodityLosses != ''">ucommodity_losses = #{ucommodityLosses},</if>&ndash;&gt;-->
+<!--            <if test="uremarks1 != null and uremarks1 != ''">uremarks1 = #{uremarks1},</if>-->
+<!--            <if test="uremarks2 != null and uremarks2 != ''">uremarks2 = #{uremarks2},</if>-->
+<!--            <if test="flag != null">flag = #{flag},</if>-->
+<!--            <if test="status != null">status = #{status},</if>-->
+<!--            <if test="createTime != null">create_time = #{createTime},</if>-->
+<!--            <if test="updateTime != null">update_time = #{updateTime},</if>-->
+
+<!--            <if test="uremarks3 != null">uremarks3=#{uremarks3},</if>-->
+<!--            <if test="ucategoryPlace != null">ucategory_place=#{ucategoryPlace},</if>-->
+<!--            <if test="usortPlace != null">usort_place=#{usortPlace},</if>-->
+<!--            <if test="utradePlace != null">utrade_place=#{utradePlace},</if>-->
+<!--            <if test="utradeOriginplace != null">utrade_originplace=#{utradeOriginplace},</if>-->
+<!--        </trim>-->
+<!--        where uproductid = #{uproductid}-->
+<!--    </update>-->
+
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtEquipmentMapper">
+
+    <resultMap type="XtEquipment" id="XtEquipmentResult">
+        <result property="uequipmentid"    column="uequipmentid"    />
+        <result property="uequipmentTypeid"    column="uequipment_typeid"    />
+        <result property="uequipmentname"    column="uequipmentname"    />
+        <result property="uqrCode"    column="uqr_code"    />
+        <result property="uquipmentCode"    column="uquipment_code"    />
+        <result property="userid"    column="userid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="uareaid"    column="uareaid"    />
+        <result property="ulatitude"    column="ulatitude"    />
+        <result property="ulongitude"    column="ulongitude"    />
+        <result property="uaddress"    column="uaddress"    />
+        <result property="uequipmentStatus"    column="uequipment_status"    />
+        <result property="uequipmentError"    column="uequipment_error"    />
+        <result property="uequipmentTesting"    column="uequipment_testing"    />
+        <result property="ubrownOut"    column="ubrown_out"    />
+        <result property="unetworkError"    column="unetwork_error"    />
+        <result property="uploadDownload"    column="upload_download"    />
+        <result property="drippingSpeedMin"    column="dripping_speed_min"    />
+        <result property="drippingSpeedMax"    column="dripping_speed_max"    />
+        <result property="uequipmentPwd"    column="uequipment_pwd"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+    </resultMap>
+
+    <sql id="selectXtEquipmentVo">
+        select uequipmentid, uequipment_typeid, uequipmentname, uqr_code, uquipment_code, userid, ucompid, udepartmentid, uareaid, ulatitude, ulongitude, uaddress, uequipment_status, uequipment_error, uequipment_testing, ubrown_out, unetwork_error, upload_download, dripping_speed, uequipment_pwd, ucreatedate from xt_equipment
+    </sql>
+
+    <select id="selectXtEquipmentList" parameterType="XtEquipment" resultMap="XtEquipmentResult">
+        <include refid="selectXtEquipmentVo"/>
+        <where>
+            <if test="uequipmentTypeid != null  and uequipmentTypeid != ''"> and uequipment_typeid = #{uequipmentTypeid}</if>
+            <if test="uequipmentname != null  and uequipmentname != ''"> and uequipmentname like concat('%', #{uequipmentname}, '%')</if>
+            <if test="uqrCode != null  and uqrCode != ''"> and uqr_code = #{uqrCode}</if>
+            <if test="uquipmentCode != null  and uquipmentCode != ''"> and uquipment_code = #{uquipmentCode}</if>
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="uareaid != null  and uareaid != ''"> and uareaid = #{uareaid}</if>
+            <if test="ulatitude != null "> and ulatitude = #{ulatitude}</if>
+            <if test="ulongitude != null "> and ulongitude = #{ulongitude}</if>
+            <if test="uaddress != null  and uaddress != ''"> and uaddress = #{uaddress}</if>
+            <if test="uequipmentStatus != null  and uequipmentStatus != ''"> and uequipment_status = #{uequipmentStatus}</if>
+            <if test="uequipmentError != null  and uequipmentError != ''"> and uequipment_error = #{uequipmentError}</if>
+            <if test="uequipmentTesting != null  and uequipmentTesting != ''"> and uequipment_testing = #{uequipmentTesting}</if>
+            <if test="ubrownOut != null  and ubrownOut != ''"> and ubrown_out = #{ubrownOut}</if>
+            <if test="unetworkError != null  and unetworkError != ''"> and unetwork_error = #{unetworkError}</if>
+            <if test="uploadDownload != null  and uploadDownload != ''"> and upload_download = #{uploadDownload}</if>
+            <if test="drippingSpeedMin != null "> and dripping_speed_min = #{drippingSpeedMin}</if>
+            <if test="drippingSpeedMax != null "> and dripping_speed_max = #{drippingSpeedMax}</if>
+            <if test="uequipmentPwd != null  and uequipmentPwd != ''"> and uequipment_pwd = #{uequipmentPwd}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+        </where>
+    </select>
+
+    <select id="selectXtEquipmentByUequipmentid" parameterType="String" resultMap="XtEquipmentResult">
+        <include refid="selectXtEquipmentVo"/>
+        where uequipmentid = #{uequipmentid}
+    </select>
+
+    <insert id="insertXtEquipment" parameterType="XtEquipment">
+        insert into xt_equipment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uequipmentid != null">uequipmentid,</if>
+            <if test="uequipmentTypeid != null and uequipmentTypeid != ''">uequipment_typeid,</if>
+            <if test="uequipmentname != null and uequipmentname != ''">uequipmentname,</if>
+            <if test="uqrCode != null and uqrCode != ''">uqr_code,</if>
+            <if test="uquipmentCode != null and uquipmentCode != ''">uquipment_code,</if>
+            <if test="userid != null and userid != ''">userid,</if>
+            <if test="ucompid != null">ucompid,</if>
+            <if test="udepartmentid != null">udepartmentid,</if>
+            <if test="uareaid != null and uareaid != ''">uareaid,</if>
+            <if test="ulatitude != null">ulatitude,</if>
+            <if test="ulongitude != null">ulongitude,</if>
+            <if test="uaddress != null">uaddress,</if>
+            <if test="uequipmentStatus != null and uequipmentStatus != ''">uequipment_status,</if>
+            <if test="uequipmentError != null and uequipmentError != ''">uequipment_error,</if>
+            <if test="uequipmentTesting != null and uequipmentTesting != ''">uequipment_testing,</if>
+            <if test="ubrownOut != null and ubrownOut != ''">ubrown_out,</if>
+            <if test="unetworkError != null and unetworkError != ''">unetwork_error,</if>
+            <if test="uploadDownload != null and uploadDownload != ''">upload_download,</if>
+            <if test="drippingSpeedMin != null">dripping_speed_min,</if>
+            <if test="drippingSpeedMax != null">dripping_speed_max,</if>
+            <if test="uequipmentPwd != null">uequipment_pwd,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uequipmentid != null">#{uequipmentid},</if>
+            <if test="uequipmentTypeid != null and uequipmentTypeid != ''">#{uequipmentTypeid},</if>
+            <if test="uequipmentname != null and uequipmentname != ''">#{uequipmentname},</if>
+            <if test="uqrCode != null and uqrCode != ''">#{uqrCode},</if>
+            <if test="uquipmentCode != null and uquipmentCode != ''">#{uquipmentCode},</if>
+            <if test="userid != null and userid != ''">#{userid},</if>
+            <if test="ucompid != null">#{ucompid},</if>
+            <if test="udepartmentid != null">#{udepartmentid},</if>
+            <if test="uareaid != null and uareaid != ''">#{uareaid},</if>
+            <if test="ulatitude != null">#{ulatitude},</if>
+            <if test="ulongitude != null">#{ulongitude},</if>
+            <if test="uaddress != null">#{uaddress},</if>
+            <if test="uequipmentStatus != null and uequipmentStatus != ''">#{uequipmentStatus},</if>
+            <if test="uequipmentError != null and uequipmentError != ''">#{uequipmentError},</if>
+            <if test="uequipmentTesting != null and uequipmentTesting != ''">#{uequipmentTesting},</if>
+            <if test="ubrownOut != null and ubrownOut != ''">#{ubrownOut},</if>
+            <if test="unetworkError != null and unetworkError != ''">#{unetworkError},</if>
+            <if test="uploadDownload != null and uploadDownload != ''">#{uploadDownload},</if>
+            <if test="drippingSpeedMin != null">#{drippingSpeedMin},</if>
+            <if test="drippingSpeedMax != null">#{drippingSpeedMax},</if>
+            <if test="uequipmentPwd != null">#{uequipmentPwd},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+        </trim>
+    </insert>
+
+    <update id="updateXtEquipment" parameterType="XtEquipment">
+        update xt_equipment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uequipmentTypeid != null and uequipmentTypeid != ''">uequipment_typeid = #{uequipmentTypeid},</if>
+            <if test="uequipmentname != null and uequipmentname != ''">uequipmentname = #{uequipmentname},</if>
+            <if test="uqrCode != null and uqrCode != ''">uqr_code = #{uqrCode},</if>
+            <if test="uquipmentCode != null and uquipmentCode != ''">uquipment_code = #{uquipmentCode},</if>
+            <if test="userid != null and userid != ''">userid = #{userid},</if>
+            <if test="ucompid != null">ucompid = #{ucompid},</if>
+            <if test="udepartmentid != null">udepartmentid = #{udepartmentid},</if>
+            <if test="uareaid != null and uareaid != ''">uareaid = #{uareaid},</if>
+            <if test="ulatitude != null">ulatitude = #{ulatitude},</if>
+            <if test="ulongitude != null">ulongitude = #{ulongitude},</if>
+            <if test="uaddress != null">uaddress = #{uaddress},</if>
+            <if test="uequipmentStatus != null and uequipmentStatus != ''">uequipment_status = #{uequipmentStatus},</if>
+            <if test="uequipmentError != null and uequipmentError != ''">uequipment_error = #{uequipmentError},</if>
+            <if test="uequipmentTesting != null and uequipmentTesting != ''">uequipment_testing = #{uequipmentTesting},</if>
+            <if test="ubrownOut != null and ubrownOut != ''">ubrown_out = #{ubrownOut},</if>
+            <if test="unetworkError != null and unetworkError != ''">unetwork_error = #{unetworkError},</if>
+            <if test="uploadDownload != null and uploadDownload != ''">upload_download = #{uploadDownload},</if>
+            <if test="drippingSpeedMin != null">dripping_speed = #{drippingSpeedMin},</if>
+            <if test="drippingSpeedMax != null">dripping_speed = #{drippingSpeedMax},</if>
+            <if test="uequipmentPwd != null">uequipment_pwd = #{uequipmentPwd},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+        </trim>
+        where uequipmentid = #{uequipmentid}
+    </update>
+
+    <delete id="deleteXtEquipmentByUequipmentid" parameterType="String">
+        delete from xt_equipment where uequipmentid = #{uequipmentid}
+    </delete>
+
+    <delete id="deleteXtEquipmentByUequipmentids" parameterType="String">
+        delete from xt_equipment where uequipmentid in
+        <foreach item="uequipmentid" collection="array" open="(" separator="," close=")">
+            #{uequipmentid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.global.mapper.XtPriceMapper">
+
+    <resultMap type="XtPrice" id="XtPriceResult">
+        <result property="upriceid"    column="upriceid"    />
+        <result property="ucostType"    column="ucost_type"    />
+        <result property="uprice"    column="uprice"    />
+        <result property="uscene"    column="uscene"    />
+    </resultMap>
+
+    <sql id="selectXtPriceVo">
+        select upriceid, ucost_type, uprice, uscene from xt_price
+    </sql>
+
+    <select id="selectXtPriceList" parameterType="XtPrice" resultMap="XtPriceResult">
+        <include refid="selectXtPriceVo"/>
+        <where>
+            <if test="ucostType != null  and ucostType != ''"> and ucost_type = #{ucostType}</if>
+            <if test="uprice != null "> and uprice = #{uprice}</if>
+            <if test="uscene != null  and uscene != ''"> and uscene = #{uscene}</if>
+        </where>
+    </select>
+
+    <select id="selectXtPriceByUpriceid" parameterType="String" resultMap="XtPriceResult">
+        <include refid="selectXtPriceVo"/>
+        where upriceid = #{upriceid}
+    </select>
+
+    <insert id="insertXtPrice" parameterType="XtPrice">
+        insert into xt_price
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="upriceid != null">upriceid,</if>
+            <if test="ucostType != null">ucost_type,</if>
+            <if test="uprice != null">uprice,</if>
+            <if test="uscene != null">uscene,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="upriceid != null">#{upriceid},</if>
+            <if test="ucostType != null">#{ucostType},</if>
+            <if test="uprice != null">#{uprice},</if>
+            <if test="uscene != null">#{uscene},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtPrice" parameterType="XtPrice">
+        update xt_price
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ucostType != null">ucost_type = #{ucostType},</if>
+            <if test="uprice != null">uprice = #{uprice},</if>
+            <if test="uscene != null">uscene = #{uscene},</if>
+        </trim>
+        where upriceid = #{upriceid}
+    </update>
+
+    <delete id="deleteXtPriceByUpriceid" parameterType="String">
+        delete from xt_price where upriceid = #{upriceid}
+    </delete>
+
+    <delete id="deleteXtPriceByUpriceids" parameterType="String">
+        delete from xt_price where upriceid in
+        <foreach item="upriceid" collection="array" open="(" separator="," close=")">
+            #{upriceid}
+        </foreach>
+    </delete>
+</mapper>

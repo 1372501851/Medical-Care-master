@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.im.mapper.XtChatMessageMapper">
+
+    <resultMap id="BaseResultMap" type="com.ruoyi.project.im.domain.XtChatMessage">
+            <id property="messageId" column="message_id" jdbcType="VARCHAR"/>
+            <result property="fromId" column="from_id" jdbcType="VARCHAR"/>
+            <result property="toId" column="to_id" jdbcType="VARCHAR"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="messageType" column="message_type" jdbcType="CHAR"/>
+            <result property="createTime" column="create_time" jdbcType="BIGINT"/>
+            <result property="taskId" column="task_id" jdbcType="VARCHAR"/>
+             <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="type" column="type" jdbcType="VARCHAR"/>
+            <result property="second" column="second" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        message_id,from_id,to_id,
+        content,message_type,create_time,
+        task_id,name,avatar,type,second,weizhi
+    </sql>
+
+
+    <insert id="saveGroupMessageToMySQL" parameterType="java.util.List">
+        insert into xt_chat_message
+        ( message_id,from_id,to_id,
+        content,message_type,create_time,
+        task_id,name,avatar,type,second
+        )
+        values
+        <foreach collection="list" item="msg" separator=",">
+            (
+        #{msg.messageId},
+        #{msg.fromId},
+        #{msg.toId},
+        #{msg.content},
+        #{msg.messageType},
+        #{msg.createTime},
+        #{msg.taskId},
+        #{msg.name},
+        #{msg.avatar},
+        #{msg.type},
+        #{msg.second}
+        )
+        </foreach>
+
+    </insert>
+
+    <insert id="savePrivateMessageToMySQL" parameterType="java.util.List">
+        insert into xt_chat_message
+        ( message_id,from_id,to_id,
+        content,message_type,create_time,
+        task_id,name,avatar,type,second
+        )
+        values
+        <foreach collection="list" item="msg" separator=",">
+            (
+            #{msg.messageId},
+            #{msg.fromId},
+            #{msg.toId},
+            #{msg.content},
+            #{msg.messageType},
+            #{msg.createTime},
+            #{msg.taskId},
+            #{msg.name},
+            #{msg.avatar},
+            #{msg.type},
+            #{msg.second}
+            )
+        </foreach>
+    </insert>
+    <delete id="delMessageListByIds">
+        delete from xt_chat_message where message_id in
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryPrivateHistoryMessageList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from xt_chat_message
+        where from_id = #{fromId} and to_id = #{toId} and  message_type = #{messageType} and weizhi = #{weizhi}
+        order by create_time desc
+    </select>
+
+    <select id="queryGroupHistoryMessageList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from xt_chat_message
+        where to_id = #{toId} and  message_type = #{messageType}
+        order by create_time desc
+    </select>
+    <select id="selectMessageListAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from xt_chat_message
+        order by create_time desc
+    </select>
+
+</mapper>

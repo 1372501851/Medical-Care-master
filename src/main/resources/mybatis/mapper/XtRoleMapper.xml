@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtRoleMapper">
+
+    <resultMap type="XtRole" id="XtRoleResult">
+        <result property="uroleid"    column="uroleid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="urolename"    column="urolename"    />
+        <result property="uroletype"    column="uroletype"    />
+    </resultMap>
+
+    <sql id="selectXtRoleVo">
+        select uroleid, ucompid, urolename, uroletype from xt_role
+    </sql>
+
+    <select id="selectXtRoleList" parameterType="XtRole" resultMap="XtRoleResult">
+        <include refid="selectXtRoleVo"/>
+        <where>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="urolename != null  and urolename != ''"> and urolename like concat('%', #{urolename}, '%')</if>
+            <if test="uroletype != null  and uroletype != ''"> and uroletype = #{uroletype}</if>
+        </where>
+    </select>
+
+    <select id="selectXtRoleByUroleid" parameterType="String" resultMap="XtRoleResult">
+        <include refid="selectXtRoleVo"/>
+        where uroleid = #{uroleid}
+    </select>
+
+    <insert id="insertXtRole" parameterType="XtRole">
+        insert into xt_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uroleid != null">uroleid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="urolename != null and urolename != ''">urolename,</if>
+            <if test="uroletype != null and uroletype != ''">uroletype,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uroleid != null">#{uroleid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="urolename != null and urolename != ''">#{urolename},</if>
+            <if test="uroletype != null and uroletype != ''">#{uroletype},</if>
+         </trim>
+    </insert>
+    <insert id="insertXtRoleMenu">
+        insert into xt_role_menu values (#{roleid},#{menuid});
+    </insert>
+
+    <insert id="insertXtRoldDao" parameterType="xtRoldDao">
+        insert into xt_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uroleid != null">uroleid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="urolename != null and urolename != ''">urolename,</if>
+            <if test="uroletype != null and uroletype != ''">uroletype,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uroleid != null">#{uroleid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="urolename != null and urolename != ''">#{urolename},</if>
+            <if test="uroletype != null and uroletype != ''">#{uroletype},</if>
+        </trim>
+    </insert>
+
+    <update id="updateXtRole" parameterType="XtRole">
+        update xt_role
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="urolename != null and urolename != ''">urolename = #{urolename},</if>
+            <if test="uroletype != null and uroletype != ''">uroletype = #{uroletype},</if>
+        </trim>
+        where uroleid = #{uroleid}
+    </update>
+
+    <delete id="deleteXtRoleByUroleid" parameterType="String">
+        delete from xt_role where uroleid = #{uroleid}
+    </delete>
+
+    <delete id="deleteXtRoleByUroleids" parameterType="String">
+        delete from xt_role where uroleid in
+        <foreach item="uroleid" collection="array" open="(" separator="," close=")">
+            #{uroleid}
+        </foreach>
+    </delete>
+</mapper>

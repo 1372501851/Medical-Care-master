@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtEquipmentTypeMapper">
+
+    <resultMap type="XtEquipmentType" id="XtEquipmentTypeResult">
+        <result property="uequipmentTypeid"    column="uequipment_typeid"    />
+        <result property="utypename"    column="utypename"    />
+        <result property="uparentid"    column="uparentid"    />
+        <result property="pic"    column="pic"    />
+    </resultMap>
+
+    <sql id="selectXtEquipmentTypeVo">
+        select uequipment_typeid, utypename, uparentid,pic from xt_equipment_type
+    </sql>
+
+    <select id="selectXtEquipmentTypeList" parameterType="XtEquipmentType" resultMap="XtEquipmentTypeResult">
+        <include refid="selectXtEquipmentTypeVo"/>
+        <where>
+            <if test="utypename != null  and utypename != ''"> and utypename like concat('%', #{utypename}, '%')</if>
+            <if test="uparentid != null  and uparentid != ''"> and uparentid = #{uparentid}</if>
+            <if test="pic != null  and pic != ''"> and pic = #{pic}</if>
+        </where>
+    </select>
+
+    <select id="selectXtEquipmentTypeByUequipmentTypeid" parameterType="String" resultMap="XtEquipmentTypeResult">
+        <include refid="selectXtEquipmentTypeVo"/>
+        where uequipment_typeid = #{uequipmentTypeid}
+    </select>
+    <select id="selectXtEquipmentTypeListAll" resultMap="XtEquipmentTypeResult">
+        <include refid="selectXtEquipmentTypeVo"/> WHERE ustatus = "1";
+    </select>
+
+    <insert id="insertXtEquipmentType" parameterType="XtEquipmentType">
+        insert into xt_equipment_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uequipmentTypeid != null">uequipment_typeid,</if>
+            <if test="utypename != null and utypename != ''">utypename,</if>
+            <if test="uparentid != null">uparentid,</if>
+            <if test="pic != null">pic,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uequipmentTypeid != null">#{uequipmentTypeid},</if>
+            <if test="utypename != null and utypename != ''">#{utypename},</if>
+            <if test="uparentid != null">#{uparentid},</if>
+            <if test="pic != null">#{pic},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtEquipmentType" parameterType="XtEquipmentType">
+        update xt_equipment_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="utypename != null and utypename != ''">utypename = #{utypename},</if>
+            <if test="uparentid != null">uparentid = #{uparentid},</if>
+            <if test="pic != null">pic = #{pic},</if>
+        </trim>
+        where uequipment_typeid = #{uequipmentTypeid}
+    </update>
+
+    <delete id="deleteXtEquipmentTypeByUequipmentTypeid" parameterType="String">
+        delete from xt_equipment_type where uequipment_typeid = #{uequipmentTypeid}
+    </delete>
+
+    <delete id="deleteXtEquipmentTypeByUequipmentTypeids" parameterType="String">
+        delete from xt_equipment_type where uequipment_typeid in
+        <foreach item="uequipmentTypeid" collection="array" open="(" separator="," close=")">
+            #{uequipmentTypeid}
+        </foreach>
+    </delete>
+</mapper>

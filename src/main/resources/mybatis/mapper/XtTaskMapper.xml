@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.task.mapper.XtTaskMapper">
+
+    <resultMap type="XtTask" id="XtTaskResult">
+        <result property="utaskid"    column="utaskid"    />
+        <result property="utaskname"    column="utaskname"    />
+        <result property="userid"    column="userid"    />
+        <result property="ubednoid"    column="ubednoid"    />
+        <result property="ubedno"    column="ubedno"    />
+        <result property="uroomid"    column="uroomid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="utaskForm"    column="utask_form"    />
+        <result property="udesc"    column="udesc"    />
+        <result property="ushowStartTime"    column="ushow_start_time"    />
+        <result property="ushowEndTime"    column="ushow_end_time"    />
+        <result property="utaskType"    column="utask_type"    />
+        <result property="ustartTime"    column="ustart_time"    />
+        <result property="uendTime"    column="uend_time"    />
+        <result property="usexType"    column="usex_type"    />
+        <result property="uprice"    column="uprice"    />
+        <result property="ucostType"    column="ucost_type"    />
+        <result property="userviceTimelength"    column="uservice_timelength"    />
+        <result property="upersonLimit"    column="uperson_limit"    />
+        <result property="ustatus"    column="ustatus"    />
+        <result property="utouserid"    column="utouserid"    />
+        <result property="uname"    column="uname"    />
+        <result property="usex"    column="usex"    />
+        <result property="ucardid"    column="ucardid"    />
+        <result property="ubirthdate"    column="ubirthdate"    />
+        <result property="uheight"    column="uheight"    />
+        <result property="uploity"    column="uploity"    />
+        <result property="uaddress"    column="uaddress"    />
+        <result property="umarriage"    column="umarriage"    />
+        <result property="umobile"    column="umobile"    />
+        <result property="uemertel"    column="uemertel"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+    </resultMap>
+
+    <sql id="selectXtTaskVo">
+        select utaskid, utaskname, userid, ubednoid, ubedno, uroomid, ucompid, udepartmentid, uemployeeid, utask_form, udesc, ushow_start_time, ushow_end_time, utask_type, ustart_time, uend_time, usex_type, uprice, ucost_type, uservice_timelength, uperson_limit, ustatus, utouserid, uname, usex, ucardid, ubirthdate, uheight, uploity, uaddress, umarriage, umobile, uemertel, ucreatedate from xt_task
+    </sql>
+
+    <select id="selectXtTaskList" parameterType="XtTask" resultMap="XtTaskResult">
+        <include refid="selectXtTaskVo"/>
+        <where>
+            <if test="utaskname != null  and utaskname != ''"> and utaskname like concat('%', #{utaskname}, '%')</if>
+            <if test="userid != null "> and userid = #{userid}</if>
+            <if test="ubednoid != null  and ubednoid != ''"> and ubednoid = #{ubednoid}</if>
+            <if test="ubedno != null  and ubedno != ''"> and ubedno = #{ubedno}</if>
+            <if test="uroomid != null  and uroomid != ''"> and uroomid = #{uroomid}</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="utaskForm != null  and utaskForm != ''"> and utask_form = #{utaskForm}</if>
+            <if test="udesc != null  and udesc != ''"> and udesc = #{udesc}</if>
+            <if test="ushowStartTime != null "> and ushow_start_time = #{ushowStartTime}</if>
+            <if test="ushowEndTime != null "> and ushow_end_time = #{ushowEndTime}</if>
+            <if test="utaskType != null  and utaskType != ''"> and utask_type = #{utaskType}</if>
+            <if test="ustartTime != null "> and ustart_time = #{ustartTime}</if>
+            <if test="uendTime != null "> and uend_time = #{uendTime}</if>
+            <if test="usexType != null  and usexType != ''"> and usex_type = #{usexType}</if>
+            <if test="uprice != null "> and uprice = #{uprice}</if>
+            <if test="ucostType != null  and ucostType != ''"> and ucost_type = #{ucostType}</if>
+            <if test="userviceTimelength != null "> and uservice_timelength = #{userviceTimelength}</if>
+            <if test="upersonLimit != null  and upersonLimit != ''"> and uperson_limit = #{upersonLimit}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+            <if test="utouserid != null  and utouserid != ''"> and utouserid = #{utouserid}</if>
+            <if test="uname != null  and uname != ''"> and uname like concat('%', #{uname}, '%')</if>
+            <if test="usex != null  and usex != ''"> and usex = #{usex}</if>
+            <if test="ucardid != null  and ucardid != ''"> and ucardid = #{ucardid}</if>
+            <if test="ubirthdate != null "> and ubirthdate = #{ubirthdate}</if>
+            <if test="uheight != null "> and uheight = #{uheight}</if>
+            <if test="uploity != null  and uploity != ''"> and uploity = #{uploity}</if>
+            <if test="uaddress != null  and uaddress != ''"> and uaddress = #{uaddress}</if>
+            <if test="umarriage != null  and umarriage != ''"> and umarriage = #{umarriage}</if>
+            <if test="umobile != null  and umobile != ''"> and umobile = #{umobile}</if>
+            <if test="uemertel != null  and uemertel != ''"> and uemertel = #{uemertel}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+        </where>
+    </select>
+
+    <select id="selectXtTaskByUtaskid" parameterType="String" resultMap="XtTaskResult">
+        <include refid="selectXtTaskVo"/>
+        where utaskid = #{utaskid}
+    </select>
+
+    <insert id="insertXtTask" parameterType="XtTask">
+        insert into xt_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="utaskid != null">utaskid,</if>
+            <if test="utaskname != null and utaskname != ''">utaskname,</if>
+            <if test="userid != null">userid,</if>
+            <if test="ubednoid != null">ubednoid,</if>
+            <if test="ubedno != null">ubedno,</if>
+            <if test="uroomid != null">uroomid,</if>
+            <if test="ucompid != null">ucompid,</if>
+            <if test="udepartmentid != null">udepartmentid,</if>
+            <if test="uemployeeid != null">uemployeeid,</if>
+            <if test="utaskForm != null">utask_form,</if>
+            <if test="udesc != null">udesc,</if>
+            <if test="ushowStartTime != null">ushow_start_time,</if>
+            <if test="ushowEndTime != null">ushow_end_time,</if>
+            <if test="utaskType != null">utask_type,</if>
+            <if test="ustartTime != null">ustart_time,</if>
+            <if test="uendTime != null">uend_time,</if>
+            <if test="usexType != null and usexType != ''">usex_type,</if>
+            <if test="uprice != null">uprice,</if>
+            <if test="ucostType != null">ucost_type,</if>
+            <if test="userviceTimelength != null">uservice_timelength,</if>
+            <if test="upersonLimit != null">uperson_limit,</if>
+            <if test="ustatus != null and ustatus != ''">ustatus,</if>
+            <if test="utouserid != null">utouserid,</if>
+            <if test="uname != null">uname,</if>
+            <if test="usex != null">usex,</if>
+            <if test="ucardid != null">ucardid,</if>
+            <if test="ubirthdate != null">ubirthdate,</if>
+            <if test="uheight != null">uheight,</if>
+            <if test="uploity != null">uploity,</if>
+            <if test="uaddress != null">uaddress,</if>
+            <if test="umarriage != null">umarriage,</if>
+            <if test="umobile != null">umobile,</if>
+            <if test="uemertel != null">uemertel,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="utaskid != null">#{utaskid},</if>
+            <if test="utaskname != null and utaskname != ''">#{utaskname},</if>
+            <if test="userid != null">#{userid},</if>
+            <if test="ubednoid != null">#{ubednoid},</if>
+            <if test="ubedno != null">#{ubedno},</if>
+            <if test="uroomid != null">#{uroomid},</if>
+            <if test="ucompid != null">#{ucompid},</if>
+            <if test="udepartmentid != null">#{udepartmentid},</if>
+            <if test="uemployeeid != null">#{uemployeeid},</if>
+            <if test="utaskForm != null">#{utaskForm},</if>
+            <if test="udesc != null">#{udesc},</if>
+            <if test="ushowStartTime != null">#{ushowStartTime},</if>
+            <if test="ushowEndTime != null">#{ushowEndTime},</if>
+            <if test="utaskType != null">#{utaskType},</if>
+            <if test="ustartTime != null">#{ustartTime},</if>
+            <if test="uendTime != null">#{uendTime},</if>
+            <if test="usexType != null and usexType != ''">#{usexType},</if>
+            <if test="uprice != null">#{uprice},</if>
+            <if test="ucostType != null">#{ucostType},</if>
+            <if test="userviceTimelength != null">#{userviceTimelength},</if>
+            <if test="upersonLimit != null">#{upersonLimit},</if>
+            <if test="ustatus != null and ustatus != ''">#{ustatus},</if>
+            <if test="utouserid != null">#{utouserid},</if>
+            <if test="uname != null">#{uname},</if>
+            <if test="usex != null">#{usex},</if>
+            <if test="ucardid != null">#{ucardid},</if>
+            <if test="ubirthdate != null">#{ubirthdate},</if>
+            <if test="uheight != null">#{uheight},</if>
+            <if test="uploity != null">#{uploity},</if>
+            <if test="uaddress != null">#{uaddress},</if>
+            <if test="umarriage != null">#{umarriage},</if>
+            <if test="umobile != null">#{umobile},</if>
+            <if test="uemertel != null">#{uemertel},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+        </trim>
+    </insert>
+
+    <update id="updateXtTask" parameterType="XtTask">
+        update xt_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="utaskname != null and utaskname != ''">utaskname = #{utaskname},</if>
+            <if test="userid != null">userid = #{userid},</if>
+            <if test="ubednoid != null">ubednoid = #{ubednoid},</if>
+            <if test="ubedno != null">ubedno = #{ubedno},</if>
+            <if test="uroomid != null">uroomid = #{uroomid},</if>
+            <if test="ucompid != null">ucompid = #{ucompid},</if>
+            <if test="udepartmentid != null">udepartmentid = #{udepartmentid},</if>
+            <if test="uemployeeid != null">uemployeeid = #{uemployeeid},</if>
+            <if test="utaskForm != null">utask_form = #{utaskForm},</if>
+            <if test="udesc != null">udesc = #{udesc},</if>
+            <if test="ushowStartTime != null">ushow_start_time = #{ushowStartTime},</if>
+            <if test="ushowEndTime != null">ushow_end_time = #{ushowEndTime},</if>
+            <if test="utaskType != null">utask_type = #{utaskType},</if>
+            <if test="ustartTime != null">ustart_time = #{ustartTime},</if>
+            <if test="uendTime != null">uend_time = #{uendTime},</if>
+            <if test="usexType != null and usexType != ''">usex_type = #{usexType},</if>
+            <if test="uprice != null">uprice = #{uprice},</if>
+            <if test="ucostType != null">ucost_type = #{ucostType},</if>
+            <if test="userviceTimelength != null">uservice_timelength = #{userviceTimelength},</if>
+            <if test="upersonLimit != null">uperson_limit = #{upersonLimit},</if>
+            <if test="ustatus != null and ustatus != ''">ustatus = #{ustatus},</if>
+            <if test="utouserid != null">utouserid = #{utouserid},</if>
+            <if test="uname != null">uname = #{uname},</if>
+            <if test="usex != null">usex = #{usex},</if>
+            <if test="ucardid != null">ucardid = #{ucardid},</if>
+            <if test="ubirthdate != null">ubirthdate = #{ubirthdate},</if>
+            <if test="uheight != null">uheight = #{uheight},</if>
+            <if test="uploity != null">uploity = #{uploity},</if>
+            <if test="uaddress != null">uaddress = #{uaddress},</if>
+            <if test="umarriage != null">umarriage = #{umarriage},</if>
+            <if test="umobile != null">umobile = #{umobile},</if>
+            <if test="uemertel != null">uemertel = #{uemertel},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+        </trim>
+        where utaskid = #{utaskid}
+    </update>
+
+    <delete id="deleteXtTaskByUtaskid" parameterType="String">
+        delete from xt_task where utaskid = #{utaskid}
+    </delete>
+
+    <delete id="deleteXtTaskByUtaskids" parameterType="String">
+        delete from xt_task where utaskid in
+        <foreach item="utaskid" collection="array" open="(" separator="," close=")">
+            #{utaskid}
+        </foreach>
+    </delete>
+</mapper>

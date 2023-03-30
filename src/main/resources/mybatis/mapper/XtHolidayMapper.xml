@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.global.mapper.XtHolidayMapper">
+
+    <resultMap type="XtHoliday" id="XtHolidayResult">
+        <result property="uholidayid"    column="uholidayid"    />
+        <result property="udate"    column="udate"    />
+        <result property="uholidayname"    column="uholidayname"    />
+        <result property="uifbuban"    column="uifbuban"    />
+    </resultMap>
+
+    <sql id="selectXtHolidayVo">
+        select uholidayid, udate, uholidayname, uifbuban from xt_holiday
+    </sql>
+
+    <select id="selectXtHolidayList" parameterType="XtHoliday" resultMap="XtHolidayResult">
+        <include refid="selectXtHolidayVo"/>
+        <where>
+            <if test="udate != null "> and udate = #{udate}</if>
+            <if test="uholidayname != null  and uholidayname != ''"> and uholidayname like concat('%', #{uholidayname}, '%')</if>
+            <if test="uifbuban != null  and uifbuban != ''"> and uifbuban = #{uifbuban}</if>
+        </where>
+    </select>
+
+    <select id="selectXtHolidayByUholidayid" parameterType="String" resultMap="XtHolidayResult">
+        <include refid="selectXtHolidayVo"/>
+        where uholidayid = #{uholidayid}
+    </select>
+
+    <insert id="insertXtHoliday" parameterType="XtHoliday">
+        insert into xt_holiday
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uholidayid != null">uholidayid,</if>
+            <if test="udate != null">udate,</if>
+            <if test="uholidayname != null and uholidayname != ''">uholidayname,</if>
+            <if test="uifbuban != null and uifbuban != ''">uifbuban,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uholidayid != null">#{uholidayid},</if>
+            <if test="udate != null">#{udate},</if>
+            <if test="uholidayname != null and uholidayname != ''">#{uholidayname},</if>
+            <if test="uifbuban != null and uifbuban != ''">#{uifbuban},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtHoliday" parameterType="XtHoliday">
+        update xt_holiday
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="udate != null">udate = #{udate},</if>
+            <if test="uholidayname != null and uholidayname != ''">uholidayname = #{uholidayname},</if>
+            <if test="uifbuban != null and uifbuban != ''">uifbuban = #{uifbuban},</if>
+        </trim>
+        where uholidayid = #{uholidayid}
+    </update>
+
+    <delete id="deleteXtHolidayByUholidayid" parameterType="String">
+        delete from xt_holiday where uholidayid = #{uholidayid}
+    </delete>
+
+    <delete id="deleteXtHolidayByUholidayids" parameterType="String">
+        delete from xt_holiday where uholidayid in
+        <foreach item="uholidayid" collection="array" open="(" separator="," close=")">
+            #{uholidayid}
+        </foreach>
+    </delete>
+</mapper>

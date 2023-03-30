@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtMessageMapper">
+    
+    <resultMap type="XtMessage" id="XtMessageResult">
+        <result property="umessageid"    column="umessageid"    />
+        <result property="umessageType"    column="umessage_type"    />
+        <result property="toId"    column="to_id"    />
+        <result property="ucontent"    column="ucontent"    />
+        <result property="uinfoid"    column="uinfoid"    />
+        <result property="ustatus"    column="ustatus"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="fromId"    column="from_id"    />
+        <result property="utaskid"    column="utaskid"    />
+    </resultMap>
+
+    <sql id="selectXtMessageVo">
+        select umessageid, umessage_type, to_id, ucontent, uinfoid, ustatus, create_time, from_id, utaskid from xt_message
+    </sql>
+
+    <select id="selectXtMessageList" parameterType="XtMessage" resultMap="XtMessageResult">
+        <include refid="selectXtMessageVo"/>
+        <where>  
+            <if test="umessageType != null  and umessageType != ''"> and umessage_type = #{umessageType}</if>
+            <if test="toId != null  and toId != ''"> and to_id = #{toId}</if>
+            <if test="ucontent != null  and ucontent != ''"> and ucontent = #{ucontent}</if>
+            <if test="uinfoid != null  and uinfoid != ''"> and uinfoid = #{uinfoid}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+            <if test="fromId != null  and fromId != ''"> and from_id = #{fromId}</if>
+            <if test="utaskid != null  and utaskid != ''"> and utaskid = #{utaskid}</if>
+        </where>
+    </select>
+    
+    <select id="selectXtMessageByUmessageid" parameterType="String" resultMap="XtMessageResult">
+        <include refid="selectXtMessageVo"/>
+        where umessageid = #{umessageid}
+    </select>
+        
+    <insert id="insertXtMessage" parameterType="XtMessage">
+        insert into xt_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="umessageid != null">umessageid,</if>
+            <if test="umessageType != null and umessageType != ''">umessage_type,</if>
+            <if test="toId != null and toId != ''">to_id,</if>
+            <if test="ucontent != null">ucontent,</if>
+            <if test="uinfoid != null">uinfoid,</if>
+            <if test="ustatus != null and ustatus != ''">ustatus,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="fromId != null">from_id,</if>
+            <if test="utaskid != null">utaskid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="umessageid != null">#{umessageid},</if>
+            <if test="umessageType != null and umessageType != ''">#{umessageType},</if>
+            <if test="toId != null and toId != ''">#{toId},</if>
+            <if test="ucontent != null">#{ucontent},</if>
+            <if test="uinfoid != null">#{uinfoid},</if>
+            <if test="ustatus != null and ustatus != ''">#{ustatus},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="fromId != null">#{fromId},</if>
+            <if test="utaskid != null">#{utaskid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtMessage" parameterType="XtMessage">
+        update xt_message
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="umessageType != null and umessageType != ''">umessage_type = #{umessageType},</if>
+            <if test="toId != null and toId != ''">to_id = #{toId},</if>
+            <if test="ucontent != null">ucontent = #{ucontent},</if>
+            <if test="uinfoid != null">uinfoid = #{uinfoid},</if>
+            <if test="ustatus != null and ustatus != ''">ustatus = #{ustatus},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="fromId != null">from_id = #{fromId},</if>
+            <if test="utaskid != null">utaskid = #{utaskid},</if>
+        </trim>
+        where umessageid = #{umessageid}
+    </update>
+
+    <delete id="deleteXtMessageByUmessageid" parameterType="String">
+        delete from xt_message where umessageid = #{umessageid}
+    </delete>
+
+    <delete id="deleteXtMessageByUmessageids" parameterType="String">
+        delete from xt_message where umessageid in 
+        <foreach item="umessageid" collection="array" open="(" separator="," close=")">
+            #{umessageid}
+        </foreach>
+    </delete>
+</mapper>

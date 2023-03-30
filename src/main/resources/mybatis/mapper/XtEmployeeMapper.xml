@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtEmployeeMapper">
+
+    <resultMap type="XtEmployee" id="XtEmployeeResult">
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="userid"    column="userid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="uname"    column="uname"    />
+        <result property="ucardtype"    column="ucardtype"    />
+        <result property="ucardid"    column="ucardid"    />
+        <result property="usex"    column="usex"    />
+        <result property="unation"    column="unation"    />
+        <result property="ubirthdate"    column="ubirthdate"    />
+        <result property="uheight"    column="uheight"    />
+        <result property="uploity"    column="uploity"    />
+        <result property="unative"    column="unative"    />
+        <result property="uresidence"    column="uresidence"    />
+        <result property="uaddress"    column="uaddress"    />
+        <result property="umobile"    column="umobile"    />
+        <result property="uemertel"    column="uemertel"    />
+        <result property="umarriage"    column="umarriage"    />
+        <result property="uspresidence"    column="uspresidence"    />
+        <result property="uspunit"    column="uspunit"    />
+        <result property="uworkdate"    column="uworkdate"    />
+        <result property="ukultur"    column="ukultur"    />
+        <result property="udegree"    column="udegree"    />
+        <result property="uacademy"    column="uacademy"    />
+        <result property="ugraduate"    column="ugraduate"    />
+        <result property="uspecialty"    column="uspecialty"    />
+        <result property="ufllevel"    column="ufllevel"    />
+        <result property="ucomlevel"    column="ucomlevel"    />
+        <result property="utechp"    column="utechp"    />
+        <result property="uspecialties"    column="uspecialties"    />
+        <result property="uheadPic"    column="uhead_pic"    />
+        <result property="uidcardzPic"    column="uidcardz_pic"    />
+        <result property="uidcardfPic"    column="uidcardf_pic"    />
+        <result property="ueducationPic"    column="ueducation_pic"    />
+        <result property="utitlesPic"    column="utitles_pic"    />
+        <result property="upracticingPic"    column="upracticing_pic"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+        <result property="usertype"    column="usertype"    />
+        <result property="uroleid"    column="uroleid"    />
+        <result property="applyStatus" column="apply_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+
+        <result property="status"     column="status"      />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="administrative"    column="administrative"    />
+
+        <result property="ucity"    column="ucity"    />
+        <result property="uage"    column="uage"    />
+        <result property="udetailedAddress"    column="udetailed_address"    />
+        <result property="upost"    column="upost"    />
+        <result property="autitele"    column="autitele"    />
+        <result property="uotherrelevantpic"    column="uotherrelevantpic"    />
+        <result property="uspareOne"    column="uspare_one"    />
+        <result property="uspareTwo"    column="uspare_two"    />
+        <result property="uspareThree"    column="uspare_three"    />
+    </resultMap>
+
+    <sql id="selectXtEmployeeVo">
+        select uemployeeid, userid, ucompid, udepartmentid, uname, ucardtype, ucardid, usex, unation, ubirthdate, uheight, uploity, unative, uresidence, uaddress, umobile, uemertel, umarriage, uspresidence, uspunit, uworkdate, ukultur, udegree, uacademy, ugraduate, uspecialty, ufllevel, ucomlevel, utechp, uspecialties, uhead_pic, uidcardz_pic, uidcardf_pic, ueducation_pic, utitles_pic, upracticing_pic, ucreatedate, usertype
+            ,uroleid,apply_status,create_time,update_time,status, del_flag,administrative,uoccupation
+        from xt_employee
+    </sql>
+
+    <select id="selectXtEmployeeList" parameterType="XtEmployee" resultMap="XtEmployeeResult">
+        select * FROM xt_employee
+        where del_flag = '0'
+        <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+        <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+        <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+        <if test="ucardtype != null  and ucardtype != ''"> and ucardtype = #{ucardtype}</if>
+        <if test="ucardid != null  and ucardid != ''"> and ucardid = #{ucardid}</if>
+        <if test="usex != null  and usex != ''"> and usex = #{usex}</if>
+        <if test="unation != null  and unation != ''"> and unation = #{unation}</if>
+        <if test="ubirthdate != null "> and ubirthdate = #{ubirthdate}</if>
+        <if test="uheight != null "> and uheight = #{uheight}</if>
+        <if test="uploity != null  and uploity != ''"> and uploity = #{uploity}</if>
+        <if test="unative != null  and unative != ''"> and unative = #{unative}</if>
+        <if test="uresidence != null  and uresidence != ''"> and uresidence = #{uresidence}</if>
+        <if test="uaddress != null  and uaddress != ''"> and uaddress = #{uaddress}</if>
+        <if test="umobile != null  and umobile != ''"> and umobile = #{umobile}</if>
+        <if test="uemertel != null  and uemertel != ''"> and uemertel = #{uemertel}</if>
+        <if test="umarriage != null  and umarriage != ''"> and umarriage = #{umarriage}</if>
+        <if test="uspresidence != null  and uspresidence != ''"> and uspresidence = #{uspresidence}</if>
+        <if test="uspunit != null  and uspunit != ''"> and uspunit = #{uspunit}</if>
+        <if test="uworkdate != null  and uworkdate != ''"> and uworkdate = #{uworkdate}</if>
+        <if test="ukultur != null  and ukultur != ''"> and ukultur = #{ukultur}</if>
+        <if test="udegree != null  and udegree != ''"> and udegree = #{udegree}</if>
+        <if test="uacademy != null  and uacademy != ''"> and uacademy = #{uacademy}</if>
+        <if test="ugraduate != null  and ugraduate != ''"> and ugraduate = #{ugraduate}</if>
+        <if test="uspecialty != null  and uspecialty != ''"> and uspecialty = #{uspecialty}</if>
+        <if test="ufllevel != null  and ufllevel != ''"> and ufllevel = #{ufllevel}</if>
+        <if test="ucomlevel != null  and ucomlevel != ''"> and ucomlevel = #{ucomlevel}</if>
+        <if test="utechp != null  and utechp != ''"> and utechp = #{utechp}</if>
+        <if test="uspecialties != null  and uspecialties != ''"> and uspecialties = #{uspecialties}</if>
+        <if test="uheadPic != null  and uheadPic != ''"> and uhead_pic = #{uheadPic}</if>
+        <if test="uidcardzPic != null  and uidcardzPic != ''"> and uidcardz_pic = #{uidcardzPic}</if>
+        <if test="uidcardfPic != null  and uidcardfPic != ''"> and uidcardf_pic = #{uidcardfPic}</if>
+        <if test="ueducationPic != null  and ueducationPic != ''"> and ueducation_pic = #{ueducationPic}</if>
+        <if test="utitlesPic != null  and utitlesPic != ''"> and utitles_pic = #{utitlesPic}</if>
+        <if test="upracticingPic != null  and upracticingPic != ''"> and upracticing_pic = #{upracticingPic}</if>
+        <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+        <if test="usertype != null "> and usertype = #{usertype}</if>
+        <if test="applyStatus != null "> and apply_status = #{applyStatus}</if>
+        <if test="uroleid != null ">and uroleid = #{uroleid}</if>
+        <if test="createTime != null "> and create_time = #{createTime}</if>
+        <if test="updateTime != null "> and update_time = #{updateTime}</if>
+        <if test="administrative != null "> and administrative = #{administrative}</if>
+        <if test="status != null "> and status = #{status}</if>
+        <if test="uname != null  and  '' !=uname "> and uname like concat('%', #{uname}, '%')</if>
+
+    </select>
+
+    <select id="selectXtEmployeeByUemployeeid" parameterType="String" resultMap="XtEmployeeResult">
+        <include refid="selectXtEmployeeVo"/>
+        where uemployeeid = #{uemployeeid}
+    </select>
+    <select id="selectXtEmployeeByUserId" resultMap="XtEmployeeResult">
+        select * FROM xt_employee
+        where userid = #{userid}
+    </select>
+    <select id="selectXtEmployeeListByQuery" parameterType="XtEmployee" resultMap="XtEmployeeResult">
+        <include refid="selectXtEmployeeVo"/>
+        where del_flag = '0'
+        <if test="uoccupation != null  and uoccupation != ''"> and uoccupation = #{uoccupation}</if>
+        <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+        <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+        <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+        <if test="uname != null  and  '' !=uname.trim()"> and uname like concat('%', #{uname}, '%')</if>
+        <if test="ucardtype != null  and ucardtype != ''"> and ucardtype = #{ucardtype}</if>
+        <if test="ucardid != null  and ucardid != ''"> and ucardid = #{ucardid}</if>
+        <if test="usex != null  and usex != ''"> and usex = #{usex}</if>
+        <if test="unation != null  and unation != ''"> and unation = #{unation}</if>
+        <if test="ubirthdate != null "> and ubirthdate = #{ubirthdate}</if>
+        <if test="uheight != null "> and uheight = #{uheight}</if>
+        <if test="uploity != null  and uploity != ''"> and uploity = #{uploity}</if>
+        <if test="unative != null  and unative != ''"> and unative = #{unative}</if>
+        <if test="uresidence != null  and uresidence != ''"> and uresidence = #{uresidence}</if>
+        <if test="uaddress != null  and uaddress != ''"> and uaddress = #{uaddress}</if>
+        <if test="umobile != null  and umobile != ''"> and umobile = #{umobile}</if>
+        <if test="uemertel != null  and uemertel != ''"> and uemertel = #{uemertel}</if>
+        <if test="umarriage != null  and umarriage != ''"> and umarriage = #{umarriage}</if>
+        <if test="uspresidence != null  and uspresidence != ''"> and uspresidence = #{uspresidence}</if>
+        <if test="uspunit != null  and uspunit != ''"> and uspunit = #{uspunit}</if>
+        <if test="uworkdate != null  and uworkdate != ''"> and uworkdate = #{uworkdate}</if>
+        <if test="ukultur != null  and ukultur != ''"> and ukultur = #{ukultur}</if>
+        <if test="udegree != null  and udegree != ''"> and udegree = #{udegree}</if>
+        <if test="uacademy != null  and uacademy != ''"> and uacademy = #{uacademy}</if>
+        <if test="ugraduate != null  and ugraduate != ''"> and ugraduate = #{ugraduate}</if>
+        <if test="uspecialty != null  and uspecialty != ''"> and uspecialty = #{uspecialty}</if>
+        <if test="ufllevel != null  and ufllevel != ''"> and ufllevel = #{ufllevel}</if>
+        <if test="ucomlevel != null  and ucomlevel != ''"> and ucomlevel = #{ucomlevel}</if>
+        <if test="utechp != null  and utechp != ''"> and utechp = #{utechp}</if>
+        <if test="uspecialties != null  and uspecialties != ''"> and uspecialties = #{uspecialties}</if>
+        <if test="uheadPic != null  and uheadPic != ''"> and uhead_pic = #{uheadPic}</if>
+        <if test="uidcardzPic != null  and uidcardzPic != ''"> and uidcardz_pic = #{uidcardzPic}</if>
+        <if test="uidcardfPic != null  and uidcardfPic != ''"> and uidcardf_pic = #{uidcardfPic}</if>
+        <if test="ueducationPic != null  and ueducationPic != ''"> and ueducation_pic = #{ueducationPic}</if>
+        <if test="utitlesPic != null  and utitlesPic != ''"> and utitles_pic = #{utitlesPic}</if>
+        <if test="upracticingPic != null  and upracticingPic != ''"> and upracticing_pic = #{upracticingPic}</if>
+        <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+        <if test="usertype != null "> and usertype = #{usertype}</if>
+
+        <if test="applyStatus != null "> and apply_status = #{applyStatus}</if>
+        <if test="uroleid != null ">and uroleid = #{uroleid}</if>
+        <if test="administrative != null "> and administrative = #{administrative}</if>
+    </select>
+
+    <select id="selectXtEmployeeListByCompId" resultType="com.ruoyi.project.merchant.domain.XtEmployee">
+
+        select * FROM xt_employee
+        where ucompid = #{ucompid} and del_flag = '0'
+        <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+        <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+        <if test="uname != null  and  '' !=uname.trim()"> and uname like concat('%', #{uname}, '%')</if>
+        <if test="ucardtype != null  and ucardtype != ''"> and ucardtype = #{ucardtype}</if>
+        <if test="ucardid != null  and ucardid != ''"> and ucardid = #{ucardid}</if>
+        <if test="usex != null  and usex != ''"> and usex = #{usex}</if>
+        <if test="unation != null  and unation != ''"> and unation = #{unation}</if>
+        <if test="ubirthdate != null "> and ubirthdate = #{ubirthdate}</if>
+        <if test="uheight != null "> and uheight = #{uheight}</if>
+        <if test="uploity != null  and uploity != ''"> and uploity = #{uploity}</if>
+        <if test="unative != null  and unative != ''"> and unative = #{unative}</if>
+        <if test="uresidence != null  and uresidence != ''"> and uresidence = #{uresidence}</if>
+        <if test="uaddress != null  and uaddress != ''"> and uaddress = #{uaddress}</if>
+        <if test="umobile != null  and umobile != ''"> and umobile = #{umobile}</if>
+        <if test="uemertel != null  and uemertel != ''"> and uemertel = #{uemertel}</if>
+        <if test="umarriage != null  and umarriage != ''"> and umarriage = #{umarriage}</if>
+        <if test="uspresidence != null  and uspresidence != ''"> and uspresidence = #{uspresidence}</if>
+        <if test="uspunit != null  and uspunit != ''"> and uspunit = #{uspunit}</if>
+        <if test="uworkdate != null  and uworkdate != ''"> and uworkdate = #{uworkdate}</if>
+        <if test="ukultur != null  and ukultur != ''"> and ukultur = #{ukultur}</if>
+        <if test="udegree != null  and udegree != ''"> and udegree = #{udegree}</if>
+        <if test="uacademy != null  and uacademy != ''"> and uacademy = #{uacademy}</if>
+        <if test="ugraduate != null  and ugraduate != ''"> and ugraduate = #{ugraduate}</if>
+        <if test="uspecialty != null  and uspecialty != ''"> and uspecialty = #{uspecialty}</if>
+        <if test="ufllevel != null  and ufllevel != ''"> and ufllevel = #{ufllevel}</if>
+        <if test="ucomlevel != null  and ucomlevel != ''"> and ucomlevel = #{ucomlevel}</if>
+        <if test="utechp != null  and utechp != ''"> and utechp = #{utechp}</if>
+        <if test="uspecialties != null  and uspecialties != ''"> and uspecialties = #{uspecialties}</if>
+        <if test="uheadPic != null  and uheadPic != ''"> and uhead_pic = #{uheadPic}</if>
+        <if test="uidcardzPic != null  and uidcardzPic != ''"> and uidcardz_pic = #{uidcardzPic}</if>
+        <if test="uidcardfPic != null  and uidcardfPic != ''"> and uidcardf_pic = #{uidcardfPic}</if>
+        <if test="ueducationPic != null  and ueducationPic != ''"> and ueducation_pic = #{ueducationPic}</if>
+        <if test="utitlesPic != null  and utitlesPic != ''"> and utitles_pic = #{utitlesPic}</if>
+        <if test="upracticingPic != null  and upracticingPic != ''"> and upracticing_pic = #{upracticingPic}</if>
+        <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+        <if test="usertype != null "> and usertype = #{usertype}</if>
+        <if test="applyStatus != null "> and apply_status = #{applyStatus}</if>
+        <if test="uroleid != null ">and uroleid = #{uroleid}</if>
+        <if test="administrative != null "> and administrative = #{administrative}</if>
+        <if test="status != null "> and status = #{status}</if>
+    </select>
+
+    <select id="getApplyEmployeeList" resultType="com.ruoyi.project.merchant.domain.XtEmployee">
+        <include refid="selectXtEmployeeVo"/>
+        where apply_status = '0'
+    </select>
+
+    <select id="selectUserIdList" resultType="java.lang.String">
+        select userid from xt_employee where del_flag = '0'
+    </select>
+
+    <insert id="insertXtEmployee" parameterType="XtEmployee">
+        insert into xt_employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="uemployeeid != null ">uemployeeid,</if>
+        <if test="userid != null ">userid,</if>
+        <if test="ucompid != null">ucompid,</if>
+        <if test="udepartmentid != null">udepartmentid,</if>
+        <if test="uname != null and udepartmentid != ''">uname,</if>
+        <if test="ucardtype != null and uname != ''">ucardtype,</if>
+
+        <if test="ucardid != null">ucardid,</if>
+        <if test="usex != null">usex,</if>
+        <if test="unation != null and usex != ''">unation,</if>
+        <if test="ubirthdate != null and unation != ''">ubirthdate,</if>
+        <if test="uheight != null">uheight,</if>
+        <if test="uploity != null">uploity,</if>
+        <if test="unative != null">unative,</if>
+
+        <if test="uresidence != null">uresidence,</if>
+        <if test="uaddress != null">uaddress,</if>
+        <if test="umobile != null">umobile,</if>
+        <if test="ukinnumber != null">ukinnumber,</if>
+        <if test="uemertel != null">uemertel,</if>
+        <if test="umarriage != null">umarriage,</if>
+        <if test="uspresidence != null">uspresidence,</if>
+
+        <if test="uspunit != null">uspunit,</if>
+        <if test="uworkdate != null">uworkdate,</if>
+        <if test="ukultur != null">ukultur,</if>
+        <if test="udegree != null">udegree,</if>
+        <if test="uacademy != null">uacademy,</if>
+        <if test="ugraduate != null">ugraduate,</if>
+        <if test="uspecialty != null">uspecialty,</if>
+
+        <if test="ufllevel != null">ufllevel,</if>
+        <if test="ucomlevel != null">ucomlevel,</if>
+        <if test="utechp != null">utechp,</if>
+        <if test="uspecialties != null">uspecialties,</if>
+        <if test="uheadPic != null">uhead_pic,</if>
+        <if test="uidcardzPic != null">uidcardz_pic,</if>
+        <if test="uidcardfPic != null">uidcardf_pic,</if>
+
+        <if test="ueducationPic != null">ueducation_pic,</if>
+        <if test="utitlesPic != null">utitles_pic,</if>
+        <if test="upracticingPic != null">upracticing_pic,</if>
+        <if test="ucreatedate != null">ucreatedate,</if>
+        <if test="usertype != null and usertype != ''">usertype,</if>
+        <if test="uroleid != null ">uroleid,</if>
+        <if test="applyStatus != null ">apply_status,</if>
+
+        <if test="createTime != null ">create_time,</if>
+        <if test="updateTime != null ">update_time,</if>
+        <if test="status != null ">status,</if>
+        <if test="delFlag != null ">del_flag,</if>
+        <if test="administrative != null ">administrative,</if>
+        <if test="uofficeSpace != null ">uoffice_space,</if>
+        <if test="company != null ">company,</if>
+
+        <if test="ucity != null ">ucity,</if>
+        <if test="uage != null ">uage,</if>
+        <if test="udetailedAddress != null ">udetailed_address,</if>
+        <if test="uoccupation != null ">uoccupation,</if>
+        <if test="upost != null ">upost,</if>
+        <if test="autitele != null ">autitele,</if>
+        <if test="uotherrelevantpic != null ">uotherrelevantpic,</if>
+
+        <if test="uspareOne != null ">uspare_one,</if>
+        <if test="uspareTwo != null ">uspare_two,</if>
+        <if test="uspareThree != null ">uspare_three,</if>
+        <if test="uleader != null ">uleader,</if>
+        <if test="uworkaddress != null ">uworkaddress,</if>
+        <if test="residentialcommunity != null ">residentialcommunity,</if>
+        <if test="applyforjob != null ">applyforjob,</if>
+
+        <if test="utel != null ">utel,</if>
+        <if test="industryAssociation != null ">industry_association,</if>
+        <if test="reasonOfQuit != null ">reason_of_quit,</if>
+        <if test="haopingnum != null ">haopingnum,</if>
+        <if test="chapingnum != null ">chapingnum,</if>
+        <if test="yibannum != null ">yibannum,</if>
+        <if test="juzhushequ != null ">juzhushequ,</if>
+        <if test="quanxianquyu != null ">quanxianquyu</if>
+        </trim>
+
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="uemployeeid != null ">#{uemployeeid},</if>
+        <if test="userid != null ">#{userid},</if>
+        <if test="ucompid != null">#{ucompid},</if>
+        <if test="udepartmentid != null">#{udepartmentid},</if>
+        <if test="uname != null and udepartmentid != ''">#{uname},</if>
+        <if test="ucardtype != null and uname != ''">#{ucardtype},</if>
+
+        <if test="ucardid != null">#{ucardid},</if>
+        <if test="usex != null">#{usex},</if>
+        <if test="unation != null and usex != ''">#{unation},</if>
+        <if test="ubirthdate != null and unation != ''">#{ubirthdate},</if>
+        <if test="uheight != null">#{uheight},</if>
+        <if test="uploity != null">#{uploity},</if>
+        <if test="unative != null">#{unative},</if>
+
+        <if test="uresidence != null">#{uresidence},</if>
+        <if test="uaddress != null">#{uaddress},</if>
+        <if test="umobile != null">#{umobile},</if>
+        <if test="ukinnumber != null">#{ukinnumber},</if>
+        <if test="uemertel != null">#{uemertel},</if>
+        <if test="umarriage != null">#{umarriage},</if>
+        <if test="uspresidence != null">#{uspresidence},</if>
+
+        <if test="uspunit != null">#{uspunit},</if>
+        <if test="uworkdate != null">#{uworkdate},</if>
+        <if test="ukultur != null">#{ukultur},</if>
+        <if test="udegree != null">#{udegree},</if>
+        <if test="uacademy != null">#{uacademy},</if>
+        <if test="ugraduate != null">#{ugraduate},</if>
+        <if test="uspecialty != null">#{uspecialty},</if>
+
+        <if test="ufllevel != null">#{ufllevel},</if>
+        <if test="ucomlevel != null">#{ucomlevel},</if>
+        <if test="utechp != null">#{utechp},</if>
+        <if test="uspecialties != null">#{uspecialties},</if>
+        <if test="uheadPic != null">#{uheadPic},</if>
+        <if test="uidcardzPic != null">#{uidcardzPic},</if>
+        <if test="uidcardfPic != null">#{uidcardfPic},</if>
+
+        <if test="ueducationPic != null">#{ueducationPic},</if>
+        <if test="utitlesPic != null">#{utitlesPic},</if>
+        <if test="upracticingPic != null">#{upracticingPic},</if>
+        <if test="ucreatedate != null">#{ucreatedate},</if>
+        <if test="usertype != null and usertype != ''">#{usertype},</if>
+        <if test="uroleid != null ">#{uroleid},</if>
+        <if test="applyStatus != null ">#{applyStatus},</if>
+
+        <if test="createTime != null ">#{createTime},</if>
+        <if test="updateTime != null ">#{updateTime},</if>
+        <if test="status != null ">#{status},</if>
+        <if test="delFlag != null ">#{delFlag},</if>
+        <if test="administrative != null ">#{administrative},</if>
+        <if test="uofficeSpace != null ">#{uofficeSpace},</if>
+        <if test="company != null ">#{company},</if>
+
+        <if test="ucity != null ">#{ucity},</if>
+        <if test="uage != null ">#{uage},</if>
+        <if test="udetailedAddress != null ">#{udetailedAddress},</if>
+        <if test="uoccupation != null ">#{uoccupation},</if>
+        <if test="upost != null ">#{upost},</if>
+        <if test="autitele != null ">#{autitele},</if>
+        <if test="uotherrelevantpic != null ">#{uotherrelevantpic},</if>
+
+        <if test="uspareOne != null ">#{uspareOne},</if>
+        <if test="uspareTwo != null ">#{uspareTwo},</if>
+        <if test="uspareThree != null ">#{uspareThree},</if>
+        <if test="uleader != null ">#{uleader},</if>
+        <if test="uworkaddress != null ">#{uworkaddress},</if>
+        <if test="residentialcommunity != null ">#{residentialcommunity},</if>
+        <if test="applyforjob != null ">#{applyforjob},</if>
+
+        <if test="utel != null ">#{utel},</if>
+        <if test="industryAssociation != null ">#{industryAssociation},</if>
+        <if test="reasonOfQuit != null ">#{reasonOfQuit},</if>
+        <if test="haopingnum != null ">#{haopingnum},</if>
+        <if test="chapingnum != null ">#{chapingnum},</if>
+        <if test="yibannum != null ">#{yibannum},</if>
+        <if test="juzhushequ != null ">#{juzhushequ},</if>
+        <if test="quanxianquyu != null ">#{quanxianquyu}</if>
+    </trim>
+    </insert>
+
+
+
+
+
+
+
+
+
+
+
+<!--    uemployeeid-->
+<!--    userid-->
+<!--    ucompid-->
+<!--    ucompType-->
+<!--    udepartmentid-->
+<!--    uname-->
+<!--    ucardtype-->
+<!--    ucardid-->
+<!--    usex-->
+<!--    unation-->
+<!--    ubirthdate-->
+<!--    uheight-->
+<!--    uploity-->
+<!--    unative-->
+<!--    uresidence-->
+<!--    uaddress-->
+<!--    umobile-->
+<!--    ukinnumber-->
+<!--    uemertel-->
+<!--    umarriage-->
+<!--    uspresidence-->
+<!--    uspunit-->
+<!--    uworkdate-->
+<!--    ukultur-->
+<!--    udegree-->
+<!--    uacademy-->
+<!--    ugraduate-->
+<!--    uspecialty-->
+<!--    ufllevel-->
+<!--    ucomlevel-->
+<!--    utechp-->
+<!--    uspecialties-->
+<!--    uheadPic-->
+<!--    uidcardzPic-->
+<!--    uidcardfPic-->
+<!--    ueducationPic-->
+<!--    utitlesPic-->
+<!--    upracticingPic-->
+<!--    ucreatedate-->
+<!--    usertype-->
+<!--    uroleid-->
+<!--    applyStatus-->
+<!--    createTime-->
+<!--    updateTime-->
+<!--    status-->
+<!--    delFlag-->
+<!--    administrative-->
+<!--    uofficeSpace-->
+<!--    company-->
+<!--    ucity-->
+<!--    uage-->
+<!--    udetailedAddress-->
+<!--    uoccupation-->
+<!--    upost-->
+<!--    autitele-->
+<!--    uotherrelevantpic-->
+<!--    uspareOne-->
+<!--    uspareTwo-->
+<!--    uspareThree-->
+<!--    uleader-->
+<!--    uworkaddress-->
+<!--    residentialcommunity-->
+<!--    applyforjob-->
+<!--    utel-->
+<!--    industryAssociation-->
+<!--    reasonOfQuit-->
+<!--    haopingnum-->
+<!--    chapingnum-->
+<!--    yibannum-->
+<!--    juzhushequ-->
+<!--    quanxianquyu-->
+
+    <update id="updateXtEmployee" parameterType="XtEmployee">
+        update xt_employee
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userid != null and userid != ''">userid = #{userid},</if>
+            <if test="ucompid != null">ucompid = #{ucompid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid = #{udepartmentid},</if>
+            <if test="uname != null and uname != ''">uname = #{uname},</if>
+            <if test="ucardtype != null">ucardtype = #{ucardtype},</if>
+            <if test="ucardid != null">ucardid = #{ucardid},</if>
+            <if test="usex != null and usex != ''">usex = #{usex},</if>
+            <if test="unation != null and unation != ''">unation = #{unation},</if>
+            <if test="ubirthdate != null">ubirthdate = #{ubirthdate},</if>
+            <if test="uheight != null">uheight = #{uheight},</if>
+            <if test="uploity != null">uploity = #{uploity},</if>
+            <if test="unative != null">unative = #{unative},</if>
+            <if test="uresidence != null">uresidence = #{uresidence},</if>
+            <if test="uaddress != null">uaddress = #{uaddress},</if>
+            <if test="umobile != null">umobile = #{umobile},</if>
+            <if test="uemertel != null">uemertel = #{uemertel},</if>
+            <if test="umarriage != null">umarriage = #{umarriage},</if>
+            <if test="uspresidence != null">uspresidence = #{uspresidence},</if>
+            <if test="uspunit != null">uspunit = #{uspunit},</if>
+            <if test="uworkdate != null">uworkdate = #{uworkdate},</if>
+            <if test="ukultur != null">ukultur = #{ukultur},</if>
+            <if test="udegree != null">udegree = #{udegree},</if>
+            <if test="uacademy != null">uacademy = #{uacademy},</if>
+            <if test="ugraduate != null">ugraduate = #{ugraduate},</if>
+            <if test="uspecialty != null">uspecialty = #{uspecialty},</if>
+            <if test="ufllevel != null">ufllevel = #{ufllevel},</if>
+            <if test="ucomlevel != null">ucomlevel = #{ucomlevel},</if>
+            <if test="utechp != null">utechp = #{utechp},</if>
+            <if test="uspecialties != null">uspecialties = #{uspecialties},</if>
+            <if test="uheadPic != null">uhead_pic = #{uheadPic},</if>
+            <if test="uidcardzPic != null">uidcardz_pic = #{uidcardzPic},</if>
+            <if test="uidcardfPic != null">uidcardf_pic = #{uidcardfPic},</if>
+            <if test="ueducationPic != null">ueducation_pic = #{ueducationPic},</if>
+            <if test="utitlesPic != null">utitles_pic = #{utitlesPic},</if>
+            <if test="upracticingPic != null">upracticing_pic = #{upracticingPic},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+            <if test="usertype != null and usertype != ''">usertype = #{usertype},</if>
+            <if test="uroleid != null ">uroleid = #{uroleid},</if>
+            <if test="applyStatus != null ">apply_status = #{applyStatus},</if>
+            <if test="administrative != null "> administrative = #{administrative},</if>
+            update_time = sysdate()
+        </trim>
+        where uemployeeid = #{uemployeeid}
+    </update>
+    <update id="updateXtEmployeeApplyStatus">
+        update xt_employee
+            set apply_status = #{status}
+        where uemployeeid = #{employeeId}
+
+    </update>
+
+    <delete id="deleteXtEmployeeByUemployeeid" parameterType="String">
+        delete from xt_employee where uemployeeid = #{uemployeeid}
+    </delete>
+
+    <delete id="deleteXtEmployeeByUemployeeids" parameterType="String">
+        update xt_employee
+        set del_flag = '2'
+        where uemployeeid in
+        <foreach item="uemployeeid" collection="array" open="(" separator="," close=")">
+            #{uemployeeid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtChatMapper">
+    
+    <resultMap type="XtChat" id="XtChatResult">
+        <result property="uchatid"    column="uchatid"    />
+        <result property="ugroupid"    column="ugroupid"    />
+        <result property="utaskid"    column="utaskid"    />
+        <result property="ucontent"    column="ucontent"    />
+        <result property="userid"    column="userid"    />
+        <result property="touserid"    column="touserid"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectXtChatVo">
+        select uchatid, ugroupid, utaskid, ucontent, userid, touserid, create_time from xt_chat
+    </sql>
+
+    <select id="selectXtChatList" parameterType="XtChat" resultMap="XtChatResult">
+        <include refid="selectXtChatVo"/>
+        <where>  
+            <if test="ugroupid != null  and ugroupid != ''"> and ugroupid = #{ugroupid}</if>
+            <if test="utaskid != null  and utaskid != ''"> and utaskid = #{utaskid}</if>
+            <if test="ucontent != null  and ucontent != ''"> and ucontent = #{ucontent}</if>
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="touserid != null  and touserid != ''"> and touserid = #{touserid}</if>
+        </where>
+    </select>
+    
+    <select id="selectXtChatByUchatid" parameterType="String" resultMap="XtChatResult">
+        <include refid="selectXtChatVo"/>
+        where uchatid = #{uchatid}
+    </select>
+        
+    <insert id="insertXtChat" parameterType="XtChat">
+        insert into xt_chat
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uchatid != null">uchatid,</if>
+            <if test="ugroupid != null">ugroupid,</if>
+            <if test="utaskid != null">utaskid,</if>
+            <if test="ucontent != null">ucontent,</if>
+            <if test="userid != null">userid,</if>
+            <if test="touserid != null">touserid,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uchatid != null">#{uchatid},</if>
+            <if test="ugroupid != null">#{ugroupid},</if>
+            <if test="utaskid != null">#{utaskid},</if>
+            <if test="ucontent != null">#{ucontent},</if>
+            <if test="userid != null">#{userid},</if>
+            <if test="touserid != null">#{touserid},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtChat" parameterType="XtChat">
+        update xt_chat
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ugroupid != null">ugroupid = #{ugroupid},</if>
+            <if test="utaskid != null">utaskid = #{utaskid},</if>
+            <if test="ucontent != null">ucontent = #{ucontent},</if>
+            <if test="userid != null">userid = #{userid},</if>
+            <if test="touserid != null">touserid = #{touserid},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where uchatid = #{uchatid}
+    </update>
+
+    <delete id="deleteXtChatByUchatid" parameterType="String">
+        delete from xt_chat where uchatid = #{uchatid}
+    </delete>
+
+    <delete id="deleteXtChatByUchatids" parameterType="String">
+        delete from xt_chat where uchatid in 
+        <foreach item="uchatid" collection="array" open="(" separator="," close=")">
+            #{uchatid}
+        </foreach>
+    </delete>
+</mapper>

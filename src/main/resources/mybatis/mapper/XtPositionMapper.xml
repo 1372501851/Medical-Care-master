@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.global.mapper.XtPositionMapper">
+
+    <resultMap type="XtPosition" id="XtPositionResult">
+        <id property="upositionid" column="upositionid"/>
+        <result property="upositionname"    column="upositionname"    />
+        <result property="udesc"    column="udesc"    />
+    </resultMap>
+
+    <sql id="selectXtPositionVo">
+        select upositionid,upositionname, udesc from xt_position
+    </sql>
+
+    <select id="selectXtPositionList" parameterType="XtPosition" resultMap="XtPositionResult">
+        <include refid="selectXtPositionVo"/>
+        <where>
+            <if test="upositionname != null">upositionname = #{upositionname}</if>
+        </where>
+    </select>
+
+    <select id="selectXtPositionByUpositionname" parameterType="String" resultMap="XtPositionResult">
+        <include refid="selectXtPositionVo"/>
+        where upositionname = #{upositionname}
+    </select>
+    <select id="selectXtPositionByUpositionId" resultMap="XtPositionResult">
+        <include refid="selectXtPositionVo"/>
+        where upositionid = #{upositionid}
+    </select>
+
+    <insert id="insertXtPosition" parameterType="XtPosition">
+        insert into xt_position
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="upositionid != null" >upositionid,</if>
+            <if test="upositionname != null">upositionname,</if>
+            <if test="udesc != null">udesc,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="upositionid != null" >#{upositionid},</if>
+            <if test="upositionname != null">#{upositionname},</if>
+            <if test="udesc != null">#{udesc},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtPosition" parameterType="XtPosition">
+        update xt_position
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="upositionname != null" >upositionname = #{upositionname},</if>
+            <if test="udesc != null">udesc = #{udesc},</if>
+        </trim>
+        where upositionid = #{upositionid}
+    </update>
+
+    <delete id="deleteXtPositionByUpositionname" parameterType="String">
+        delete from xt_position where upositionname = #{upositionname}
+    </delete>
+
+    <delete id="deleteXtPositionByUpositionIds" parameterType="String">
+        delete from xt_position where upositionid in
+        <foreach item="upositionid" collection="upositionIds" open="(" separator="," close=")">
+            #{upositionid}
+        </foreach>
+    </delete>
+</mapper>

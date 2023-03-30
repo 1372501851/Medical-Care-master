@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtAppProductMapper">
+
+    <resultMap type="XtAppProduct" id="XtAppProductResult">
+        <result property="uappProductid"    column="uapp_productid"    />
+        <result property="userAppid"    column="user_appid"    />
+        <result property="uproductid"    column="uproductid"    />
+        <result property="uproductName"    column="uproduct_name"    />
+        <result property="uappNum"    column="uapp_num"    />
+        <result property="uappPrice"    column="uapp_price"    />
+        <result property="uappUnit"    column="uapp_unit"    />
+    </resultMap>
+
+    <sql id="selectXtAppProductVo">
+        select uapp_productid, user_appid, uproductid, uproduct_name, uapp_num, uapp_price, uapp_unit from xt_app_product
+    </sql>
+
+    <select id="selectXtAppProductList" parameterType="XtAppProduct" resultMap="XtAppProductResult">
+        <include refid="selectXtAppProductVo"/>
+        <where>
+            <if test="userAppid != null  and userAppid != ''"> and user_appid = #{userAppid}</if>
+            <if test="uproductid != null  and uproductid != ''"> and uproductid = #{uproductid}</if>
+            <if test="uproductName != null  and uproductName != ''"> and uproduct_name like concat('%', #{uproductName}, '%')</if>
+            <if test="uappNum != null "> and uapp_num = #{uappNum}</if>
+            <if test="uappPrice != null "> and uapp_price = #{uappPrice}</if>
+            <if test="uappUnit != null  and uappUnit != ''"> and uapp_unit = #{uappUnit}</if>
+        </where>
+    </select>
+
+    <select id="selectXtAppProductByUappProductid" parameterType="String" resultMap="XtAppProductResult">
+        <include refid="selectXtAppProductVo"/>
+        where uapp_productid = #{uappProductid}
+    </select>
+
+    <insert id="insertXtAppProduct" parameterType="XtAppProduct">
+        insert into xt_app_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uappProductid != null">uapp_productid,</if>
+            <if test="userAppid != null and userAppid != ''">user_appid,</if>
+            <if test="uproductid != null and uproductid != ''">uproductid,</if>
+            <if test="uproductName != null and uproductName != ''">uproduct_name,</if>
+            <if test="uappNum != null">uapp_num,</if>
+            <if test="uappPrice != null">uapp_price,</if>
+            <if test="uappUnit != null">uapp_unit,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uappProductid != null">#{uappProductid},</if>
+            <if test="userAppid != null and userAppid != ''">#{userAppid},</if>
+            <if test="uproductid != null and uproductid != ''">#{uproductid},</if>
+            <if test="uproductName != null and uproductName != ''">#{uproductName},</if>
+            <if test="uappNum != null">#{uappNum},</if>
+            <if test="uappPrice != null">#{uappPrice},</if>
+            <if test="uappUnit != null">#{uappUnit},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtAppProduct" parameterType="XtAppProduct">
+        update xt_app_product
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userAppid != null and userAppid != ''">user_appid = #{userAppid},</if>
+            <if test="uproductid != null and uproductid != ''">uproductid = #{uproductid},</if>
+            <if test="uproductName != null and uproductName != ''">uproduct_name = #{uproductName},</if>
+            <if test="uappNum != null">uapp_num = #{uappNum},</if>
+            <if test="uappPrice != null">uapp_price = #{uappPrice},</if>
+            <if test="uappUnit != null">uapp_unit = #{uappUnit},</if>
+        </trim>
+        where uapp_productid = #{uappProductid}
+    </update>
+
+    <delete id="deleteXtAppProductByUappProductid" parameterType="String">
+        delete from xt_app_product where uapp_productid = #{uappProductid}
+    </delete>
+
+    <delete id="deleteXtAppProductByUappProductids" parameterType="String">
+        delete from xt_app_product where uapp_productid in
+        <foreach item="uappProductid" collection="array" open="(" separator="," close=")">
+            #{uappProductid}
+        </foreach>
+    </delete>
+</mapper>

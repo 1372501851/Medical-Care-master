@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.user.mapper.UserGuardianshipMapper">
+
+    <resultMap type="UserGuardianship" id="UserGuardianshipResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="guardianshipPhone"    column="guardianship_phone"    />
+        <result property="guardianshipId"    column="guardianship_id"    />
+        <result property="relationship"    column="relationship"    />
+        <result property="infoId"    column="info_id"    />
+        <result property="createTime" column="create_time" />
+        <result property="ysorjhrorpb" column="ysorjhrorpb" />
+    </resultMap>
+
+    <sql id="selectUserGuardianshipVo">
+        select id, user_id, guardianship_phone, guardianship_id, relationship, info_id,create_time,ysorjhrorpb from user_guardianship
+    </sql>
+
+    <select id="selectUserGuardianshipList" parameterType="UserGuardianship" resultMap="UserGuardianshipResult">
+        <include refid="selectUserGuardianshipVo"/>
+        <where>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="guardianshipPhone != null  and guardianshipPhone != ''"> and guardianship_phone = #{guardianshipPhone}</if>
+            <if test="guardianshipId != null  and guardianshipId != ''"> and guardianship_id = #{guardianshipId}</if>
+            <if test="relationship != null  and relationship != ''"> and relationship = #{relationship}</if>
+            <if test="infoId != null  and infoId != ''"> and info_id = #{infoId}</if>
+            <if test="ysorjhrorpb != null  and ysorjhrorpb != ''"> and ysorjhrorpb = #{ysorjhrorpb}</if>
+        </where>
+    </select>
+
+    <select id="selectUserGuardianshipById" parameterType="String" resultMap="UserGuardianshipResult">
+        <include refid="selectUserGuardianshipVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectUserGuardianshipByLoginName" resultMap="UserGuardianshipResult">
+        <include refid="selectUserGuardianshipVo"/>
+        where guardianship_phone = #{guardianshipPhone} and user_id = #{userId}
+    </select>
+
+    <insert id="insertUserGuardianship" parameterType="UserGuardianship">
+        insert into user_guardianship
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="guardianshipPhone != null">guardianship_phone,</if>
+            <if test="guardianshipId != null">guardianship_id,</if>
+            <if test="relationship != null">relationship,</if>
+            <if test="infoId != null">info_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="ysorjhrorpb != null">ysorjhrorpb</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="guardianshipPhone != null">#{guardianshipPhone},</if>
+            <if test="guardianshipId != null">#{guardianshipId},</if>
+            <if test="relationship != null">#{relationship},</if>
+            <if test="infoId != null">#{infoId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="ysorjhrorpb != null">#{ysorjhrorpb}</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserGuardianship" parameterType="UserGuardianship">
+        update user_guardianship
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="guardianshipPhone != null">guardianship_phone = #{guardianshipPhone},</if>
+            <if test="guardianshipId != null">guardianship_id = #{guardianshipId},</if>
+            <if test="relationship != null">relationship = #{relationship},</if>
+            <if test="infoId != null">info_id = #{infoId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserGuardianshipById" parameterType="String">
+        delete from user_guardianship where id = #{id}
+    </delete>
+
+    <delete id="deleteUserGuardianshipByIds" parameterType="String">
+        delete from user_guardianship where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

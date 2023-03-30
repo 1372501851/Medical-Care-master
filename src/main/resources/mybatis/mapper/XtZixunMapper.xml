@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.zixun.mapper.XtZixunMapper">
+
+
+
+    <select id="seleXtZixun" resultType="com.ruoyi.project.zixun.domain.XtZixun" >
+        select * FROM xt_zixun
+        <where>
+            <if test="uzixunId != null and uzixunId != '' ">and uzixun_id = #{uzixunId}</if>
+            <if test="ulujing != null and ulujing != '' ">and ulujing = #{ulujing}</if>
+            <if test="utype != null and utype != '' ">and utype = #{utype}</if>
+            <if test="ucompid != null and ucompid != '' ">and ucompid = #{ucompid}</if>
+            <!--            <if test="utime != null and utime != '' ">and utime = #{utime}</if>-->
+            <if test="utitle != null and utitle != '' ">and utitle like  like concat('%', #{utitle}, '%') </if>
+        </where>
+    </select>
+
+
+    <delete id="delZixun" parameterType="String">
+        delete from xt_zixun where uzixun_id in
+        <foreach collection="array" item="uzixunId" open="(" separator="," close=")">
+            #{uzixunId}
+        </foreach>
+    </delete>
+
+
+</mapper>

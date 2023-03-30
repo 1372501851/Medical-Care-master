@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtOrderMapper">
+
+    <resultMap type="XtOrder" id="XtOrderResult">
+        <result property="uorderid"    column="uorderid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="ucustomerid"    column="ucustomerid"    />
+        <result property="ucompname"    column="ucompname"    />
+        <result property="uaddress"    column="uaddress"    />
+        <result property="utel"    column="utel"    />
+        <result property="userid"    column="userid"    />
+        <result property="userAddress"    column="user_address"    />
+        <result property="userMobile"    column="user_mobile"    />
+        <result property="ustatus"    column="ustatus"    />
+        <result property="uremark"    column="uremark"    />
+        <result property="upaymentTime"    column="upayment_time"    />
+        <result property="usendGoodsTime"    column="usend_goods_time"    />
+        <result property="uexpressname"    column="uexpressname"    />
+        <result property="uexpressCode"    column="uexpress_code"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+        <result property="utotalprice"    column="utotalprice"    />
+        <result property="orderNo"    column="order_no"    />
+
+        <result property="productNum"    column="product_num"    />
+        <result property="productId"    column="product_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="region"    column="region"    />
+        <result property="uproductName"    column="uproduct_name"    />
+<!--        <result property="orderStatus"    column="order_status"    />-->
+
+    </resultMap>
+
+    <sql id="selectXtOrderVo">
+        select uorderid, ucompid, ucustomerid, ucompname, uaddress, utel, userid, user_address, user_mobile, ustatus, uremark, upayment_time, usend_goods_time, uexpressname, uexpress_code, ucreatedate, utotalprice,order_no,
+               product_num,product_id,user_name,region,uproduct_name
+        from xt_order
+    </sql>
+
+    <select id="selectXtOrderList" parameterType="XtOrder" resultMap="XtOrderResult">
+        <include refid="selectXtOrderVo"/>
+        <where>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="ucustomerid != null "> and ucustomerid = #{ucustomerid}</if>
+            <if test="ucompname != null  and ucompname != ''"> and ucompname like concat('%', #{ucompname}, '%')</if>
+            <if test="uaddress != null  and uaddress != ''"> and uaddress = #{uaddress}</if>
+            <if test="utel != null  and utel != ''"> and utel = #{utel}</if>
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="userAddress != null  and userAddress != ''"> and user_address = #{userAddress}</if>
+            <if test="userMobile != null  and userMobile != ''"> and user_mobile = #{userMobile}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+            <if test="uremark != null  and uremark != ''"> and uremark = #{uremark}</if>
+            <if test="upaymentTime != null "> and upayment_time = #{upaymentTime}</if>
+            <if test="usendGoodsTime != null "> and usend_goods_time = #{usendGoodsTime}</if>
+            <if test="uexpressname != null  and uexpressname != ''"> and uexpressname like concat('%', #{uexpressname}, '%')</if>
+            <if test="uexpressCode != null  and uexpressCode != ''"> and uexpress_code = #{uexpressCode}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+            <if test="utotalprice != null "> and utotalprice = #{utotalprice}</if>
+            <if test="orderNo != null "> and order_no = #{orderNo}</if>
+            <if test="productNum != null "> and product_num = #{productNum}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="userName != null "> and user_name = #{userName}</if>
+            <if test="region != null "> and region = #{region}</if>
+            <if test="uproductName != null "> and uproduct_name = #{uproductName}</if>
+<!--            <if test="orderStatus != null "> and order_status = #{orderStatus}</if>-->
+        </where>
+    </select>
+
+    <select id="selectXtOrderByUorderid" parameterType="String" resultMap="XtOrderResult">
+        <include refid="selectXtOrderVo"/>
+        where uorderid = #{uorderid}
+    </select>
+    <select id="selectOrderListByStatusAndName" resultMap="XtOrderResult">
+
+        <include refid="selectXtOrderVo"/>
+        where userid = #{userid}
+        <if test="status != null  and '' != status.trim() "> and ustatus = #{status}</if>
+        <if test="name != null  and '' != name.trim()"> and  (
+            ucompname like concat('%', #{name}, '%')
+            or uproduct_name like concat('%', #{name}, '%')
+            )
+        </if>
+
+
+    </select>
+    <select id="selectXtOrderByUorderNo" resultMap="XtOrderResult">
+        <include refid="selectXtOrderVo"/>
+        where order_no = #{outTradeNo}
+
+    </select>
+
+
+    <insert id="insertXtOrder" parameterType="XtOrder">
+        insert into xt_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uorderid != null">uorderid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="ucustomerid != null">ucustomerid,</if>
+            <if test="ucompname != null and ucompname != ''">ucompname,</if>
+            <if test="uaddress != null">uaddress,</if>
+            <if test="utel != null">utel,</if>
+            <if test="userid != null and userid != ''">userid,</if>
+            <if test="userAddress != null and userAddress != ''">user_address,</if>
+            <if test="userMobile != null">user_mobile,</if>
+            <if test="ustatus != null and ustatus != ''">ustatus,</if>
+            <if test="uremark != null">uremark,</if>
+            <if test="upaymentTime != null">upayment_time,</if>
+            <if test="usendGoodsTime != null">usend_goods_time,</if>
+            <if test="uexpressname != null">uexpressname,</if>
+            <if test="uexpressCode != null">uexpress_code,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+            <if test="utotalprice != null">utotalprice,</if>
+            <if test="orderNo != null "> order_no,</if>
+            <if test="productNum != null "> product_num, </if>
+            <if test="productId != null "> product_id ,</if>
+            <if test="userName != null ">  user_name,</if>
+            <if test="region != null "> region, </if>
+#             <if test="orderStatus != null "> order_status, </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uorderid != null">#{uorderid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="ucustomerid != null">#{ucustomerid},</if>
+            <if test="ucompname != null and ucompname != ''">#{ucompname},</if>
+            <if test="uaddress != null">#{uaddress},</if>
+            <if test="utel != null">#{utel},</if>
+            <if test="userid != null and userid != ''">#{userid},</if>
+            <if test="userAddress != null and userAddress != ''">#{userAddress},</if>
+            <if test="userMobile != null">#{userMobile},</if>
+            <if test="ustatus != null and ustatus != ''">#{ustatus},</if>
+            <if test="uremark != null">#{uremark},</if>
+            <if test="upaymentTime != null">#{upaymentTime},</if>
+            <if test="usendGoodsTime != null">#{usendGoodsTime},</if>
+            <if test="uexpressname != null">#{uexpressname},</if>
+            <if test="uexpressCode != null">#{uexpressCode},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+            <if test="utotalprice != null">#{utotalprice},</if>
+            <if test="orderNo != null "> #{orderNo},</if>
+            <if test="productNum != null "> #{productNum},</if>
+            <if test="productId != null ">#{productId},</if>
+            <if test="userName != null "> #{userName},</if>
+            <if test="region != null "> #{region},</if>
+#             <if test="orderStatus != null "> {orderStatus},</if>
+        </trim>
+    </insert>
+
+    <update id="updateXtOrder" parameterType="XtOrder">
+        update xt_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="ucustomerid != null">ucustomerid = #{ucustomerid},</if>
+            <if test="ucompname != null and ucompname != ''">ucompname = #{ucompname},</if>
+            <if test="uaddress != null">uaddress = #{uaddress},</if>
+            <if test="utel != null">utel = #{utel},</if>
+            <if test="userid != null and userid != ''">userid = #{userid},</if>
+            <if test="userAddress != null and userAddress != ''">user_address = #{userAddress},</if>
+            <if test="userMobile != null">user_mobile = #{userMobile},</if>
+            <if test="ustatus != null and ustatus != ''">ustatus = #{ustatus},</if>
+            <if test="uremark != null">uremark = #{uremark},</if>
+            <if test="upaymentTime != null">upayment_time = #{upaymentTime},</if>
+            <if test="usendGoodsTime != null">usend_goods_time = #{usendGoodsTime},</if>
+            <if test="uexpressname != null">uexpressname = #{uexpressname},</if>
+            <if test="uexpressCode != null">uexpress_code = #{uexpressCode},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+            <if test="utotalprice != null">utotalprice = #{utotalprice},</if>
+            <if test="orderNo != null ">order_no = #{orderNo},</if>
+            <if test="productNum != null "> product_num = #{productNum},</if>
+            <if test="productId != null ">  product_id = #{productId},</if>
+            <if test="userName != null ">  user_name = #{userName},</if>
+            <if test="region != null ">  region = #{region},</if>
+#             <if test="orderStatus != null ">  order_status = #{orderStatus},</if>
+        </trim>
+        where uorderid = #{uorderid}
+    </update>
+
+<!--    <update id="updateOrderStatusAndPaymentStatusByOrderNo">-->
+<!--        update xt_order-->
+<!--        set ustatus = #{payStauts},order_status = #{Orderstaus}-->
+<!--        where order_no = #{orderNo}-->
+<!--    </update>-->
+
+<!--    <update id="updateOrderStatusByOrderNo">-->
+<!--        update xt_order-->
+<!--        set order_status = #{Orderstaus}-->
+<!--        where order_no = #{orderNo}-->
+<!--    </update>-->
+
+    <delete id="deleteXtOrderByUorderid" parameterType="String">
+        delete from xt_order where uorderid = #{uorderid}
+    </delete>
+
+
+
+    <delete id="deleteXtOrderByUorderids" parameterType="String">
+        delete from xt_order where uorderid in
+        <foreach item="uorderid" collection="array" open="(" separator="," close=")">
+            #{uorderid}
+        </foreach>
+    </delete>
+</mapper>

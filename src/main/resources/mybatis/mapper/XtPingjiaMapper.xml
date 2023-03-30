@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtPingjiaMapper">
+
+    <resultMap type="XtPingjia" id="XtPingjiaResult">
+        <result property="upingjiaid"    column="upingjiaid"    />
+        <result property="utaskid"    column="utaskid"    />
+        <result property="upingfen"    column="upingfen"    />
+        <result property="upic"    column="upic"    />
+        <result property="uvideo"    column="uvideo"    />
+        <result property="ucontent"    column="ucontent"    />
+    </resultMap>
+
+    <sql id="selectXtPingjiaVo">
+        select upingjiaid, utaskid, upingfen, upic, uvideo, ucontent from xt_pingjia
+    </sql>
+
+    <select id="selectXtPingjiaList" parameterType="XtPingjia" resultMap="XtPingjiaResult">
+        <include refid="selectXtPingjiaVo"/>
+        <where>
+            <if test="utaskid != null  and utaskid != ''"> and utaskid = #{utaskid}</if>
+            <if test="upingfen != null "> and upingfen = #{upingfen}</if>
+            <if test="upic != null  and upic != ''"> and upic = #{upic}</if>
+            <if test="uvideo != null  and uvideo != ''"> and uvideo = #{uvideo}</if>
+            <if test="ucontent != null  and ucontent != ''"> and ucontent = #{ucontent}</if>
+        </where>
+    </select>
+
+    <select id="selectXtPingjiaByUpingjiaid" parameterType="String" resultMap="XtPingjiaResult">
+        <include refid="selectXtPingjiaVo"/>
+        where upingjiaid = #{upingjiaid}
+    </select>
+
+    <insert id="insertXtPingjia" parameterType="XtPingjia">
+        insert into xt_pingjia
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="upingjiaid != null">upingjiaid,</if>
+            <if test="utaskid != null and utaskid != ''">utaskid,</if>
+            <if test="upingfen != null">upingfen,</if>
+            <if test="upic != null">upic,</if>
+            <if test="uvideo != null">uvideo,</if>
+            <if test="ucontent != null">ucontent,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="upingjiaid != null">#{upingjiaid},</if>
+            <if test="utaskid != null and utaskid != ''">#{utaskid},</if>
+            <if test="upingfen != null">#{upingfen},</if>
+            <if test="upic != null">#{upic},</if>
+            <if test="uvideo != null">#{uvideo},</if>
+            <if test="ucontent != null">#{ucontent},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtPingjia" parameterType="XtPingjia">
+        update xt_pingjia
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="utaskid != null and utaskid != ''">utaskid = #{utaskid},</if>
+            <if test="upingfen != null">upingfen = #{upingfen},</if>
+            <if test="upic != null">upic = #{upic},</if>
+            <if test="uvideo != null">uvideo = #{uvideo},</if>
+            <if test="ucontent != null">ucontent = #{ucontent},</if>
+        </trim>
+        where upingjiaid = #{upingjiaid}
+    </update>
+
+    <delete id="deleteXtPingjiaByUpingjiaid" parameterType="String">
+        delete from xt_pingjia where upingjiaid = #{upingjiaid}
+    </delete>
+
+    <delete id="deleteXtPingjiaByUpingjiaids" parameterType="String">
+        delete from xt_pingjia where upingjiaid in
+        <foreach item="upingjiaid" collection="array" open="(" separator="," close=")">
+            #{upingjiaid}
+        </foreach>
+    </delete>
+</mapper>

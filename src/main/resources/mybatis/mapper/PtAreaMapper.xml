@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.area.mapper.PtAreaMapper">
+    
+    <resultMap type="PtArea" id="PtAreaResult">
+        <result property="uareaid"    column="uareaid"    />
+        <result property="uparentid"    column="uparentid"    />
+        <result property="uareaname"    column="uareaname"    />
+        <result property="ulevel"    column="ulevel"    />
+        <result property="ucode"    column="ucode"    />
+        <result property="ulanguage"    column="ulanguage"    />
+    </resultMap>
+
+    <sql id="selectPtAreaVo">
+        select uareaid, uparentid, uareaname, ulevel, ucode, ulanguage from pt_area
+    </sql>
+
+    <select id="selectPtAreaList" parameterType="PtArea" resultMap="PtAreaResult">
+        <include refid="selectPtAreaVo"/>
+        <where>  
+            <if test="uparentid != null  and uparentid != ''"> and uparentid = #{uparentid}</if>
+            <if test="uareaname != null  and uareaname != ''"> and uareaname like concat('%', #{uareaname}, '%')</if>
+            <if test="ulevel != null "> and ulevel = #{ulevel}</if>
+            <if test="ucode != null  and ucode != ''"> and ucode = #{ucode}</if>
+            <if test="ulanguage != null  and ulanguage != ''"> and ulanguage = #{ulanguage}</if>
+        </where>
+    </select>
+    
+    <select id="selectPtAreaByUareaid" parameterType="String" resultMap="PtAreaResult">
+        <include refid="selectPtAreaVo"/>
+        where uareaid = #{uareaid}
+    </select>
+        
+        <insert id="insertPtArea" parameterType="PtArea">
+        insert into pt_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uareaid != null">uareaid,</if>
+            <if test="uparentid != null">uparentid,</if>
+            <if test="uareaname != null and uareaname != ''">uareaname,</if>
+            <if test="ulevel != null">ulevel,</if>
+            <if test="ucode != null">ucode,</if>
+            <if test="ulanguage != null">ulanguage,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uareaid != null">#{uareaid},</if>
+            <if test="uparentid != null">#{uparentid},</if>
+            <if test="uareaname != null and uareaname != ''">#{uareaname},</if>
+            <if test="ulevel != null">#{ulevel},</if>
+            <if test="ucode != null">#{ucode},</if>
+            <if test="ulanguage != null">#{ulanguage},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePtArea" parameterType="PtArea">
+        update pt_area
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uparentid != null">uparentid = #{uparentid},</if>
+            <if test="uareaname != null and uareaname != ''">uareaname = #{uareaname},</if>
+            <if test="ulevel != null">ulevel = #{ulevel},</if>
+            <if test="ucode != null">ucode = #{ucode},</if>
+            <if test="ulanguage != null">ulanguage = #{ulanguage},</if>
+        </trim>
+        where uareaid = #{uareaid}
+    </update>
+
+    <delete id="deletePtAreaByUareaid" parameterType="String">
+        delete from pt_area where uareaid = #{uareaid}
+    </delete>
+
+    <delete id="deletePtAreaByUareaids" parameterType="String">
+        delete from pt_area where uareaid in 
+        <foreach item="uareaid" collection="array" open="(" separator="," close=")">
+            #{uareaid}
+        </foreach>
+    </delete>
+</mapper>

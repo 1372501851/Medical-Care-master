@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtRoomMapper">
+
+    <resultMap type="XtRoom" id="XtRoomResult">
+        <result property="uroomid"    column="uroomid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="ubuildingname"    column="ubuildingname"    />
+        <result property="ufloorNo"    column="ufloor_no"    />
+        <result property="uroomNo"    column="uroom_no"    />
+        <result property="udesc"    column="udesc"    />
+    </resultMap>
+
+    <sql id="selectXtRoomVo">
+        select uroomid, ucompid, udepartmentid, ubuildingname, ufloor_no, uroom_no, udesc from xt_room
+    </sql>
+
+    <select id="selectXtRoomList" parameterType="XtRoom" resultMap="XtRoomResult">
+        <include refid="selectXtRoomVo"/>
+        <where>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="ubuildingname != null  and ubuildingname != ''"> and ubuildingname like concat('%', #{ubuildingname}, '%')</if>
+            <if test="ufloorNo != null  and ufloorNo != ''"> and ufloor_no = #{ufloorNo}</if>
+            <if test="uroomNo != null  and uroomNo != ''"> and uroom_no = #{uroomNo}</if>
+            <if test="udesc != null  and udesc != ''"> and udesc = #{udesc}</if>
+        </where>
+    </select>
+
+    <select id="selectXtRoomByUroomid" parameterType="String" resultMap="XtRoomResult">
+        <include refid="selectXtRoomVo"/>
+        where uroomid = #{uroomid}
+    </select>
+    <select id="selectXtRoomByName" resultType="java.lang.Integer">
+        select count(1)
+        from xt_room
+        where ubuildingname = #{ubuildingname} and ucompid = #{ucompid}
+
+    </select>
+    <select id="selectXtRoomByRoomNo" resultType="java.lang.Integer">
+        select count(1)
+        from xt_room
+        where uroom_no = #{uroomNo} and ufloor_no = #{ufloorNo} and ubuildingname = #{ubuildingname} and ucompid = #{ucompid}
+    </select>
+
+    <insert id="insertXtRoom" parameterType="XtRoom">
+        insert into xt_room
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uroomid != null">uroomid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid,</if>
+            <if test="ubuildingname != null and ubuildingname != ''">ubuildingname,</if>
+            <if test="ufloorNo != null and ufloorNo != ''">ufloor_no,</if>
+            <if test="uroomNo != null">uroom_no,</if>
+            <if test="udesc != null">udesc,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uroomid != null">#{uroomid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">#{udepartmentid},</if>
+            <if test="ubuildingname != null and ubuildingname != ''">#{ubuildingname},</if>
+            <if test="ufloorNo != null and ufloorNo != ''">#{ufloorNo},</if>
+            <if test="uroomNo != null">#{uroomNo},</if>
+            <if test="udesc != null">#{udesc},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtRoom" parameterType="XtRoom">
+        update xt_room
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid = #{udepartmentid},</if>
+            <if test="ubuildingname != null and ubuildingname != ''">ubuildingname = #{ubuildingname},</if>
+            <if test="ufloorNo != null and ufloorNo != ''">ufloor_no = #{ufloorNo},</if>
+            <if test="uroomNo != null">uroom_no = #{uroomNo},</if>
+            <if test="udesc != null">udesc = #{udesc},</if>
+        </trim>
+        where uroomid = #{uroomid}
+    </update>
+
+    <delete id="deleteXtRoomByUroomid" parameterType="String">
+        delete from xt_room where uroomid = #{uroomid}
+    </delete>
+
+    <delete id="deleteXtRoomByUroomids" parameterType="String">
+        delete from xt_room where uroomid in
+        <foreach item="uroomid" collection="array" open="(" separator="," close=")">
+            #{uroomid}
+        </foreach>
+    </delete>
+</mapper>

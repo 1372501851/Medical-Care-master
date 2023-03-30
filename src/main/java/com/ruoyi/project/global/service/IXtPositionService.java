@@ -1,0 +1,67 @@
+package com.ruoyi.project.global.service;
+
+import com.ruoyi.project.global.domain.XtPosition;
+import com.ruoyi.project.global.domain.select.PositionSelect;
+
+import java.util.List;
+
+/**
+ * 职位 提供选择（传职位名称给用户信息）Service接口
+ *
+ * @author ruoyi
+ * @date 2022-10-13
+ */
+public interface IXtPositionService
+{
+    /**
+     * 查询职位 提供选择（传职位名称给用户信息）
+     *
+     * @param upositionname 职位 提供选择（传职位名称给用户信息）主键
+     * @return 职位 提供选择（传职位名称给用户信息）
+     */
+    public XtPosition selectXtPositionByUpositionname(String upositionname);
+
+    /**
+     * 查询职位 提供选择（传职位名称给用户信息）列表
+     *
+     * @param xtPosition 职位 提供选择（传职位名称给用户信息）
+     * @return 职位 提供选择（传职位名称给用户信息）集合
+     */
+    public List<XtPosition> selectXtPositionList(XtPosition xtPosition);
+
+    /**
+     * 新增职位 提供选择（传职位名称给用户信息）
+     *
+     * @param xtPosition 职位 提供选择（传职位名称给用户信息）
+     * @return 结果
+     */
+    public int insertXtPosition(XtPosition xtPosition);
+
+    /**
+     * 修改职位 提供选择（传职位名称给用户信息）
+     *
+     * @param xtPosition 职位 提供选择（传职位名称给用户信息）
+     * @return 结果
+     */
+    public int updateXtPosition(XtPosition xtPosition);
+
+    /**
+     * 批量删除职位 提供选择（传职位名称给用户信息）
+     *
+     * @param upositionnames 需要删除的职位 提供选择（传职位名称给用户信息）主键集合
+     * @return 结果
+     */
+    public int deleteXtPositionByUpositionIds(String[] postIds);
+
+    /**
+     * 删除职位 提供选择（传职位名称给用户信息）信息
+     *
+     * @param upositionname 职位 提供选择（传职位名称给用户信息）主键
+     * @return 结果
+     */
+    public int deleteXtPositionByUpositionname(String upositionname);
+
+    XtPosition selectXtPositionByUpositionId(String upositionid);
+
+    List<PositionSelect> getSelectList();
+}

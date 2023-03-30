@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.im.mapper.XtUserToGroupMapper">
+
+    <resultMap type="XtUserToGroup" id="XtUserToGroupResult">
+        <result property="usergroupid"    column="usergroupid"    />
+        <result property="userid"    column="userid"    />
+        <result property="ugroupid"    column="ugroupid"    />
+        <result property="ustatus"    column="ustatus"    />
+        <result property="message"    column="message"    />
+        <result property="creatTime"    column="creat_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectXtUserToGroupVo">
+        select usergroupid, userid, ugroupid, ustatus, message, creat_time, update_time, create_by, update_by, del_flag, remark from xt_user_to_group
+    </sql>
+
+    <select id="selectXtUserToGroupList" parameterType="XtUserToGroup" resultMap="XtUserToGroupResult">
+        <include refid="selectXtUserToGroupVo"/>
+        <where>
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="ugroupid != null  and ugroupid != ''"> and ugroupid = #{ugroupid}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+            <if test="message != null  and message != ''"> and message = #{message}</if>
+            <if test="creatTime != null "> and creat_time = #{creatTime}</if>
+        </where>
+    </select>
+
+    <select id="selectXtUserToGroupByUsergroupid" parameterType="String" resultMap="XtUserToGroupResult">
+        <include refid="selectXtUserToGroupVo"/>
+        where usergroupid = #{usergroupid}
+    </select>
+    <select id="selectUserListByGroupId" resultMap="XtUserToGroupResult">
+        <include refid="selectXtUserToGroupVo"/>
+        where ugroupid = #{chatId}
+    </select>
+    <select id="selectUserListByUserId" resultMap="XtUserToGroupResult">
+        <include refid="selectXtUserToGroupVo"/>
+        where userid = #{userId}
+    </select>
+
+    <insert id="insertXtUserToGroup" parameterType="XtUserToGroup">
+        insert into xt_user_to_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="usergroupid != null">usergroupid,</if>
+            <if test="userid != null and userid != ''">userid,</if>
+            <if test="ugroupid != null and ugroupid != ''">ugroupid,</if>
+            <if test="ustatus != null and ustatus != ''">ustatus,</if>
+            <if test="message != null">message,</if>
+            <if test="creatTime != null">creat_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="usergroupid != null">#{usergroupid},</if>
+            <if test="userid != null and userid != ''">#{userid},</if>
+            <if test="ugroupid != null and ugroupid != ''">#{ugroupid},</if>
+            <if test="ustatus != null and ustatus != ''">#{ustatus},</if>
+            <if test="message != null">#{message},</if>
+            <if test="creatTime != null">#{creatTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtUserToGroup" parameterType="XtUserToGroup">
+        update xt_user_to_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userid != null and userid != ''">userid = #{userid},</if>
+            <if test="ugroupid != null and ugroupid != ''">ugroupid = #{ugroupid},</if>
+            <if test="ustatus != null and ustatus != ''">ustatus = #{ustatus},</if>
+            <if test="message != null">message = #{message},</if>
+            <if test="creatTime != null">creat_time = #{creatTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where usergroupid = #{usergroupid}
+    </update>
+
+    <delete id="deleteXtUserToGroupByUsergroupid" parameterType="String">
+        delete from xt_user_to_group where usergroupid = #{usergroupid}
+    </delete>
+
+    <delete id="deleteXtUserToGroupByUsergroupids" parameterType="String">
+        delete from xt_user_to_group where usergroupid in
+        <foreach item="usergroupid" collection="array" open="(" separator="," close=")">
+            #{usergroupid}
+        </foreach>
+    </delete>
+    <delete id="deleteXtUserToGroupByUsergroupidAndUserId">
+        delete from xt_user_to_group
+        where userid = #{userId} and usergroupid = #{groupId}
+    </delete>
+</mapper>

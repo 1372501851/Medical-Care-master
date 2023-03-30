@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtPaibanMapper">
+
+    <resultMap type="XtPaiban" id="XtPaibanResult">
+        <result property="upaibanid"    column="upaibanid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="udate"    column="udate"    />
+        <result property="uweek"    column="uweek"    />
+        <result property="utimeQuantum"    column="utime_quantum"    />
+        <result property="uholiday"    column="uholiday"    />
+    </resultMap>
+
+    <sql id="selectXtPaibanVo">
+        select upaibanid, udepartmentid, udate, uweek, utime_quantum, uholiday ,upaibantime from xt_paiban
+    </sql>
+
+    <select id="selectXtPaibanList" parameterType="XtPaiban" resultMap="XtPaibanResult">
+        <include refid="selectXtPaibanVo"/>
+        <where>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="udate != null "> and udate = #{udate}</if>
+            <if test="uweek != null "> and uweek = #{uweek}</if>
+            <if test="utimeQuantum != null  and utimeQuantum != ''"> and utime_quantum = #{utimeQuantum}</if>
+            <if test="uholiday != null  and uholiday != ''"> and uholiday = #{uholiday}</if>
+        </where>
+    </select>
+
+    <select id="selectXtPaibanByUpaibanid" parameterType="String" resultMap="XtPaibanResult">
+        <include refid="selectXtPaibanVo"/>
+        where upaibanid = #{upaibanid}
+    </select>
+
+    <insert id="insertXtPaiban" parameterType="XtPaiban">
+        insert into xt_paiban
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="upaibanid != null">upaibanid,</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid,</if>
+            <if test="udate != null">udate,</if>
+            <if test="uweek != null">uweek,</if>
+            <if test="utimeQuantum != null">utime_quantum,</if>
+            <if test="uholiday != null">uholiday,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="upaibanid != null">#{upaibanid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">#{udepartmentid},</if>
+            <if test="udate != null">#{udate},</if>
+            <if test="uweek != null">#{uweek},</if>
+            <if test="utimeQuantum != null">#{utimeQuantum},</if>
+            <if test="uholiday != null">#{uholiday},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtPaiban" parameterType="XtPaiban">
+        update xt_paiban
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid = #{udepartmentid},</if>
+            <if test="udate != null">udate = #{udate},</if>
+            <if test="uweek != null">uweek = #{uweek},</if>
+            <if test="utimeQuantum != null">utime_quantum = #{utimeQuantum},</if>
+            <if test="uholiday != null">uholiday = #{uholiday},</if>
+        </trim>
+        where upaibanid = #{upaibanid}
+    </update>
+
+    <delete id="deleteXtPaibanByUpaibanid" parameterType="String">
+        delete from xt_paiban where upaibanid = #{upaibanid}
+    </delete>
+
+    <delete id="deleteXtPaibanByUpaibanids" parameterType="String">
+        delete from xt_paiban where upaibanid in
+        <foreach item="upaibanid" collection="array" open="(" separator="," close=")">
+            #{upaibanid}
+        </foreach>
+    </delete>
+</mapper>

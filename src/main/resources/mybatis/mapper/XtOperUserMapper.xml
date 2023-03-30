@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.user.mapper.XtOperUserMapper">
+
+    <resultMap type="XtOperUser" id="XtOperUserResult">
+        <result property="uoperUserid"    column="uoper_userid"    />
+        <result property="uoperCompid"    column="uoper_compid"    />
+        <result property="uoperCustomerid"    column="uoper_customerid"    />
+        <result property="uloginname"    column="uloginname"    />
+        <result property="upassword"    column="upassword"    />
+        <result property="uparentid"    column="uparentid"    />
+        <result property="ifroot"    column="ifroot"    />
+        <result property="uname"    column="uname"    />
+        <result property="ulogo"    column="ulogo"    />
+        <result property="uemail"    column="uemail"    />
+        <result property="umobile"    column="umobile"    />
+        <result property="ueareid"    column="ueareid"    />
+        <result property="uroleid"    column="uroleid"    />
+        <result property="ulogintime"    column="ulogintime"    />
+        <result property="uloginip"    column="uloginip"    />
+        <result property="usertype"    column="usertype"    />
+        <result property="ulogins"    column="ulogins"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="status"    column="status"    />
+
+
+        <result property="uentryUnit" column="uentry_unit"></result>
+        <result property="ueuntryDepartment" column="ueuntry_department"></result>
+        <result property="uworkAddress" column="uwork_address"></result>
+        <result property="uofficeSpace" column="uoffice_space"></result>
+        <result property="uapplyPost" column="uapply_post"></result>
+        <result property="uhavePermissions" column="uhave_permissions"></result>
+        <result property="ucardid" column="ucardid"></result>
+        <result property="ubirthdate" column="ubirthdate"></result>
+        <result property="usex" column="usex"></result>
+        <result property="uage" column="uage"></result>
+        <result property="uliveingCity" column="uliveing_city"></result>
+        <result property="udetailedAddresse" column="udetailed_addresse"></result>
+        <result property="ulivingCommunity" column="uliving_community"></result>
+        <result property="ukultur" column="ukultur"></result>
+        <result property="uoccupation" column="uoccupation"></result>
+        <result property="upost" column="upost"></result>
+        <result property="utitle" column="utitle"></result>
+        <result property="ukinshipNumber" column="ukinship_number"></result>
+        <result property="utel" column="utel"></result>
+        <result property="uheadPic" column="uhead_pic"></result>
+        <result property="uidcardzPic" column="uidcardz_pic"></result>
+        <result property="uidcardfPic" column="uidcardf_pic"></result>
+        <result property="ueducationPic" column="ueducation_Pic"></result>
+        <result property="utitlesPic" column="utitles_Pic"></result>
+        <result property="upracticingPic" column="upracticing_pic"></result>
+        <result property="uotherCertificatesPic" column="uother_Certificates_Pic"></result>
+        <result property="uploity" column="uploity"></result>
+        <result property="undustryAssociation" column="undustry_association"></result>
+        <result property="uspareOne" column="uspare_one"></result>
+        <result property="uspareTwo" column="uspare_two"></result>
+        <result property="approvalTime" column="approval_time"></result>
+    </resultMap>
+
+    <sql id="selectXtOperUserVo">
+        select * from xt_oper_user
+    </sql>
+
+    <select id="selectXtOperUserList" parameterType="XtOperUser" resultMap="XtOperUserResult">
+        <include refid="selectXtOperUserVo"/>
+        <where>
+            <if test="uoperCompid != null  and uoperCompid != ''"> and uoper_compid = #{uoperCompid}</if>
+            <if test="uoperCustomerid != null "> and uoper_customerid = #{uoperCustomerid}</if>
+            <if test="uloginname != null  and uloginname != ''"> and uloginname like concat('%', #{uloginname}, '%')</if>
+            <if test="upassword != null  and upassword != ''"> and upassword = #{upassword}</if>
+            <if test="uparentid != null  and uparentid != ''"> and uparentid = #{uparentid}</if>
+            <if test="ifroot != null  and ifroot != ''"> and ifroot = #{ifroot}</if>
+            <if test="uname != null  and uname != ''"> and uname like concat('%', #{uname}, '%')</if>
+            <if test="ulogo != null  and ulogo != ''"> and ulogo = #{ulogo}</if>
+            <if test="uemail != null  and uemail != ''"> and uemail = #{uemail}</if>
+            <if test="umobile != null  and umobile != ''"> and umobile = #{umobile}</if>
+            <if test="ueareid != null  and ueareid != ''"> and ueareid = #{ueareid}</if>
+            <if test="uroleid != null  and uroleid != ''"> and uroleid = #{uroleid}</if>
+            <if test="ulogintime != null "> and ulogintime = #{ulogintime}</if>
+            <if test="uloginip != null  and uloginip != ''"> and uloginip = #{uloginip}</if>
+            <if test="usertype != null  and usertype != ''"> and usertype = #{usertype}</if>
+            <if test="ulogins != null "> and ulogins = #{ulogins}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+             and del_flag = '0'
+        </where>
+    </select>
+
+
+    <select id="selectWebUserList" resultMap="XtOperUserResult">
+        select uoper_userid, uoper_compid, uoper_customerid, uloginname, upassword, uparentid, ifroot, uname, ulogo, uemail, umobile, ueareid, uroleid, ulogintime, uloginip, usertype, ulogins, ucreatedate,
+               del_flag,status
+        from xt_oper_user
+        <where>
+            uoper_userid in
+            (
+            select user_id
+            from user_comp
+            where comp_id = #{uoperCompid}
+            )
+
+            <if test="uoperCustomerid != null "> and uoper_customerid = #{uoperCustomerid}</if>
+            <if test="uloginname != null  and uloginname != ''"> and uloginname like concat('%', #{uloginname}, '%')</if>
+            <if test="upassword != null  and upassword != ''"> and upassword = #{upassword}</if>
+            <if test="uparentid != null  and uparentid != ''"> and uparentid = #{uparentid}</if>
+            <if test="ifroot != null  and ifroot != ''"> and ifroot = #{ifroot}</if>
+            <if test="uname != null  and uname != ''"> and uname like concat('%', #{uname}, '%')</if>
+            <if test="ulogo != null  and ulogo != ''"> and ulogo = #{ulogo}</if>
+            <if test="uemail != null  and uemail != ''"> and uemail = #{uemail}</if>
+            <if test="umobile != null  and umobile != ''"> and umobile = #{umobile}</if>
+            <if test="ueareid != null  and ueareid != ''"> and ueareid = #{ueareid}</if>
+            <if test="uroleid != null  and uroleid != ''"> and uroleid = #{uroleid}</if>
+            <if test="ulogintime != null "> and ulogintime = #{ulogintime}</if>
+            <if test="uloginip != null  and uloginip != ''"> and uloginip = #{uloginip}</if>
+            <if test="usertype != null  and usertype != ''"> and usertype = #{usertype}</if>
+            <if test="ulogins != null "> and ulogins = #{ulogins}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+            and del_flag = '0'
+        </where>
+
+    </select>
+    <select id="selectXtOperUserByUoperUserid" parameterType="String" resultMap="XtOperUserResult">
+        <include refid="selectXtOperUserVo"/>
+        where uoper_userid = #{uoperUserid} and del_flag = '0'
+    </select>
+    <select id="selectXtOperUserByUserLoginName" parameterType="String" resultMap="XtOperUserResult">
+        <include refid="selectXtOperUserVo"/>
+        where uloginname = #{username} and del_flag = '0'
+    </select>
+    <select id="selectXtOperUserByPhoneNumber" resultMap="XtOperUserResult">
+        <include refid="selectXtOperUserVo"/>
+        where umobile = #{umobile} and del_flag = '0'
+    </select>
+
+
+    <select id="selectXtOperUserBEmail" resultMap="XtOperUserResult">
+        <include refid="selectXtOperUserVo"/>
+        where uemail = #{uemail} and del_flag = '0'
+    </select>
+
+    <insert id="insertXtOperUser" parameterType="XtOperUser">
+        insert into xt_oper_user
+        (
+        <if test="uoperUserid != null">uoper_userid,</if>
+        <if test="uoperCompid != null">uoper_compid,</if>
+        <if test="uoperCustomerid != null">uoper_customerid,</if>
+        <if test="uloginname != null and uloginname != ''">uloginname,</if>
+        <if test="upassword != null and upassword != ''">upassword,</if>
+        <if test="uparentid != null">uparentid,</if>
+        <if test="ifroot != null and ifroot != ''">ifroot,</if>
+        <if test="uname != null and uname != ''">uname,</if>
+        <if test="ulogo != null">ulogo,</if>
+        <if test="uemail != null">uemail,</if>
+        <if test="umobile != null">umobile,</if>
+        <if test="ueareid != null">ueareid,</if>
+        <if test="uroleid != null">uroleid,</if>
+        <if test="ulogintime != null">ulogintime,</if>
+        <if test="uloginip != null">uloginip,</if>
+        <if test="usertype != null and usertype != ''">usertype,</if>
+        <if test="ulogins != null">ulogins,</if>
+        <if test="ucreatedate != null">ucreatedate,</if>
+
+        <if test="uentryUnit != null">uentry_unit,</if>
+        <if test="ueuntryDepartment != null">ueuntry_department,</if>
+        <if test="uworkAddress != null">uwork_address,</if>
+        <if test="uofficeSpace != null">uoffice_space,</if>
+        <if test="uapplyPost != null">uapply_post,</if>
+        <if test="uhavePermissions != null">uhave_permissions,</if>
+        <if test="ucardid != null">ucardid,</if>
+        <if test="ubirthdate != null">ubirthdate,</if>
+        <if test="usex != null">usex,</if>
+        <if test="uage != null">uage,</if>
+        <if test="uliveingCity != null">uliveing_city,</if>
+        <if test="udetailedAddresse != null">udetailed_addresse,</if>
+        <if test="ulivingCommunity != null">uliving_community,</if>
+        <if test="ukultur != null">ukultur,</if>
+        <if test="upost != null">upost,</if>
+        <if test="utitle != null">utitle,</if>
+        <if test="ukinshipNumber != null">ukinship_number,</if>
+        <if test="utel != null">utel,</if>
+        <if test="uheadPic != null">uhead_pic,</if>
+        <if test="uidcardzPic != null">uidcardz_pic,</if>
+        <if test="uidcardfPic != null">uidcardf_pic,</if>
+        <if test="ueducationPic != null">ueducation_pic,</if>
+        <if test="utitlesPic != null">utitles_pic,</if>
+        <if test="upracticingPic != null">upracticing_pic,</if>
+        <if test="uotherCertificatesPic != null">uother_certificates_pic,</if>
+        <if test="uploity != null">uploity,</if>
+        <if test="undustryAssociation != null">undustry_association,</if>
+        <if test="uspareOne != null">uspare_one,</if>
+        <if test="uspareTwo != null">uspare_two,</if>
+         del_flag,status
+        )values (
+        <if test="uoperUserid != null">#{uoperUserid},</if>
+        <if test="uoperCompid != null">#{uoperCompid},</if>
+        <if test="uoperCustomerid != null">#{uoperCustomerid},</if>
+        <if test="uloginname != null and uloginname != ''">#{uloginname},</if>
+        <if test="upassword != null and upassword != ''">#{upassword},</if>
+        <if test="uparentid != null">#{uparentid},</if>
+        <if test="ifroot != null and ifroot != ''">#{ifroot},</if>
+        <if test="uname != null and uname != ''">#{uname},</if>
+        <if test="ulogo != null">#{ulogo},</if>
+        <if test="uemail != null">#{uemail},</if>
+        <if test="umobile != null">#{umobile},</if>
+        <if test="ueareid != null">#{ueareid},</if>
+        <if test="uroleid != null">#{uroleid},</if>
+        <if test="ulogintime != null">#{ulogintime},</if>
+        <if test="uloginip != null">#{uloginip},</if>
+        <if test="usertype != null and usertype != ''">#{usertype},</if>
+        <if test="ulogins != null">#{ulogins},</if>
+        <if test="ucreatedate != null">#{ucreatedate},</if>
+
+        <if test="uentryUnit != null">#{uentryUnit},</if>
+        <if test="ueuntryDepartment != null">#{ueuntryDepartment},</if>
+        <if test="uworkAddress != null">#{uworkAddress},</if>
+        <if test="uofficeSpace != null">#{uofficeSpace},</if>
+        <if test="uapplyPost != null">#{uapplyPost},</if>
+        <if test="uhavePermissions != null">#{uhavePermissions},</if>
+        <if test="ucardid != null">#{ucardid},</if>
+        <if test="ubirthdate != null">#{ubirthdate},</if>
+        <if test="usex != null">#{usex},</if>
+        <if test="uage != null">#{uage},</if>
+        <if test="uliveingCity != null">#{uliveingCity},</if>
+        <if test="udetailedAddresse != null">#{udetailedAddresse},</if>
+        <if test="ulivingCommunity != null">#{ulivingCommunity},</if>
+        <if test="ukultur != null">#{ukultur},</if>
+        <if test="upost != null">#{upost},</if>
+        <if test="utitle != null">#{utitle},</if>
+        <if test="ukinshipNumber != null">#{ukinshipNumber},</if>
+        <if test="utel != null">#{utel},</if>
+        <if test="uheadPic != null">#{uheadPic},</if>
+        <if test="uidcardzPic != null">#{uidcardzPic},</if>
+        <if test="uidcardfPic != null">#{uidcardfPic},</if>
+        <if test="ueducationPic != null">#{ueducationPic},</if>
+        <if test="utitlesPic != null">#{utitlesPic},</if>
+        <if test="upracticingPic != null">#{upracticingPic},</if>
+        <if test="uotherCertificatesPic != null">#{uotherCertificatesPic},</if>
+        <if test="uploity != null">#{uploity},</if>
+        <if test="undustryAssociation != null">#{undustryAssociation},</if>
+        <if test="uspareOne != null">#{uspareOne},</if>
+        <if test="uspareTwo != null">#{uspareTwo},</if>
+        '0','0'
+        )
+    </insert>
+
+    <update id="updateXtOperUser" parameterType="XtOperUser">
+        update xt_oper_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uoperCompid != null">uoper_compid = #{uoperCompid},</if>
+            <if test="uoperCustomerid != null">uoper_customerid = #{uoperCustomerid},</if>
+            <if test="uloginname != null and uloginname != ''">uloginname = #{uloginname},</if>
+            <if test="upassword != null and upassword != ''">upassword = #{upassword},</if>
+            <if test="uparentid != null">uparentid = #{uparentid},</if>
+            <if test="ifroot != null and ifroot != ''">ifroot = #{ifroot},</if>
+            <if test="uname != null and uname != ''">uname = #{uname},</if>
+            <if test="ulogo != null">ulogo = #{ulogo},</if>
+            <if test="uemail != null">uemail = #{uemail},</if>
+            <if test="umobile != null">umobile = #{umobile},</if>
+            <if test="ueareid != null">ueareid = #{ueareid},</if>
+            <if test="uroleid != null">uroleid = #{uroleid},</if>
+            <if test="ulogintime != null">ulogintime = #{ulogintime},</if>
+            <if test="uloginip != null">uloginip = #{uloginip},</if>
+            <if test="usertype != null and usertype != ''">usertype = #{usertype},</if>
+            <if test="ulogins != null">ulogins = #{ulogins},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+
+
+
+            <if test="uentryUnit != null">uentry_unit = #{uentryUnit},</if>
+            <if test="ueuntryDepartment != null">ueuntry_department = #{ueuntryDepartment},</if>
+            <if test="uworkAddress != null">uwork_address = #{uworkAddress},</if>
+            <if test="uofficeSpace != null">uoffice_space = #{uofficeSpace},</if>
+            <if test="uapplyPost != null">uapply_post = #{uapplyPost},</if>
+            <if test="uhavePermissions != null">uhave_permissions = #{uhavePermissions},</if>
+            <if test="ucardid != null">ucardid = #{ucardid},</if>
+            <if test="ubirthdate != null">ubirthdate = #{ubirthdate},</if>
+            <if test="usex != null">usex = #{usex},</if>
+            <if test="uage != null">uage = #{uage},</if>
+            <if test="uliveingCity != null">uliveing_city = #{uliveingCity},</if>
+            <if test="udetailedAddresse != null">udetailed_addresse = #{udetailedAddresse},</if>
+            <if test="ulivingCommunity != null">uliving_community = #{ulivingCommunity},</if>
+            <if test="ukultur != null">ukultur = #{ukultur},</if>
+            <if test="uoccupation != null">uoccupation = #{uoccupation},</if>
+            <if test="upost != null">upost = #{upost},</if>
+            <if test="utitle != null">utitle = #{utitle},</if>
+            <if test="ukinshipNumber != null">ukinship_number = #{ukinshipNumber},</if>
+            <if test="utel != null">utel = #{utel},</if>
+            <if test="uheadPic != null">uhead_pic = #{uheadPic},</if>
+            <if test="uidcardzPic != null">uidcardz_pic = #{uidcardzPic},</if>
+            <if test="uidcardfPic != null">uidcardf_pic = #{uidcardfPic},</if>
+            <if test="ueducationPic != null">ueducation_pic = #{ueducationPic},</if>
+            <if test="utitlesPic != null">utitles_pic = #{utitlesPic},</if>
+            <if test="upracticingPic != null">upracticing_pic = #{upracticingPic},</if>
+            <if test="uotherCertificatesPic != null">uother_certificates_pic = #{uotherCertificatesPic},</if>
+            <if test="uploity != null">uploity = #{uploity},</if>
+            <if test="undustryAssociation != null">undustry_association = #{undustryAssociation},</if>
+            <if test="uspareOne != null">uspare_one = #{uspareOne},</if>
+            <if test="uspareTwo != null">uspare_two = #{uspareTwo},</if>
+            <if test="approvalTime != null">approval_time = #{approvalTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where uoper_userid = #{uoperUserid}
+    </update>
+
+    <delete id="deleteXtOperUserByUoperUserid" parameterType="String">
+        delete from xt_oper_user where uoper_userid = #{uoperUserid}
+    </delete>
+
+    <delete id="deleteXtOperUserByUoperUserids" parameterType="String">
+        DELETE FROM xt_oper_user
+        where uoper_userid in
+        <foreach item="uoperUserid" collection="array" open="(" separator="," close=")">
+            #{uoperUserid}
+        </foreach>
+    </delete>
+</mapper>

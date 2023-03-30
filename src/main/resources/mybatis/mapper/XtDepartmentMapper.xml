@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.user.mapper.XtDepartmentMapper">
+
+    <resultMap type="XtDepartment" id="XtDepartmentResult">
+        <id property="udepartmentid"    column="udepartmentid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="ulevel"    column="ulevel"    />
+        <result property="udepartmentname"    column="udepartmentname"    />
+        <result property="uoptype"    column="uoptype"    />
+        <result property="udesc"    column="udesc"    />
+
+        <result property="parentId"   column="parent_id"   />
+        <result property="ancestors"  column="ancestors"   />
+        <result property="leader"     column="leader"      />
+        <result property="phone"      column="phone"       />
+        <result property="status"     column="status"      />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+
+        <result property="ucompType" column="ucomp_type"/>
+    </resultMap>
+
+    <sql id="selectXtDepartmentVo">
+        select d.udepartmentid, d.ucompid, d.ulevel, d.udepartmentname, d.uoptype, d.udesc ,d.parent_id, d.ancestors, d.leader, d.phone,
+               d.status, d.del_flag, d.create_by, d.create_time,d.update_by,d.update_time
+        from xt_department d
+    </sql>
+
+    <select id="selectXtDepartmentList" parameterType="XtDepartment" resultMap="XtDepartmentResult">
+        <include refid="selectXtDepartmentVo"/>
+        where del_flag = '0'
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="ancestors != null  and ancestors != ''"> and ancestors like  concat(#{ancestors}, '%')</if>
+            <if test="udepartmentname != null  and udepartmentname != ''"> and udepartmentname like concat('%', #{udepartmentname}, '%')</if>
+            <if test="uoptype != null  and uoptype != ''"> and uoptype = #{uoptype}</if>
+            <if test="udesc != null  and udesc != ''"> and udesc = #{udesc}</if>
+            <if test="status != null and status != ''">AND status = #{status}</if>
+    </select>
+
+    <select id="selectXtDepartmentByUdepartmentid" parameterType="String" resultMap="XtDepartmentResult">
+        <include refid="selectXtDepartmentVo"/>
+        where udepartmentid = #{udepartmentid}
+
+    </select>
+    <select id="hasChildByDeptId" resultType="java.lang.Integer">
+        select count(1) from xt_department
+        where del_flag = '0' and parent_id = #{deptId} limit 1
+    </select>
+    <select id="checkDeptExistUser" resultType="java.lang.Integer">
+        select count(1) from xt_employee where udepartmentid = #{deptId} and del_flag = '0'
+    </select>
+    <select id="checkDeptNameUnique" resultMap="XtDepartmentResult">
+        <include refid="selectXtDepartmentVo"/>
+        where udepartmentname = #{udepartmentname} and parent_id = #{parentId}
+        and udepartmentid = #{departmentId}
+        and del_flag = '0' limit 1
+
+    </select>
+    <select id="selectChildrenDeptById" resultMap="XtDepartmentResult">
+        select d.* ,c.ucomp_type from xt_department d , xt_comp c where find_in_set(#{deptId}, ancestors)
+
+    </select>
+    <select id="selectNormalChildrenDeptById" resultType="java.lang.Integer">
+        select count(*) from xt_department where status = '0' and del_flag = '0' and find_in_set(#{deptId}, ancestors)
+    </select>
+
+    <insert id="insertXtDepartment" parameterType="XtDepartment">
+        insert into xt_department
+        (
+        <if test="udepartmentid != null">udepartmentid,</if>
+        <if test="ucompid != null and ucompid != ''">ucompid,</if>
+        <if test="ulevel != null and ulevel != ''">ulevel,</if>
+        <if test="udepartmentname != null">udepartmentname,</if>
+        <if test="uoptype != null">uoptype,</if>
+        <if test="udesc != null">udesc,</if>
+
+        <if test="parentId != null">parent_id,</if>
+        <if test="ancestors != null and ancestors != ''">ancestors,</if>
+        <if test="leader != null and leader != ''">leader,</if>
+        <if test="phone != null and phone != ''">phone,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        create_time,status,del_flag
+        )
+        values
+        (
+        <if test="udepartmentid != null">#{udepartmentid},</if>
+        <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+        <if test="ulevel != null and ulevel != ''">#{ulevel},</if>
+        <if test="udepartmentname != null">#{udepartmentname},</if>
+        <if test="uoptype != null">#{uoptype},</if>
+        <if test="udesc != null">#{udesc},</if>
+
+        <if test="parentId != null">#{parentId},</if>
+        <if test="ancestors != null and ancestors != ''">#{ancestors},</if>
+        <if test="leader != null and leader != ''">#{leader},</if>
+        <if test="phone != null and phone != ''">#{phone},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        sysdate(),'0','0'
+        )
+
+
+    </insert>
+
+    <update id="updateXtDepartment" parameterType="XtDepartment">
+        update xt_department
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="ulevel != null and ulevel != ''">ulevel = #{ulevel},</if>
+            <if test="udepartmentname != null">udepartmentname = #{udepartmentname},</if>
+            <if test="uoptype != null">uoptype = #{uoptype},</if>
+            <if test="udesc != null">udesc = #{udesc},</if>
+
+            <if test="parentId != null">parent_id = #{parentId},</if>
+            <if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
+            <if test="leader != null">leader = #{leader},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            update_time = sysdate()
+        </trim>
+        where udepartmentid = #{udepartmentid}
+    </update>
+
+    <update id="updateDeptChildren" parameterType="java.util.List">
+        update xt_department set ancestors =
+        <foreach collection="depts" item="item" index="index"
+                 separator=" " open="case item.udepartmentid" close="end">
+            when #{item.udepartmentid} then #{item.ancestors}
+        </foreach>
+        where udepartmentid in
+        <foreach collection="depts" item="item" index="index"
+                 separator="," open="(" close=")">
+            #{item.udepartmentid}
+        </foreach>
+
+    </update>
+
+    <delete id="deleteXtDepartmentByUdepartmentid" parameterType="Long">
+        delete from xt_department where udepartmentid = #{udepartmentid}
+    </delete>
+
+    <delete id="deleteXtDepartmentByUdepartmentids" parameterType="String">
+        update xt_department
+        set del_flag = '2'
+        where status != '3' and udepartmentid in
+        <foreach item="udepartmentid" collection="udepartmentids" open="(" separator="," close=")">
+            #{udepartmentid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.approval.mapper.XtFlowopdetailMapper">
+
+    <resultMap type="XtFlowopdetail" id="XtFlowopdetailResult">
+        <result property="uflowopdetailid"    column="uflowopdetailid"    />
+        <result property="uflowid"    column="uflowid"    />
+        <result property="uflowopmasterid"    column="uflowopmasterid"    />
+        <result property="uflowname"    column="uflowname"    />
+        <result property="ustepid"    column="ustepid"    />
+        <result property="ustepname"    column="ustepname"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="uopstartTime"    column="uopstart_time"    />
+        <result property="uopendTime"    column="uopend_time"    />
+        <result property="uagree"    column="uagree"    />
+        <result property="uidea"    column="uidea"    />
+        <result property="ureturn"    column="ureturn"    />
+        <result property="ufinishflag"    column="ufinishflag"    />
+        <result property="ustatus"    column="ustatus"    />
+    </resultMap>
+
+    <sql id="selectXtFlowopdetailVo">
+        select uflowopdetailid, uflowid, uflowopmasterid, uflowname, ustepid, ustepname, ucompid, udepartmentid, uemployeeid, uopstart_time, uopend_time, uagree, uidea, ureturn, ufinishflag, ustatus from xt_flowopdetail
+    </sql>
+
+    <select id="selectXtFlowopdetailList" parameterType="XtFlowopdetail" resultMap="XtFlowopdetailResult">
+        <include refid="selectXtFlowopdetailVo"/>
+        <where>
+            <if test="uflowid != null  and uflowid != ''"> and uflowid = #{uflowid}</if>
+            <if test="uflowopmasterid != null  and uflowopmasterid != ''"> and uflowopmasterid = #{uflowopmasterid}</if>
+            <if test="uflowname != null  and uflowname != ''"> and uflowname like concat('%', #{uflowname}, '%')</if>
+            <if test="ustepid != null  and ustepid != ''"> and ustepid = #{ustepid}</if>
+            <if test="ustepname != null  and ustepname != ''"> and ustepname like concat('%', #{ustepname}, '%')</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="uopstartTime != null "> and uopstart_time = #{uopstartTime}</if>
+            <if test="uopendTime != null "> and uopend_time = #{uopendTime}</if>
+            <if test="uagree != null  and uagree != ''"> and uagree = #{uagree}</if>
+            <if test="uidea != null  and uidea != ''"> and uidea = #{uidea}</if>
+            <if test="ureturn != null  and ureturn != ''"> and ureturn = #{ureturn}</if>
+            <if test="ufinishflag != null  and ufinishflag != ''"> and ufinishflag = #{ufinishflag}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+        </where>
+    </select>
+
+    <select id="selectXtFlowopdetailByUflowopdetailid" parameterType="String" resultMap="XtFlowopdetailResult">
+        <include refid="selectXtFlowopdetailVo"/>
+        where uflowopdetailid = #{uflowopdetailid}
+    </select>
+
+    <insert id="insertXtFlowopdetail" parameterType="XtFlowopdetail">
+        insert into xt_flowopdetail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uflowopdetailid != null">uflowopdetailid,</if>
+            <if test="uflowid != null and uflowid != ''">uflowid,</if>
+            <if test="uflowopmasterid != null and uflowopmasterid != ''">uflowopmasterid,</if>
+            <if test="uflowname != null">uflowname,</if>
+            <if test="ustepid != null and ustepid != ''">ustepid,</if>
+            <if test="ustepname != null and ustepname != ''">ustepname,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid,</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid,</if>
+            <if test="uopstartTime != null">uopstart_time,</if>
+            <if test="uopendTime != null">uopend_time,</if>
+            <if test="uagree != null and uagree != ''">uagree,</if>
+            <if test="uidea != null">uidea,</if>
+            <if test="ureturn != null and ureturn != ''">ureturn,</if>
+            <if test="ufinishflag != null and ufinishflag != ''">ufinishflag,</if>
+            <if test="ustatus != null">ustatus,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uflowopdetailid != null">#{uflowopdetailid},</if>
+            <if test="uflowid != null and uflowid != ''">#{uflowid},</if>
+            <if test="uflowopmasterid != null and uflowopmasterid != ''">#{uflowopmasterid},</if>
+            <if test="uflowname != null">#{uflowname},</if>
+            <if test="ustepid != null and ustepid != ''">#{ustepid},</if>
+            <if test="ustepname != null and ustepname != ''">#{ustepname},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">#{udepartmentid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">#{uemployeeid},</if>
+            <if test="uopstartTime != null">#{uopstartTime},</if>
+            <if test="uopendTime != null">#{uopendTime},</if>
+            <if test="uagree != null and uagree != ''">#{uagree},</if>
+            <if test="uidea != null">#{uidea},</if>
+            <if test="ureturn != null and ureturn != ''">#{ureturn},</if>
+            <if test="ufinishflag != null and ufinishflag != ''">#{ufinishflag},</if>
+            <if test="ustatus != null">#{ustatus},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtFlowopdetail" parameterType="XtFlowopdetail">
+        update xt_flowopdetail
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uflowid != null and uflowid != ''">uflowid = #{uflowid},</if>
+            <if test="uflowopmasterid != null and uflowopmasterid != ''">uflowopmasterid = #{uflowopmasterid},</if>
+            <if test="uflowname != null">uflowname = #{uflowname},</if>
+            <if test="ustepid != null and ustepid != ''">ustepid = #{ustepid},</if>
+            <if test="ustepname != null and ustepname != ''">ustepname = #{ustepname},</if>
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="udepartmentid != null and udepartmentid != ''">udepartmentid = #{udepartmentid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid = #{uemployeeid},</if>
+            <if test="uopstartTime != null">uopstart_time = #{uopstartTime},</if>
+            <if test="uopendTime != null">uopend_time = #{uopendTime},</if>
+            <if test="uagree != null and uagree != ''">uagree = #{uagree},</if>
+            <if test="uidea != null">uidea = #{uidea},</if>
+            <if test="ureturn != null and ureturn != ''">ureturn = #{ureturn},</if>
+            <if test="ufinishflag != null and ufinishflag != ''">ufinishflag = #{ufinishflag},</if>
+            <if test="ustatus != null">ustatus = #{ustatus},</if>
+        </trim>
+        where uflowopdetailid = #{uflowopdetailid}
+    </update>
+
+    <delete id="deleteXtFlowopdetailByUflowopdetailid" parameterType="String">
+        delete from xt_flowopdetail where uflowopdetailid = #{uflowopdetailid}
+    </delete>
+
+    <delete id="deleteXtFlowopdetailByUflowopdetailids" parameterType="String">
+        delete from xt_flowopdetail where uflowopdetailid in
+        <foreach item="uflowopdetailid" collection="array" open="(" separator="," close=")">
+            #{uflowopdetailid}
+        </foreach>
+    </delete>
+</mapper>

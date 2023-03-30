@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.find.mapper.FindModelMapper">
+
+    <resultMap type="FindModel" id="FindModelResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="serverId"    column="server_id"    />
+        <result property="serviceType"    column="service_type"    />
+        <result property="status"    column="status"    />
+        <result property="chatId"    column="chat_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="compId"    column="comp_id"    />
+        <result property="guardianIds"    column="guardian_ids"    />
+        <result property="robStatus"    column="rob_status"    />
+        <result property="message"    column="message"    />
+        <result property="latitude"    column="latitude"    />
+        <result property="longitude"    column="longitude"    />
+    </resultMap>
+
+    <sql id="selectFindModelVo">
+        select id, user_id, server_id, service_type, status, chat_id, create_time,comp_id,guardian_ids,rob_status,message,
+               latitude,longitude
+        from find_model
+    </sql>
+
+    <select id="selectFindModelList" parameterType="FindModel" resultMap="FindModelResult">
+        <include refid="selectFindModelVo"/>
+        <where>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="serverId != null  and serverId != ''"> and server_id = #{serverId}</if>
+            <if test="serviceType != null  and serviceType != ''"> and service_type = #{serviceType}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="chatId != null  and chatId != ''"> and chat_id = #{chatId}</if>
+            <if test="compId != null  and compId != ''"> and comp_id = #{compId}</if>
+            <if test="guardianIds != null  and guardianIds != ''"> and guardian_ids = #{guardianIds}</if>
+            <if test="robStatus != null  and robStatus != ''"> and rob_status = #{robStatus}</if>
+            <if test="message != null  and message != ''"> and message = #{message}</if>
+            <if test="latitude != null  and latitude != ''"> and latitude = #{latitude}</if>
+            <if test="longitude != null  and longitude != ''"> and longitude = #{longitude}</if>
+        </where>
+    </select>
+
+    <select id="selectFindModelById" parameterType="String" resultMap="FindModelResult">
+        <include refid="selectFindModelVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectFindRobList" resultMap="FindModelResult">
+        select id, user_id, server_id, service_type, status, chat_id, create_time,comp_id,guardian_ids,rob_status,message,
+        latitude,longitude
+        ,(
+
+        6371 * acos (
+
+        cos ( radians(#{latitude}) )
+
+        * cos( radians( latitude ) )
+
+        * cos( radians( longitude ) - radians(#{longitude}) )
+
+        + sin ( radians(#{latitude}) )
+
+        * sin( radians( latitude ) )
+
+        )
+
+        ) AS distance
+        from find_model
+        <where>
+        <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+        <if test="serverId != null  and serverId != ''"> and server_id = #{serverId}</if>
+        <if test="serviceType != null  and serviceType != ''"> and service_type = #{serviceType}</if>
+        <if test="status != null  and status != ''"> and status = #{status}</if>
+        <if test="chatId != null  and chatId != ''"> and chat_id = #{chatId}</if>
+        <if test="compId != null  and compId != ''"> and comp_id = #{compId}</if>
+        <if test="guardianIds != null  and guardianIds != ''"> and guardian_ids = #{guardianIds}</if>
+        <if test="robStatus != null  and robStatus != ''"> and rob_status = #{robStatus}</if>
+        <if test="message != null  and message != ''"> and message = #{message}</if>
+        </where>
+--         HAVING distance &lt; 10
+        ORDER BY distance
+    </select>
+
+    <insert id="insertFindModel" parameterType="FindModel">
+        insert into find_model
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="serverId != null">server_id,</if>
+            <if test="serviceType != null">service_type,</if>
+            <if test="status != null">status,</if>
+            <if test="chatId != null">chat_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="compId != null">comp_id,</if>
+            <if test="guardianIds != null">guardian_ids,</if>
+            <if test="robStatus != null">rob_status,</if>
+            <if test="message != null">message,</if>
+            <if test="latitude != null">latitude,</if>
+            <if test="longitude != null">longitude,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="serverId != null">#{serverId},</if>
+            <if test="serviceType != null">#{serviceType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="chatId != null">#{chatId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="compId != null">#{compId},</if>
+            <if test="guardianIds != null">#{guardianIds},</if>
+            <if test="robStatus != null">#{robStatus},</if>
+            <if test="message != null">#{message},</if>
+            <if test="latitude != null">#{latitude},</if>
+            <if test="longitude != null">#{longitude},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFindModel" parameterType="FindModel">
+        update find_model
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="serverId != null">server_id = #{serverId},</if>
+            <if test="serviceType != null">service_type = #{serviceType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="chatId != null">chat_id = #{chatId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="compId != null">comp_id = #{compId},</if>
+            <if test="guardianIds != null">guardian_ids = #{guardianIds},</if>
+            <if test="robStatus != null">rob_status = #{robStatus},</if>
+            <if test="message != null">message = #{message},</if>
+            <if test="latitude != null">latitude = #{latitude},</if>
+            <if test="longitude != null">longitude = #{longitude},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFindModelById" parameterType="String">
+        delete from find_model where id = #{id}
+    </delete>
+
+    <delete id="deleteFindModelByIds" parameterType="String">
+        delete from find_model where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

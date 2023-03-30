@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.user.mapper.AllRoleToMenuMapper">
+
+    <insert id="insertXtAllRoleToMenu" parameterType="XtAllRoleToMenu">
+        insert into xt_allrole_to_menu
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uallroleid != null">uallroleid,</if>
+            <if test="menu_id != null">menu_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uallroleid != null">#{uallroleid},</if>
+            <if test="menu_id != null">#{menuId},</if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into xt_allrole_to_menu(uallroleid, menu_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.uallroleid}, #{entity.menuId})
+        </foreach>
+    </insert>
+
+    <insert id="addrole"  parameterType="string">
+        INSERT INTO xt_allrole (uallroleid,urolename,uroledesc,ucomp_type)
+        VALUES (#{id},#{name},#{uroledesc},#{type})
+    </insert>
+    <insert id="accredit">
+        INSERT INTO xt_role_menu (role_id,menu_id)
+        VALUES (#{id},#{menuid})
+    </insert>
+
+    <update id="updataByid" parameterType="com.ruoyi.project.user.domain.XtAllRole">
+        update xt_allrole
+        <set>
+            <if test="urolename != null ">urolename=#{urolename},</if>
+            <if test="uroledesc != null">uroledesc=#{uroledesc},</if>
+            <if test="ucompType != null">ucomp_type=#{ucompType},</if>
+        </set>
+        where uallroleid = #{uallroleid};
+    </update>
+    <delete id="deleteXtAllRoleToMenu" parameterType="String">
+        delete from xt_allrole_to_menu where uallroleid = #{uallroleid}
+    </delete>
+    <delete id="revamp">
+        delete from xt_role_menu where role_id = #{id}
+    </delete>
+
+</mapper>

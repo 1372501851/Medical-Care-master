@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.approval.mapper.XtFlowmasterMapper">
+
+    <resultMap type="XtFlowmaster" id="XtFlowmasterResult">
+        <result property="uflowid"    column="uflowid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="uflowname"    column="uflowname"    />
+        <result property="uappType"    column="uapp_type"    />
+        <result property="uorderno"    column="uorderno"    />
+        <result property="udesc"    column="udesc"    />
+        <result property="ueflag"    column="ueflag"    />
+    </resultMap>
+
+    <sql id="selectXtFlowmasterVo">
+        select uflowid, ucompid, uflowname, uapp_type, uorderno, udesc, ueflag from xt_flowmaster
+    </sql>
+
+    <select id="selectXtFlowmasterList" parameterType="XtFlowmaster" resultMap="XtFlowmasterResult">
+        <include refid="selectXtFlowmasterVo"/>
+        <where>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="uflowname != null  and uflowname != ''"> and uflowname like concat('%', #{uflowname}, '%')</if>
+            <if test="uappType != null  and uappType != ''"> and uapp_type = #{uappType}</if>
+            <if test="uorderno != null "> and uorderno = #{uorderno}</if>
+            <if test="udesc != null  and udesc != ''"> and udesc = #{udesc}</if>
+            <if test="ueflag != null  and ueflag != ''"> and ueflag = #{ueflag}</if>
+        </where>
+    </select>
+
+    <select id="selectXtFlowmasterByUflowid" parameterType="String" resultMap="XtFlowmasterResult">
+        <include refid="selectXtFlowmasterVo"/>
+        where uflowid = #{uflowid}
+    </select>
+
+    <insert id="insertXtFlowmaster" parameterType="XtFlowmaster">
+        insert into xt_flowmaster
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uflowid != null">uflowid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="uflowname != null and uflowname != ''">uflowname,</if>
+            <if test="uappType != null">uapp_type,</if>
+            <if test="uorderno != null">uorderno,</if>
+            <if test="udesc != null">udesc,</if>
+            <if test="ueflag != null">ueflag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uflowid != null">#{uflowid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="uflowname != null and uflowname != ''">#{uflowname},</if>
+            <if test="uappType != null">#{uappType},</if>
+            <if test="uorderno != null">#{uorderno},</if>
+            <if test="udesc != null">#{udesc},</if>
+            <if test="ueflag != null">#{ueflag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtFlowmaster" parameterType="XtFlowmaster">
+        update xt_flowmaster
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="uflowname != null and uflowname != ''">uflowname = #{uflowname},</if>
+            <if test="uappType != null">uapp_type = #{uappType},</if>
+            <if test="uorderno != null">uorderno = #{uorderno},</if>
+            <if test="udesc != null">udesc = #{udesc},</if>
+            <if test="ueflag != null">ueflag = #{ueflag},</if>
+        </trim>
+        where uflowid = #{uflowid}
+    </update>
+
+    <delete id="deleteXtFlowmasterByUflowid" parameterType="String">
+        delete from xt_flowmaster where uflowid = #{uflowid}
+    </delete>
+
+    <delete id="deleteXtFlowmasterByUflowids" parameterType="String">
+        delete from xt_flowmaster where uflowid in
+        <foreach item="uflowid" collection="array" open="(" separator="," close=")">
+            #{uflowid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.merchant.mapper.XtEquipmentUserMapper">
+
+    <resultMap type="XtEquipmentUser" id="XtEquipmentUserResult">
+        <result property="uequipmentUserid"    column="uequipment_userid"    />
+        <result property="uquipmentid"    column="uquipmentid"    />
+        <result property="userid"    column="userid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="uifAdmin"    column="uif_admin"    />
+        <result property="uifLimitDate"    column="uif_limit_date"    />
+        <result property="ustartDatetime"    column="ustart_datetime"    />
+        <result property="uendDatetime"    column="uend_datetime"    />
+        <result property="ustatus"    column="ustatus"    />
+        <result property="ucreatedate"    column="ucreatedate"    />
+        <result property="uequipmentTypeid"    column="uequipment_typeid"    />
+    </resultMap>
+
+    <sql id="selectXtEquipmentUserVo">
+        select uequipment_userid, uquipmentid, userid, uemployeeid, uif_admin, uif_limit_date, ustart_datetime, uend_datetime, ustatus, ucreatedate,uequipment_typeid from xt_equipment_user
+    </sql>
+
+    <select id="selectXtEquipmentUserList" parameterType="XtEquipmentUser" resultMap="XtEquipmentUserResult">
+        <include refid="selectXtEquipmentUserVo"/>
+        <where>
+            <if test="uquipmentid != null  and uquipmentid != ''"> and uquipmentid = #{uquipmentid}</if>
+            <if test="userid != null  and userid != ''"> and userid = #{userid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="uifAdmin != null  and uifAdmin != ''"> and uif_admin = #{uifAdmin}</if>
+            <if test="uifLimitDate != null  and uifLimitDate != ''"> and uif_limit_date = #{uifLimitDate}</if>
+            <if test="ustartDatetime != null "> and ustart_datetime = #{ustartDatetime}</if>
+            <if test="uendDatetime != null "> and uend_datetime = #{uendDatetime}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+            <if test="ucreatedate != null "> and ucreatedate = #{ucreatedate}</if>
+            <if test="uequipmentTypeid != null "> and uequipment_typeid = #{uequipmentTypeid}</if>
+
+        </where>
+    </select>
+
+    <select id="selectXtEquipmentUserByUequipmentUserid" parameterType="String" resultMap="XtEquipmentUserResult">
+        <include refid="selectXtEquipmentUserVo"/>
+        where uequipment_userid = #{uequipmentUserid}
+    </select>
+
+    <insert id="insertXtEquipmentUser" parameterType="XtEquipmentUser">
+        insert into xt_equipment_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uequipmentUserid != null">uequipment_userid,</if>
+            <if test="uquipmentid != null and uquipmentid != ''">uquipmentid,</if>
+            <if test="userid != null and userid != ''">userid,</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid,</if>
+            <if test="uifAdmin != null and uifAdmin != ''">uif_admin,</if>
+            <if test="uifLimitDate != null and uifLimitDate != ''">uif_limit_date,</if>
+            <if test="ustartDatetime != null">ustart_datetime,</if>
+            <if test="uendDatetime != null">uend_datetime,</if>
+            <if test="ustatus != null and ustatus != ''">ustatus,</if>
+            <if test="ucreatedate != null">ucreatedate,</if>
+            <if test="uequipmentTypeid != null">uequipment_typeid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uequipmentUserid != null">#{uequipmentUserid},</if>
+            <if test="uquipmentid != null and uquipmentid != ''">#{uquipmentid},</if>
+            <if test="userid != null and userid != ''">#{userid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">#{uemployeeid},</if>
+            <if test="uifAdmin != null and uifAdmin != ''">#{uifAdmin},</if>
+            <if test="uifLimitDate != null and uifLimitDate != ''">#{uifLimitDate},</if>
+            <if test="ustartDatetime != null">#{ustartDatetime},</if>
+            <if test="uendDatetime != null">#{uendDatetime},</if>
+            <if test="ustatus != null and ustatus != ''">#{ustatus},</if>
+            <if test="ucreatedate != null">#{ucreatedate},</if>
+            <if test="uequipmentTypeid != null">#{uequipmentTypeid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtEquipmentUser" parameterType="XtEquipmentUser">
+        update xt_equipment_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uquipmentid != null and uquipmentid != ''">uquipmentid = #{uquipmentid},</if>
+            <if test="userid != null and userid != ''">userid = #{userid},</if>
+            <if test="uemployeeid != null and uemployeeid != ''">uemployeeid = #{uemployeeid},</if>
+            <if test="uifAdmin != null and uifAdmin != ''">uif_admin = #{uifAdmin},</if>
+            <if test="uifLimitDate != null and uifLimitDate != ''">uif_limit_date = #{uifLimitDate},</if>
+            <if test="ustartDatetime != null">ustart_datetime = #{ustartDatetime},</if>
+            <if test="uendDatetime != null">uend_datetime = #{uendDatetime},</if>
+            <if test="ustatus != null and ustatus != ''">ustatus = #{ustatus},</if>
+            <if test="ucreatedate != null">ucreatedate = #{ucreatedate},</if>
+            <if test="uequipmentTypeid != null">uequipment_typeid = #{uequipmentTypeid},</if>
+        </trim>
+        where uequipment_userid = #{uequipmentUserid}
+    </update>
+
+    <delete id="deleteXtEquipmentUserByUequipmentUserid" parameterType="String">
+        delete from xt_equipment_user where uequipment_userid = #{uequipmentUserid}
+    </delete>
+
+    <delete id="deleteXtEquipmentUserByUequipmentUserids" parameterType="String">
+        delete from xt_equipment_user where uequipment_userid in
+        <foreach item="uequipmentUserid" collection="array" open="(" separator="," close=")">
+            #{uequipmentUserid}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.common.mapper.XtUsertopaibanMapper">
+
+    <resultMap type="XtUsertopaiban" id="XtUsertopaibanResult">
+        <result property="upaibanid"    column="upaibanid"    />
+        <result property="uemployeeid"    column="uemployeeid"    />
+        <result property="ustatus"    column="ustatus"    />
+    </resultMap>
+
+    <resultMap id="PaibanEmployeeMap" type="select">
+        <result property="value" column="uemployeeid"/>
+        <result property="label" column="uname"/>
+    </resultMap>
+
+    <sql id="selectXtUsertopaibanVo">
+        select upaibanid, uemployeeid, ustatus from xt_usertopaiban
+    </sql>
+
+    <select id="selectXtUsertopaibanList" parameterType="XtUsertopaiban" resultMap="XtUsertopaibanResult">
+        <include refid="selectXtUsertopaibanVo"/>
+        <where>
+            <if test="upaibanid != null  and upaibanid != ''"> and upaibanid = #{upaibanid}</if>
+            <if test="uemployeeid != null  and uemployeeid != ''"> and uemployeeid = #{uemployeeid}</if>
+            <if test="ustatus != null  and ustatus != ''"> and ustatus = #{ustatus}</if>
+        </where>
+    </select>
+
+    <select id="selectXtUsertopaibanByUpaibanid" parameterType="String" resultMap="XtUsertopaibanResult">
+        <include refid="selectXtUsertopaibanVo"/>
+        where upaibanid = #{upaibanid}
+    </select>
+
+    <select id="selectEmployeeListByPaibanId" resultMap="PaibanEmployeeMap">
+        select r.uemployeeid,e.uname
+        from xt_usertopaiban r left join xt_employee e on r.uemployeeid = e.uemployeeid
+        where r.upaibanid = #{upaibanid}
+    </select>
+
+    <insert id="insertXtUsertopaiban" parameterType="XtUsertopaiban">
+        insert into xt_usertopaiban
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="upaibanid != null and upaibanid != ''">upaibanid,</if>
+            <if test="uemployeeid != null">uemployeeid,</if>
+            <if test="ustatus != null">ustatus,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="upaibanid != null and upaibanid != ''">#{upaibanid},</if>
+            <if test="uemployeeid != null">#{uemployeeid},</if>
+            <if test="ustatus != null">#{ustatus},</if>
+         </trim>
+    </insert>
+
+    <insert id="insertXtUsertopaibanBatch">
+        insert into xt_usertopaiban(upaibanid,uemployeeid,ustatus)
+        value
+        <foreach collection="uemployeeids" item="uemployeeid" separator=",">
+            (#{upaibanid},#{uemployeeid},1)
+        </foreach>
+    </insert>
+
+    <update id="updateXtUsertopaiban" parameterType="XtUsertopaiban">
+        update xt_usertopaiban
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uemployeeid != null">uemployeeid = #{uemployeeid},</if>
+            <if test="ustatus != null">ustatus = #{ustatus},</if>
+        </trim>
+        where upaibanid = #{upaibanid}
+    </update>
+
+    <delete id="deleteXtUsertopaibanByUpaibanid" parameterType="String">
+        delete from xt_usertopaiban where upaibanid = #{upaibanid}
+    </delete>
+
+    <delete id="deleteXtUsertopaibanByUpaibanids" parameterType="String">
+        delete from xt_usertopaiban where upaibanid in
+        <foreach item="upaibanid" collection="upaibanids" open="(" separator="," close=")">
+            #{upaibanid}
+        </foreach>
+    </delete>
+
+</mapper>

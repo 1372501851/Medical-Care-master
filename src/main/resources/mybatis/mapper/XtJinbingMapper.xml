@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.zixun.mapper.XtJibingMapper">
+
+
+    <delete id="delXtjibing" parameterType="string">
+        delete from xt_jibing where ujibing_id in
+        <foreach collection="array" open="(" close=")" separator="," item="ujibingId">
+            #{ujibingId}
+        </foreach>
+    </delete>
+    <select id="seleXtjibing" resultType="com.ruoyi.project.zixun.domain.XtJibing">
+        select * from xt_jibing
+        <where>
+            <if test=" ujibingId != null and ujibingId != '' ">and ujibing_id = #{ujibingId}</if>
+            <if test=" uname != null and uname != '' ">and uname = #{uname}</if>
+            <if test=" ubuwei != null and ubuwei != '' ">and ubuwei = #{ubuwei}</if>
+            <if test=" ukeshi != null and ukeshi != '' ">and ukeshi = #{ukeshi}</if>
+            <if test=" ujiancha != null and ujiancha != '' ">and ujiancha = #{ujiancha}</if>
+            <if test=" uzhengzhuang != null and uzhengzhuang != '' ">and uzhengzhuang = #{uzhengzhuang}</if>
+            <if test=" utitle != null and utitle != '' ">and utitle = #{utitle}</if>
+            <if test=" uyuanyinContent != null and uyuanyinContent != '' ">and uyuanyin_content = #{uyuanyinContent}</if>
+            <if test=" ugaishu != null and ugaishu != '' ">and ugaishu = #{ugaishu}</if>
+            <if test=" uzhengzhuangContent != null and uzhengzhuangContent != '' ">and uzhengzhuang_content = #{uzhengzhuangContent}</if>
+            <if test=" ujianchaContent != null and ujianchaContent != '' ">and ujiancha_content = #{ujianchaContent}</if>
+            <if test=" uzhengduanContent != null and uzhengduanContent != '' ">and uzhengduan_content = #{uzhengduanContent}</if>
+            <if test=" ubaojianContent != null and ubaojianContent != '' ">and ubaojian_content = #{ubaojianContent}</if>
+            <if test=" uhuliContent != null and uhuliContent != '' ">and uhuli_content = #{uhuliContent}</if>
+            <if test=" ubinfazhengContent != null and ubinfazhengContent != '' ">and ubinfazheng_content = #{ubinfazhengContent}</if>
+        </where>
+    </select>
+
+</mapper>
+

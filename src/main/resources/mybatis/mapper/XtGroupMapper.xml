@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.im.mapper.XtGroupMapper">
+
+    <resultMap type="XtGroup" id="XtGroupResult">
+        <result property="ugroupid"    column="ugroupid"    />
+        <result property="ucompid"    column="ucompid"    />
+        <result property="udepartmentid"    column="udepartmentid"    />
+        <result property="ugroupname"    column="ugroupname"    />
+        <result property="udesc"    column="udesc"    />
+        <result property="ugroupavatar"    column="ugroupavatar"    />
+        <result property="ugroupmaster"    column="ugroupmaster"    />
+        <result property="ugroupcheck"    column="ugroupcheck"    />
+        <result property="createTime"    column="creat_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="remark"    column="remark"    />
+
+        <result property="ucompType" column="ucomp_type"></result>
+    </resultMap>
+
+    <sql id="selectXtGroupVo">
+        select g.ugroupid, g.ucompid, g.udepartmentid, g.ugroupname, g.udesc, g.ugroupavatar, g.ugroupmaster, g.ugroupcheck, g.create_time, g.update_time, g.create_by, g.update_by, g.del_flag, g.remark
+        ,<if test="g.ucompid = null  or g.ucompid = ''">null as ucomp_type </if>  <if test="g.ucompid != null  and g.ucompid != ''"> c.ucomp_type</if>
+        from xt_group g  <if test="g.ucompid != null  or g.ucompid != ''">,xt_comp c</if>
+    </sql>
+
+    <select id="selectXtGroupList" parameterType="XtGroup" resultMap="XtGroupResult">
+        <include refid="selectXtGroupVo"/>
+        <where>
+            <if test="ucompid != null  and ucompid != ''"> and g.ucompid = #{ucompid} and g.ucompid = c.ucompid </if>
+            <if test="udepartmentid != null  and udepartmentid != ''"> and udepartmentid = #{udepartmentid}</if>
+            <if test="ugroupname != null  and ugroupname != ''"> and ugroupname like concat('%', #{ugroupname}, '%')</if>
+            <if test="udesc != null  and udesc != ''"> and udesc = #{udesc}</if>
+            <if test="ugroupavatar != null  and ugroupavatar != ''"> and ugroupavatar = #{ugroupavatar}</if>
+            <if test="ugroupmaster != null  and ugroupmaster != ''"> and ugroupmaster = #{ugroupmaster}</if>
+            <if test="ugroupcheck != null  and ugroupcheck != ''"> and ugroupcheck = #{ugroupcheck}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+        </where>
+    </select>
+
+    <select id="selectXtGroupByUgroupid" parameterType="String" resultMap="XtGroupResult">
+        <include refid="selectXtGroupVo"/>
+        where ugroupid = #{ugroupid} <if test="g.ucompid != null  and g.ucompid != ''">and g.ucompid = c.ucompid</if>
+    </select>
+
+    <select id="selectXtGroupListByUserId" parameterType="string" resultMap="XtGroupResult">
+        <include refid="selectXtGroupVo"/>
+        WHERE ugroupid IN (SELECT ug.ugroupid
+        FROM xt_user_to_group ug
+        WHERE ug.userid = #{userId} and ug.del_flag='0') and del_flag='0' <if test="g.ucompid != null  and g.ucompid != ''">and g.ucompid = c.ucompid</if>
+    </select>
+
+    <insert id="insertXtGroup" parameterType="XtGroup">
+        insert into xt_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ugroupid != null">ugroupid,</if>
+            <if test="ucompid != null and ucompid != ''">ucompid,</if>
+            <if test="udepartmentid != null">udepartmentid,</if>
+            <if test="ugroupname != null and ugroupname != ''">ugroupname,</if>
+            <if test="udesc != null">udesc,</if>
+            <if test="ugroupavatar != null">ugroupavatar,</if>
+            <if test="ugroupmaster != null">ugroupmaster,</if>
+            <if test="ugroupcheck != null">ugroupcheck,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ugroupid != null">#{ugroupid},</if>
+            <if test="ucompid != null and ucompid != ''">#{ucompid},</if>
+            <if test="udepartmentid != null">#{udepartmentid},</if>
+            <if test="ugroupname != null and ugroupname != ''">#{ugroupname},</if>
+            <if test="udesc != null">#{udesc},</if>
+            <if test="ugroupavatar != null">#{ugroupavatar},</if>
+            <if test="ugroupmaster != null">#{ugroupmaster},</if>
+            <if test="ugroupcheck != null">#{ugroupcheck},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXtGroup" parameterType="XtGroup">
+        update xt_group
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="ucompid != null and ucompid != ''">ucompid = #{ucompid},</if>
+            <if test="udepartmentid != null">udepartmentid = #{udepartmentid},</if>
+            <if test="ugroupname != null and ugroupname != ''">ugroupname = #{ugroupname},</if>
+            <if test="udesc != null">udesc = #{udesc},</if>
+            <if test="ugroupavatar != null">ugroupavatar = #{ugroupavatar},</if>
+            <if test="ugroupmaster != null">ugroupmaster = #{ugroupmaster},</if>
+            <if test="ugroupcheck != null">ugroupcheck = #{ugroupcheck},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where ugroupid = #{ugroupid}
+    </update>
+
+    <delete id="deleteXtGroupByUgroupid" parameterType="String">
+        delete from xt_group where ugroupid = #{ugroupid}
+    </delete>
+
+    <delete id="deleteXtGroupByUgroupids" parameterType="String">
+        delete from xt_group where ugroupid in
+        <foreach item="ugroupid" collection="array" open="(" separator="," close=")">
+            #{ugroupid}
+        </foreach>
+    </delete>
+</mapper>

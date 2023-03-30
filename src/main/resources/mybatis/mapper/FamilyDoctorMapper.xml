@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.user.mapper.FamilyDoctorMapper">
+
+    <resultMap type="FamilyDoctor" id="FamilyDoctorResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="doctorPhone"    column="doctor_phone"    />
+        <result property="doctorId"    column="doctor_id"    />
+        <result property="infoId"    column="info_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="status"    column="status"    />
+        <result property="ucompid"    column="ucompid"    />
+    </resultMap>
+
+    <sql id="selectFamilyDoctorVo">
+        select id, user_id, doctor_phone, doctor_id, info_id, create_time,status,ucompid from family_doctor
+    </sql>
+
+    <select id="selectFamilyDoctorList" parameterType="FamilyDoctor" resultMap="FamilyDoctorResult">
+        <include refid="selectFamilyDoctorVo"/>
+        <where>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="doctorPhone != null  and doctorPhone != ''"> and doctor_phone = #{doctorPhone}</if>
+            <if test="doctorId != null  and doctorId != ''"> and doctor_id = #{doctorId}</if>
+            <if test="infoId != null  and infoId != ''"> and info_id = #{infoId}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+        </where>
+    </select>
+
+    <select id="selectFamilyDoctorById" parameterType="String" resultMap="FamilyDoctorResult">
+        <include refid="selectFamilyDoctorVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectFamilyDoctorByLoginName" resultMap="FamilyDoctorResult">
+        <include refid="selectFamilyDoctorVo"/>
+        where doctor_phone = #{doctorPhone} and user_id = #{userid}
+    </select>
+
+    <insert id="insertFamilyDoctor" parameterType="FamilyDoctor">
+        insert into family_doctor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="doctorPhone != null">doctor_phone,</if>
+            <if test="doctorId != null">doctor_id,</if>
+            <if test="infoId != null">info_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="status != null">status,</if>
+            <if test="ucompid != null">ucompid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="doctorPhone != null">#{doctorPhone},</if>
+            <if test="doctorId != null">#{doctorId},</if>
+            <if test="infoId != null">#{infoId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="ucompid != null">#{ucompid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFamilyDoctor" parameterType="FamilyDoctor">
+        update family_doctor
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="doctorPhone != null">doctor_phone = #{doctorPhone},</if>
+            <if test="doctorId != null">doctor_id = #{doctorId},</if>
+            <if test="infoId != null">info_id = #{infoId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="status != null">status = #{status},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <update id="signFamilyDoctorById">
+        update family_doctor
+            set status = '1'
+        where id = #{id}
+
+    </update>
+
+    <update id="updateFamilyDoctorById">
+        update family_doctor
+        set status = '1'
+        where id = #{id}
+
+    </update>
+    <update id="denyFamilyDoctorById">
+        update family_doctor
+        set status = '2'
+        where id = #{id}
+
+    </update>
+
+    <delete id="deleteFamilyDoctorById" parameterType="String">
+        delete from family_doctor where id = #{id}
+    </delete>
+
+    <delete id="deleteFamilyDoctorByIds" parameterType="String">
+        delete from family_doctor where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

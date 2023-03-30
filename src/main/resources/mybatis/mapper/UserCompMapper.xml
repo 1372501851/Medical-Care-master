@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.user.mapper.UserCompMapper">
+
+    <resultMap type="UserComp" id="UserCompResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="compId"    column="comp_id"    />
+    </resultMap>
+
+    <sql id="selectUserCompVo">
+        select id, user_id, comp_id from user_comp
+    </sql>
+
+    <select id="selectUserCompList" parameterType="UserComp" resultMap="UserCompResult">
+        <include refid="selectUserCompVo"/>
+        <where>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="compId != null  and compId != ''"> and comp_id = #{compId}</if>
+        </where>
+    </select>
+
+    <select id="selectUserCompById" parameterType="String" resultMap="UserCompResult">
+        <include refid="selectUserCompVo"/>
+        where id = #{id}
+    </select>
+    <select id="selectUserCompByCompId" resultMap="UserCompResult">
+        <include refid="selectUserCompVo"/>
+        where comp_id = #{compId}
+    </select>
+
+    <insert id="insertUserComp" parameterType="UserComp">
+        insert into user_comp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="compId != null">comp_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="compId != null">#{compId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateUserComp" parameterType="UserComp">
+        update user_comp
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="compId != null">comp_id = #{compId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUserCompById" parameterType="String">
+        delete from user_comp where id = #{id}
+    </delete>
+
+    <delete id="deleteUserCompByIds" parameterType="String">
+        delete from user_comp where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

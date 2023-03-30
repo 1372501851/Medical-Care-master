@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.remind.mapper.RemindMapper">
+
+    <resultMap type="Remind" id="RemindResult">
+        <result property="id"    column="id"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="reminderId"    column="reminder_id"    />
+        <result property="content"    column="content"    />
+        <result property="time"    column="time"    />
+        <result property="days"    column="days"    />
+        <result property="remindDate"    column="remind_date"    />
+        <result property="userId"    column="user_id"    />
+        <result property="ucompid"    column="ucompid"    />
+    </resultMap>
+
+    <sql id="selectRemindVo">
+        select id, type_id, reminder_id, content, time, days, remind_date, user_id, ucompid from remind
+    </sql>
+
+    <select id="selectRemindList" parameterType="Remind" resultMap="RemindResult">
+        <include refid="selectRemindVo"/>
+        <where>
+            <if test="typeId != null  and typeId != ''"> and type_id = #{typeId}</if>
+            <if test="reminderId != null  and reminderId != ''"> and reminder_id = #{reminderId}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="days != null "> and days = #{days}</if>
+            <if test="remindDate != null "> and remind_date = #{remindDate}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="ucompid != null  and ucompid != ''"> and ucompid = #{ucompid}</if>
+            <if test="ucompid == null"> and isNull(#{ucompid})</if>
+        </where>
+    </select>
+
+    <select id="selectRemindById" parameterType="String" resultMap="RemindResult">
+        <include refid="selectRemindVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertRemind" parameterType="Remind">
+        insert into remind
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="reminderId != null">reminder_id,</if>
+            <if test="content != null">content,</if>
+            <if test="time != null">time,</if>
+            <if test="days != null">days,</if>
+            <if test="remindDate != null">remind_date,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="ucompid != null">ucompid,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="reminderId != null">#{reminderId},</if>
+            <if test="content != null">#{content},</if>
+            <if test="time != null">#{time},</if>
+            <if test="days != null">#{days},</if>
+            <if test="remindDate != null">#{remindDate},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="ucompid != null">#{ucompid},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRemind" parameterType="Remind">
+        update remind
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="reminderId != null">reminder_id = #{reminderId},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="days != null">days = #{days},</if>
+            <if test="remindDate != null">remind_date = #{remindDate},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRemindById" parameterType="String">
+        delete from remind where id = #{id}
+    </delete>
+
+    <delete id="deleteRemindByIds" parameterType="String">
+        delete from remind where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
